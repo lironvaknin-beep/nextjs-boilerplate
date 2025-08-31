@@ -68,6 +68,17 @@ export default function BuilderPage() {
               </div>
             </div>
           </div>
+<Script id="builder-css">{`
+  (function(){
+    if (!document.getElementById('builder-css')) {
+      var l = document.createElement('link');
+      l.id = 'builder-css';
+      l.rel = 'stylesheet';
+      l.href = '/builder/style.css'; // נשען על הקובץ שב-public
+      document.head.appendChild(l);
+    }
+  })();
+`}</Script>
 
           {/* טעינת לוגיקת הבילדר אחרי התחלה */}
           <Script src="/builder/builder.js" strategy="afterInteractive" />
