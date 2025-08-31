@@ -4,11 +4,11 @@ import Script from 'next/script';
 
 export default function BuilderPage() {
   const [started, setStarted] = useState(false);
-  const [docType, setDocType] = useState('story'); // story|recipe|news|song|script|comic|essay...
+  const [docType, setDocType] = useState('story');
   const [prompt, setPrompt]   = useState('');
 
   return (
-    <div className="app" dir="rtl">
+    <div className="app">
       {!started ? (
         <section className="starter" aria-label="מסך פתיחה ליצירה">
           <h1>מה תרצה/י ליצור?</h1>
@@ -29,7 +29,7 @@ export default function BuilderPage() {
 
           <div className="row">
             <label>כמה מילים על מה שבא לך ליצור</label>
-            <textarea rows={4} value={prompt} onChange={e=>setPrompt(e.target.value)} placeholder="לדוגמה: סיפור קצר על ילד שמוצא רובוט בחוף הים..."></textarea>
+            <textarea rows={4} value={prompt} onChange={e=>setPrompt(e.target.value)} placeholder="לדוגמה: סיפור קצר על ילד שמוצא רובוט בחוף הים..." />
           </div>
 
           <div className="actions">
@@ -41,21 +41,21 @@ export default function BuilderPage() {
         </section>
       ) : (
         <>
-          {/* אפשר להעביר קונפיג לסקריפט: */}
+          {/* מעביר seed ל-JS (בעתיד ישמש ל-AI) */}
           <Script id="builder-config">{`
             window.__builderSeed = { docType: ${JSON.stringify(docType)}, prompt: ${JSON.stringify(prompt)} };
           `}</Script>
 
-          {/* כאן ה-JS יוסיף את ה-slots (אין כפילות כפתורים יותר) */}
+          {/* מכולת הכרטיסים (ה-JS שלך מוסיף לתוכה section.slot) */}
           <main id="scroller" className="scroller" aria-live="polite" />
 
-          {/* כפתורי Preview/Share (builder-ספציפיים) */}
+          {/* כפתורי Preview/Share של הבילדר */}
           <div style={{position:'fixed', bottom:90, insetInlineEnd:16, display:'grid', gap:8}}>
             <button id="previewBtn" className="btn-primary">Preview</button>
             <button id="shareBtn"   className="btn-ghost">Share</button>
           </div>
 
-          {/* מודאל תצוגה מקדימה שה-builder.js מצפה לו */}
+          {/* מודאל תצוגה מקדימה — IDs לפי builder.js */}
           <div id="previewModal" className="modal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
             <div className="modal-backdrop"></div>
             <div className="modal-panel">
@@ -69,7 +69,7 @@ export default function BuilderPage() {
             </div>
           </div>
 
-          {/* נטען את לוגיקת ה-Builder רק אחרי Start */}
+          {/* טעינת לוגיקת הבילדר אחרי התחלה */}
           <Script src="/builder/builder.js" strategy="afterInteractive" />
         </>
       )}
