@@ -186,3 +186,21 @@ body, .app { font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+/* לאפשר עריכה נוחה ב-inline */
+.word[contenteditable="true"] {
+  outline: 2px solid var(--accent, #2563eb);
+  border-radius: 12px;
+  padding: 8px 10px;
+  /* חשוב: גודל גופן >= 16px מונע זום ב-iOS */
+  font-size: clamp(18px, 5vw, 28px);
+  /* כדי שמקלדת לא תקפוץ לדברים מוזרים */
+  -webkit-user-select: text;
+}
+
+/* למנוע שינויי גודל אוטומטיים במובייל */
+html { -webkit-text-size-adjust: 100%; }
+
+/* כפתורי מצב עריכה */
+.actionBtn.save   { color:#16a34a; border-color:#bbf7d0; background:#f0fdf4; }
+.actionBtn.cancel { color:#6b7280; border-color:#e5e7eb; background:#f9fafb; }
+
