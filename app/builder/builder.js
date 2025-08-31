@@ -1,7 +1,7 @@
 const slots=[
   { key:'subject', words:['I','You','Uriah','Liron','We'] },
-  { key:'verb', words:['love','cook','train','write','learn'] },
-  { key:'object', words:['pizza','coffee','printers','sports','code'] }
+  { key:'verb',    words:['love','cook','train','write','learn'] },
+  { key:'object',  words:['pizza','coffee','printers','sports','code'] }
 ];
 const chosen={};
 const histories=new Map();
@@ -12,7 +12,7 @@ function btn(cls,text,fn){ const b=document.createElement('button'); b.className
 function createSlot(slot,index){
   const wrap=document.createElement('section'); wrap.className='slot'; wrap.dataset.index=index;
   const card=document.createElement('div'); card.className='card';
-  const word=document.createElement('div'); word.className='word'; word.textContent=slot.words[0];
+  const word=document.createElement('div'); word.className='word'; word.textContent=slot.words[0] || '…';
   const actions=document.createElement('div'); actions.className='actions';
   const like=btn('like','✓',()=> setSelection(slot,wrap,word.textContent));
   const edit=btn('edit','✎',()=> openEditor(slot,wrap,word));
@@ -35,6 +35,7 @@ function setSelection(slot,wrap,text){
   } else { openPreview(); }
 }
 function changeWord(slot,wrap,delta,wordEl){
+  if(!slot.words || !slot.words.length) return;
   const idx=slot.words.indexOf(wordEl.textContent);
   const next=(idx+delta+slot.words.length)%slot.words.length;
   wordEl.textContent=slot.words[next];
@@ -64,7 +65,19 @@ function centerOnIndex(i){
   scroller.scrollTo({top,behavior:'smooth'});
 }
 function buildSentence(){ return slots.map(s=>chosen[s.key]||'[...]').join(' '); }
-function openPreview(){ document.getElementById('previewSentence').textContent=buildSentence(); document.getElementById('previewModal').classList.add('open'); }
-document.getElementById('closePreview').onclick=()=> document.getElementById('previewModal').classList.remove('open');
-document.getElementById('previewBtn').onclick=openPreview;
+function openPreview(){
+  const sEl = document.getElementById('previewSentence');
+  if (sEl) sEl.textContent=buildSentence();
+  const m = document.getElementById('previewModal');
+  if (m) m.classList.add('open');
+}
+const closeBtn = document.getElementById('closePreview');
+if (closeBtn) closeBtn.onclick=()=> {
+  const m = document.getElementById('previewModal');
+  if (m) m.classList.remove('open');
+};
+const previewBtn = document.getElementById('previewBtn');
+if (previewBtn) previewBtn.onclick=openPreview;
+
+// התחל (אחרי שעמוד ה-Builder עבר start)
 renderUpTo(0);
