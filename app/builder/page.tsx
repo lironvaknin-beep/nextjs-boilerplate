@@ -4,58 +4,63 @@ import Script from 'next/script';
 
 export default function BuilderPage() {
   return (
-    <div dir="rtl" style={{minHeight: '100vh', background:'#fff', display:'flex', flexDirection:'column'}}>
-      {/* Header (מחוץ ל-scroller) */}
-      <header style={{position:'sticky', top:0, background:'#fff', borderBottom:'1px solid #eee', zIndex:50}}>
-        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', padding:'12px 16px'}}>
-          <div style={{fontWeight:700}}>write</div>
-          <nav>
-            <button aria-label="תפריט" title="תפריט">☰</button>
-          </nav>
+    <div className="app" dir="rtl">
+      {/* Header תואם-מחלקות (classes) */}
+      <header className="header">
+        <div className="brand">
+          <span className="logo">write</span>
+          <button className="burger" aria-label="תפריט">☰</button>
         </div>
       </header>
 
-      {/* כאן הסקריפט מצפה להזריק כרטיסים: SCROLLER הוא המכולה היחידה */}
-      <section id="scroller" style={{flex:1, overflowY:'auto', padding:'16px'}}>
-        {/* אל תמקם כאן אלמנטים נוספים קבועים — הסקריפט יוסיף section.slot */}
-      </section>
+      {/* המכולה היחידה שה-JS מוסיף אליה כרטיסים */}
+      <main id="scroller" className="scroller" aria-live="polite" />
 
-      {/* Footer (גם מחוץ ל-scroller) */}
-      <footer style={{position:'sticky', bottom:0, background:'#fff', borderTop:'1px solid #eee'}}>
-        <div style={{display:'flex', gap:12, justifyContent:'space-between', padding:'12px 16px'}}>
-          {/* פעולות כרטיס — ה-JS שלך לא חייב אותם כ-IDs, אבל אם בעתיד ידרוש, כבר מוכנים */}
-          <div style={{display:'flex', gap:8}}>
-            <button id="likeBtn" aria-label="בחר">👍</button>
-            <button id="dislikeBtn" aria-label="דלג">👎</button>
-            <button id="editBtn" aria-label="ערוך">✏️</button>
-            <button id="undoBtn" aria-label="בטל">↩️</button>
+      {/* כפתורי פעולה כלליים בתחתית */}
+      <footer className="footer">
+        <div className="footer-actions">
+          {/* פעולות הכרטיס (אם ה-CSS שלך מתייחס להן, השארנו ids לשימוש עתידי) */}
+          <div className="card-actions">
+            <button id="likeBtn" className="actionBtn like" aria-label="בחר">✓</button>
+            <button id="editBtn" className="actionBtn edit" aria-label="ערוך">✎</button>
+            <button id="dislikeBtn" className="actionBtn dislike" aria-label="דלג">✕</button>
+            <button id="undoBtn" className="actionBtn undo" aria-label="בטל">↺</button>
           </div>
-          {/* כפתורי Preview/Share שהסקריפט מצפה אליהם */}
-          <div style={{display:'flex', gap:8}}>
-            <button id="previewBtn" aria-label="תצוגה מקדימה">Preview</button>
-            <button id="shareBtn" aria-label="שיתוף">Share</button>
+
+          {/* Preview / Share שה-builder.js משתמש בהם */}
+          <div className="global-actions">
+            <button id="previewBtn" className="btn preview">Preview</button>
+            <button id="shareBtn" className="btn share">Share</button>
           </div>
         </div>
       </footer>
 
-      {/* Preview Modal — שמות ה-IDs MUST MATCH בדיוק למה שהסקריפט מחפש */}
-      <div id="previewModal" style={{display:'none'}}>
-        {/* אפשר לעצב עם CSS בקובץ style.css שלך (כיתה .open וכו') */}
-        <div style={{
-          position:'fixed', inset:0, background:'rgba(0,0,0,.4)',
-          display:'flex', alignItems:'center', justifyContent:'center', zIndex:1000
-        }}>
-          <div style={{background:'#fff', borderRadius:12, padding:20, maxWidth:600, width:'90%'}}>
-            <h2 style={{marginTop:0}}>תצוגה מקדימה</h2>
-            <p id="previewSentence" style={{minHeight:40, margin:'12px 0'}}>…</p>
-            <div style={{display:'flex', justifyContent:'flex-end', gap:8}}>
-              <button id="closePreview">סגור</button>
-            </div>
+      {/* מודאל תצוגה מקדימה — שמות ids חייבים להתאים ל-builder.js */}
+      <div id="previewModal" className="modal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+        <div className="modal-backdrop"></div>
+        <div className="modal-panel">
+          <h2 id="previewTitle" className="modal-title">תצוגה מקדימה</h2>
+          <p id="previewSentence" className="preview-sentence">…</p>
+          <div className="modal-actions">
+            <button id="closePreview" className="btn ghost">סגור</button>
           </div>
         </div>
       </div>
 
-      {/* טוענים את סקריפט ה-Builder אחרי טעינת הדף */}
+      {/* Overlay עורך טקסט (לפי ה-CSS שלך, אפשר להשאיר לעתיד) */}
+      <div id="editorOverlay" className="modal" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+        <div className="modal-backdrop"></div>
+        <div className="modal-panel">
+          <h2 id="editorTitle" className="modal-title">עריכת טקסט</h2>
+          <textarea id="editorTextarea" rows={5} className="editor-textarea" placeholder="כתוב כאן..."></textarea>
+          <div className="modal-actions">
+            <button id="editorCancelBtn" className="btn ghost">ביטול</button>
+            <button id="editorUpdateBtn" className="btn primary">עדכן</button>
+          </div>
+        </div>
+      </div>
+
+      {/* טעינת הלוגיקה של הבילדר אחרי אינטראקציה */}
       <Script src="/builder/builder.js" strategy="afterInteractive" />
     </div>
   );
