@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -8,7 +10,11 @@ export default function Header() {
       <header className="app-header" role="banner">
         <div className="header-inner">
           <div className="logo" aria-label="write">write</div>
-          <button className="burger" aria-label="פתיחת תפריט" onClick={()=>setOpen(true)}>☰</button>
+          <div style={{display:'flex', gap:8, alignItems:'center'}}>
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <button className="burger" aria-label="פתיחת תפריט" onClick={()=>setOpen(true)}>☰</button>
+          </div>
         </div>
       </header>
 
