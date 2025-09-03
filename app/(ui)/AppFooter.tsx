@@ -37,8 +37,11 @@ export default function AppFooter() {
     const [lang, setLang] = useState<LangCode>('en');
 
     useEffect(() => {
+        // Read the language from the root HTML element on mount.
         const currentLang = (document.documentElement.lang || 'en') as LangCode;
-        setLang(currentLang);
+        if (currentLang in FOOTER_DICT) {
+            setLang(currentLang);
+        }
     }, []);
 
     const t = FOOTER_DICT[lang] || FOOTER_DICT.en;
