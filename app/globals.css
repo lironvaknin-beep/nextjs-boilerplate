@@ -16,28 +16,20 @@
   /* Light Theme Palette */
   --background: #FFFFFF;
   --foreground: #09090B; /* Zinc 950 */
-  
   --muted: #F4F4F5; /* Zinc 100 */
   --muted-foreground: #71717A; /* Zinc 500 */
-  
   --card: #FFFFFF;
   --card-foreground: #09090B;
-  
   --popover: #FFFFFF;
   --popover-foreground: #09090B;
-  
   --border: #E4E4E7; /* Zinc 200 */
   --input: #E4E4E7;
-  
   --primary: #09090B;
   --primary-foreground: #FAFAFA; /* Zinc 50 */
-  
   --secondary: #F4F4F5;
   --secondary-foreground: #18181B; /* Zinc 900 */
-  
   --accent: #F4F4F5;
   --accent-foreground: #18181B;
-
   --destructive: #EF4444; /* Red 500 */
   --ring: #A1A1AA; /* Zinc 400 */
   
@@ -52,28 +44,20 @@
 html[data-theme='dark'] {
   --background: #09090B;
   --foreground: #FAFAFA;
-
   --muted: #27272A; /* Zinc 800 */
   --muted-foreground: #A1A1AA; /* Zinc 400 */
-  
   --card: #09090B;
   --card-foreground: #FAFAFA;
-  
   --popover: #09090B;
   --popover-foreground: #FAFAFA;
-
   --border: #27272A;
   --input: #27272A;
-
   --primary: #FAFAFA;
   --primary-foreground: #18181B;
-  
   --secondary: #27272A;
   --secondary-foreground: #FAFAFA;
-
   --accent: #27272A;
   --accent-foreground: #FAFAFA;
-  
   --destructive: #7F1D1D; /* Red 900 */
   --ring: #27272A;
 }
@@ -81,18 +65,8 @@ html[data-theme='dark'] {
 /* -- ============================================= -- */
 /* -- Base & Reset Styles -- */
 /* -- ============================================= -- */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  font-family: var(--font-sans);
-  color: var(--foreground);
-  background-color: var(--background);
-  transition: background-color var(--transition), color var(--transition);
-}
+* { box-sizing: border-box; padding: 0; margin: 0; }
+body { font-family: var(--font-sans); color: var(--foreground); background-color: var(--background); transition: background-color var(--transition), color var(--transition); }
 
 /* -- ============================================= -- */
 /* -- Header & Footer Shared Styles -- */
@@ -106,101 +80,40 @@ body {
   transition: background-color var(--transition), border-color var(--transition);
   z-index: 1000;
 }
-
 html[data-theme='dark'] .appHeader,
-html[data-theme='dark'] .appFooter {
-    background-color: hsla(240, 10%, 3.9%, 0.8);
-}
-
+html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8); }
 
 /* -- ============================================= -- */
 /* -- Premium Header -- */
 /* -- ============================================= -- */
-.appHeader {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--header-height);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-  border-bottom-width: 1px;
-}
-
+.appHeader { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom-width: 1px; }
 .logo { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; }
-.logo.colored {
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-
+.logo.colored { background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
 .headerActions { display: flex; align-items: center; gap: 12px; }
-.headerBtn {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 12px;
-  border-radius: 99px;
-  border: 1px solid var(--border);
-  background-color: transparent;
-  color: var(--muted-foreground);
-  font-size: 14px; font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition);
-}
+.headerBtn { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 99px; border: 1px solid var(--border); background-color: transparent; color: var(--muted-foreground); font-size: 14px; font-weight: 500; cursor: pointer; transition: all var(--transition); }
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
 .headerBtn svg { width: 16px; height: 16px; }
 
-.langDropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  width: 160px;
-  background-color: var(--popover);
-  color: var(--popover-foreground);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  padding: 4px;
-  z-index: 1010;
-}
+/* -- Desktop Language Dropdown -- */
+.langDropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; width: 160px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 4px; z-index: 1010; }
+.langDropdownItem { width: 100%; text-align: left; padding: 8px 12px; font-size: 14px; border-radius: 6px; background: none; border: none; color: inherit; cursor: pointer; }
+.langDropdownItem:hover { background-color: var(--accent); }
 
-.mobileMenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: var(--card);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
+/* -- Mobile Burger Menu -- */
+.mobileMenu { position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--card); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 16px; border-bottom: 1px solid var(--border); }
+.mobileMenuContent { display: flex; flex-direction: column; gap: 8px; }
+.mobileMenuDivider { height: 1px; background-color: var(--border); margin: 8px 0; }
+.mobileMenuHeading { font-size: 12px; font-weight: 600; color: var(--muted-foreground); padding: 0 8px 4px; text-transform: uppercase; }
+.mobileMenuItem { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 8px; border-radius: 6px; background: none; border: none; color: var(--foreground); font-size: 14px; text-align: left; cursor: pointer; }
+.mobileMenuItem:hover { background-color: var(--accent); }
+.mobileMenuItem span { flex-grow: 1; }
 
 /* -- ============================================= -- */
 /* -- Premium Footer -- */
 /* -- ============================================= -- */
-.appFooter {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: var(--footer-height);
-  border-top-width: 1px;
-  display: flex; justify-content: space-around; align-items: center;
-  padding: 0 16px;
-  box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.05);
-}
-
-html[data-theme='dark'] .appFooter {
-    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.2);
-}
-
-.footerLink {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 4px; color: var(--muted-foreground);
-  font-size: 12px; font-weight: 500;
-  padding: 4px 8px; border-radius: var(--radius);
-  transition: all var(--transition);
-}
+.appFooter { position: fixed; bottom: 0; left: 0; right: 0; height: var(--footer-height); border-top-width: 1px; display: flex; justify-content: space-around; align-items: center; padding: 0 16px; box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.05); }
+html[data-theme='dark'] .appFooter { box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.2); }
+.footerLink { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--muted-foreground); font-size: 12px; font-weight: 500; padding: 4px 8px; border-radius: var(--radius); transition: all var(--transition); }
 .footerLink svg { width: 22px; height: 22px; }
 .footerLink:hover { color: var(--foreground); }
 .footerLink.active { color: var(--brand-primary); }
@@ -208,36 +121,16 @@ html[data-theme='dark'] .appFooter {
 /* -- ============================================= -- */
 /* -- Main Content Area -- */
 /* -- ============================================= -- */
-main {
-  padding-top: var(--header-height);
-  padding-bottom: var(--footer-height);
-}
-
+main { padding-top: var(--header-height); padding-bottom: var(--footer-height); }
 
 /* -- ============================================= -- */
 /* -- RTL Support -- */
 /* -- ============================================= -- */
 html[dir="rtl"] {
-  /* Flip header items */
-  .appHeader {
-    flex-direction: row-reverse;
-  }
-  
-  /* Adjust language dropdown position */
-  .langDropdown {
-    right: auto;
-    left: 0;
-  }
-  
-  /* Align text in language dropdown and mobile menu */
-  .langDropdown button,
-  .mobileMenu button,
-  .mobileMenu h3 {
-    text-align: right;
-  }
-  
-  .mobileMenu .headerBtn {
-    justify-content: flex-start;
-  }
+  .appHeader { flex-direction: row-reverse; }
+  .langDropdown { right: auto; left: 0; }
+  .langDropdownItem, .mobileMenuItem, .mobileMenuHeading { text-align: right; }
+  .mobileMenuItem { flex-direction: row-reverse; }
+  .mobileMenuItem span { text-align: right; }
 }
 
