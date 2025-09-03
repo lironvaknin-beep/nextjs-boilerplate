@@ -23,6 +23,7 @@ export default function AppFooter() {
     return (
         <footer className="appFooter">
             {NAV_LINKS.map(({ href, label, icon }) => {
+                // The link is active if it's the homepage OR if the path starts with the link's href
                 const isActive = (href === '/' && pathname === '/') || (href !== '/' && pathname.startsWith(href));
                 return (
                     <Link key={href} href={href} className={`footerLink ${isActive ? 'active' : ''}`}>
@@ -34,3 +35,4 @@ export default function AppFooter() {
         </footer>
     );
 }
+
