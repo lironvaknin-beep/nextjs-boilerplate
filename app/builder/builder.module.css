@@ -1,0 +1,232 @@
+/* Builder Module CSS 
+  This file styles the BuilderPage component using CSS Modules.
+*/
+
+/* -- Variables -- */
+:root {
+  --primary-color: #007aff;
+  --primary-color-hover: #0056b3;
+  --secondary-color: #6c757d;
+  --secondary-color-hover: #5a6268;
+  --background-color: #f8f9fa;
+  --panel-background: #ffffff;
+  --text-color: #212529;
+  --label-color: #495057;
+  --border-color: #ced4da;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* -- Main Container -- */
+.builderPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  min-height: calc(100vh - 80px); /* Adjust based on header height */
+  background-color: var(--background-color);
+  width: 100%;
+}
+
+/* -- Starter Panel -- */
+.starterPanel {
+  max-width: 600px;
+  width: 100%;
+  background: var(--panel-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.starterTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+  text-align: center;
+}
+
+.starterSubtitle {
+  font-size: 16px;
+  color: var(--secondary-color);
+  margin: -10px 0 10px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* -- Form Elements -- */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--label-color);
+}
+
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-family: inherit;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formSelect:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* -- Action Buttons -- */
+.starterActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 15px;
+  border-top: 1px solid #e9ecef;
+  padding-top: 20px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btnPrimary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btnPrimary:hover {
+  background-color: var(--primary-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btnPrimary:disabled {
+  background-color: #a0c7ff;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btnSecondary {
+  background-color: #e9ecef;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.btnSecondary:hover {
+  background-color: #dde1e5;
+  border-color: #adb5bd;
+}
+
+
+/* -- Builder View (after start) -- */
+.scroller {
+  /* This will be controlled by builder.js */
+  width: 100%;
+  max-width: 800px; /* Or whatever the design dictates */
+}
+
+.floatingActions {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  gap: 15px;
+  z-index: 1000;
+}
+
+/* -- Modal -- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* This is a helper class to be toggled with JS */
+.modal.isOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modalPanel {
+  position: relative;
+  background: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 500px;
+  width: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transform: scale(0.95);
+  transition: transform 0.3s ease-out;
+}
+
+.modal.isOpen .modalPanel {
+  transform: scale(1);
+}
+
+.modalTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.previewContent {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--label-color);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
