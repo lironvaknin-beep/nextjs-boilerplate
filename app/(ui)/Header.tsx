@@ -5,33 +5,46 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
+  // This function will be used to render the navigation links
+  const renderNavLinks = () => (
+    <nav style={{ display: 'grid', gap: '0.5rem' }}>
+      <a href="/" className="nav-btn">Home</a>
+      <a href="/builder" className="nav-btn active">Builder</a>
+      <a href="/explore" className="nav-btn">Explore</a>
+      <a href="/me/library" className="nav-btn">My Library</a>
+      <a href="/settings" className="nav-btn">Settings</a>
+    </nav>
+  );
+
   return (
     <>
       <header className="app-header" role="banner">
         <div className="header-inner">
           <div className="logo" aria-label="write">write</div>
-          <div style={{display:'flex', gap:8, alignItems:'center'}}>
+          <div className="header-controls">
             <LanguageSwitcher />
             <ThemeToggle />
-            <button className="burger" aria-label="פתיחת תפריט" onClick={()=>setOpen(true)}>☰</button>
+            <button 
+              className="control-btn" 
+              aria-label="Open menu" 
+              onClick={() => setOpen(true)}
+            >
+              ☰
+            </button>
           </div>
         </div>
       </header>
 
-      <div className={open ? 'drawer open' : 'drawer'} aria-hidden={!open}>
-        <div className="drawer-backdrop" onClick={()=>setOpen(false)}></div>
-        <aside className="drawer-panel" role="dialog" aria-modal="true" aria-label="תפריט">
-          <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
-            <strong>תפריט</strong>
-            <button className="btn-ghost" onClick={()=>setOpen(false)}>סגור</button>
+      {/* Drawer (Side Menu) */}
+      <div className={open ? 'drawer open' : 'drawer'} aria-hidden={!open} role="dialog">
+        <div className="drawer-backdrop" onClick={() => setOpen(false)}></div>
+        <aside className="drawer-panel" aria-modal="true" aria-label="Main menu">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <span className="logo">Menu</span>
+            <button className="btn-secondary" onClick={() => setOpen(false)}>Close</button>
           </div>
-          <nav style={{display:'grid', gap:8}}>
-            <a href="/" className="nav-btn">דף הבית</a>
-            <a href="/builder" className="nav-btn">Builder</a>
-            <a href="/explore" className="nav-btn">גילוי</a>
-            <a href="/me/library" className="nav-btn">הספרייה שלי</a>
-            <a href="/settings" className="nav-btn">הגדרות</a>
-          </nav>
+          {renderNavLinks()}
         </aside>
       </div>
     </>
