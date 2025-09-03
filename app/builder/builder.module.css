@@ -1,30 +1,33 @@
 /* Builder Module CSS - Premium & Complete Redesign
-  Version 3.0: Covers both Starter Form and Builder Scroller states.
+  Version 4.0: Rebuilt to match the provided high-end reference.
+  Focus on no-scroll layout, clean UX, and premium feel.
 */
 
-/* -- Design System: Variables -- */
+/* -- ============================================= -- */
+/* -- Part 0: Design System & Variables -- */
+/* -- ============================================= -- */
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   
-  /* Palette: Sophisticated, clean, and trustworthy */
-  --brand-gradient: linear-gradient(45deg, #4f46e5, #7c3aed);
-  --brand-gradient-hover: linear-gradient(45deg, #4338ca, #6d28d9);
+  /* Palette: Clean, modern, and focused */
+  --brand-gradient: linear-gradient(90deg, #5D5CDE, #5685E6);
+  --brand-gradient-hover: linear-gradient(90deg, #4c4ae0, #4a77d8);
   
-  --bg-main: #f9fafb; /* Lighter, cleaner background */
+  --bg-main: #f9fafb;
   --bg-panel: #ffffff;
   --bg-interactive: #f3f4f6;
   
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
   --text-placeholder: #9ca3af;
 
   --border-primary: #e5e7eb;
-  --border-focus: #4f46e5;
+  --border-focus: #5D5CDE;
   
   --radius-md: 12px;
   --radius-lg: 16px;
   
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-subtle: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
@@ -32,7 +35,7 @@
 }
 
 /* -- ============================================= -- */
-/* -- Part 1: Main Layout & Starter Panel -- */
+/* -- Part 1: Main Layout & No-Scroll Starter Panel -- */
 /* -- ============================================= -- */
 
 .builderPageContainer {
@@ -40,19 +43,23 @@
   justify-content: center;
   align-items: center;
   padding: 24px;
-  min-height: calc(100vh - 120px);
-  background-color: var(--bg-main);
   width: 100%;
+  min-height: calc(100vh - 120px); /* Adjust based on header/footer */
+  background-color: var(--bg-main);
   font-family: var(--font-sans);
 }
 
+/* The main panel is now a flex container that fills available space */
 .starterPanel {
   width: 100%;
   max-width: 580px;
+  height: 100%;
+  max-height: 70vh; /* Control max height on large screens */
   background: var(--bg-panel);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 40px;
+  box-shadow: var(--shadow-subtle);
+  border: 1px solid var(--border-primary);
+  padding: 32px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -65,32 +72,43 @@
 }
 
 .starterTitle {
-  font-size: clamp(24px, 5vw, 30px);
-  font-weight: 800;
+  font-size: clamp(22px, 5vw, 26px);
+  font-weight: 700;
   color: var(--text-primary);
   text-align: center;
-  letter-spacing: -0.02em;
 }
 
 .starterSubtitle {
-  font-size: clamp(16px, 3vw, 18px);
+  font-size: clamp(15px, 3vw, 16px);
   color: var(--text-secondary);
-  margin: -12px 0 8px;
+  margin: -16px 0 0;
   text-align: center;
   line-height: 1.6;
 }
 
 .formGroup {
-  display: flex; flex-direction: column; gap: 10px;
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px;
+}
+
+/* This group will grow to push the button down */
+.formGroup.is-growing {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .formLabel {
-  font-size: 14px; font-weight: 600; color: var(--text-primary);
+  font-size: 14px; 
+  font-weight: 500; 
+  color: var(--text-primary);
 }
 
+/* Custom styled select and textarea */
 .formSelect, .formTextarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 12px 16px;
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
   font-size: 16px;
@@ -99,161 +117,130 @@
   color: var(--text-primary);
   transition: all var(--transition);
 }
+
+.formSelect {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 48px;
+}
+
+.formTextarea {
+  flex-grow: 1; /* Allows textarea to fill space */
+  resize: none; 
+}
+
 .formSelect:hover, .formTextarea:hover {
   border-color: #9ca3af;
 }
 .formSelect:focus, .formTextarea:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.15);
   background-color: var(--bg-panel);
 }
 
-.formTextarea { resize: vertical; min-height: 100px; }
-
 .starterActions {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 12px;
-  margin-top: 16px;
-  border-top: 1px solid var(--border-primary);
-  padding-top: 24px;
+  margin-top: auto; /* Pushes to the bottom */
+  padding-top: 16px;
 }
 
-.btnPrimary, .btnSecondary {
-  padding: 14px 28px;
+.btnPrimary {
+  width: 100%;
+  padding: 16px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  transition: all var(--transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.btnPrimary {
   background: var(--brand-gradient);
   color: white;
-  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
 }
 .btnPrimary:hover {
+  background: var(--brand-gradient-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 .btnPrimary:disabled {
-  background: #a5b4fc;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  background: #c7c7f0;
+  cursor: not-allowed; transform: none; box-shadow: none;
 }
 .btnSecondary {
-  background-color: transparent;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--text-secondary);
-  border: 1px solid var(--border-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: color var(--transition);
 }
 .btnSecondary:hover {
-  background-color: var(--bg-interactive);
   color: var(--text-primary);
 }
 
 
 /* -- ============================================= -- */
 /* -- Part 2: Builder Scroller & Content Cards      -- */
-/* -- This is the view after clicking 'Start'       -- */
 /* -- ============================================= -- */
 
 .scroller {
-  width: 100%;
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Space between cards */
+  width: 100%; max-width: 720px;
+  display: flex; flex-direction: column; gap: 20px;
 }
-
-/* Individual Content Card */
 .contentCard {
-  background: var(--bg-panel);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  /* Staggered animation for new cards */
+  background: var(--bg-panel); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md); padding: 32px;
+  display: flex; flex-direction: column; gap: 24px;
   animation: slideInUp 0.7s var(--transition) both;
 }
-
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(30px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-
 .cardText {
-  font-size: 18px;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  white-space: pre-wrap; /* Preserves formatting */
+  font-size: 18px; line-height: 1.7;
+  color: var(--text-secondary); white-space: pre-wrap;
 }
-
-/* Actions per card: Like, Dislike, Edit */
 .cardActions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  border-top: 1px solid var(--border-primary);
+  display: flex; justify-content: flex-end; align-items: center;
+  gap: 12px; border-top: 1px solid var(--border-primary);
   padding-top: 20px;
 }
-
 .actionButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid transparent;
-  background-color: var(--bg-interactive);
-  cursor: pointer;
-  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid transparent; background-color: var(--bg-interactive);
+  cursor: pointer; transition: all var(--transition);
 }
-
 .actionButton svg {
-  width: 20px;
-  height: 20px;
-  color: var(--text-secondary);
-  transition: color var(--transition);
+  width: 20px; height: 20px;
+  color: var(--text-secondary); transition: color var(--transition);
 }
-
 .actionButton:hover {
-  transform: scale(1.1);
-  background-color: #e5e7eb;
+  transform: scale(1.1); background-color: #e5e7eb;
 }
-
-/* Specific button styles */
-.likeBtn:hover svg { color: #16a34a; /* Green */ }
-.dislikeBtn:hover svg { color: #dc2626; /* Red */ }
-.editBtn:hover svg { color: #2563eb; /* Blue */ }
+.likeBtn:hover svg { color: #16a34a; }
+.dislikeBtn:hover svg { color: #dc2626; }
+.editBtn:hover svg { color: #2563eb; }
 
 
 /* -- ============================================= -- */
-/* -- Part 3: Floating Actions & Modals -- */
+/* -- Part 3: Floating Actions & Modals             -- */
 /* -- ============================================= -- */
 
 .floatingActions {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  gap: 16px;
-  z-index: 1000;
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; gap: 16px; z-index: 1000;
 }
 .floatingActions button {
-  padding: 16px 24px;
-  box-shadow: var(--shadow-lg);
+  padding: 16px 24px; box-shadow: var(--shadow-lg);
 }
-
 .modal {
   position: fixed; inset: 0; z-index: 2000;
   display: flex; justify-content: center; align-items: center;
@@ -281,22 +268,17 @@
 
 
 /* -- ============================================= -- */
-/* -- Part 4: Responsive Design -- */
+/* -- Part 4: Responsive Design                     -- */
 /* -- ============================================= -- */
 
 @media (max-width: 640px) {
   .builderPageContainer {
     padding: 16px;
-    align-items: flex-start; /* Allow scrolling on small screens */
+    align-items: flex-start;
   }
   .starterPanel, .contentCard {
     padding: 24px;
-  }
-  .starterActions {
-    flex-direction: column-reverse;
-  }
-  .starterActions button {
-    width: 100%;
+    max-height: none;
   }
   .formSelect, .formTextarea {
     font-size: 16px !important; /* Prevents iOS zoom */
