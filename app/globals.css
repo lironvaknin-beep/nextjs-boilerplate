@@ -1,197 +1,215 @@
-/* :root variables for themes and global tokens */
+/* ------------------------------ */
+/* Design System & Global Tokens  */
+/* ------------------------------ */
 :root {
-  --radius: 22px;
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --radius: 1.25rem; /* 20px */
+  --shadow-lg: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-/* Dark Theme */
-:root[data-theme="dark"] {
-  --bg: #0b1020;
-  --panel: #0f172a;
-  --ink: #e5e7eb;
-  --muted: #9ca3af;
-  --brand: #22c55e;
-  --accent: #2563eb;
-  --danger: #f43f5e;
-  --ring: #7dd3fc;
-  --card-bg: #ffffff;
-  --card-ink: #0f172a;
+/* ------------------------------ */
+/* Dark & Light Theme Variables   */
+/* ------------------------------ */
+/* Dark Theme (Default) */
+:root, :root[data-theme="dark"] {
+  --bg: #121212;            /* Almost black, common in media apps */
+  --panel: #181818;          /* Slightly lighter panels */
+  --surface: #282828;        /* Hover, interactive surfaces */
+  --ink: #ffffff;           /* Primary text */
+  --muted: #b3b3b3;         /* Secondary text */
+  --border: #282828;         /* Subtle borders */
+  
+  --brand-text: #1ed760;     /* Spotify Green for highlights */
+  --brand-bg: #1ed760;
+  --brand-bg-text: #000000;
+
+  --accent-text: #509bf5;    /* A calm blue for accents */
+  --accent-bg: #509bf5;
+  --accent-bg-text: #ffffff;
+
+  --ring: #509bf5;          /* Focus ring color */
 }
 
-/* Light Theme (Daylight) */
+/* Light Theme */
 :root[data-theme="light"] {
-  --bg: #f7f9fc;
+  --bg: #f5f5f5;
   --panel: #ffffff;
-  --ink: #0b1020;
-  --muted: #475569;
-  --brand: #16a34a;
-  --accent: #1d4ed8;
-  --danger: #dc2626;
-  --ring: #0284c7;
-  --card-bg: #ffffff;
-  --card-ink: #0f172a;
+  --surface: #e5e5e5;
+  --ink: #121212;
+  --muted: #5a5a5a;
+  --border: #e0e0e0;
+  
+  --brand-text: #1db954;
+  --brand-bg: #1db954;
+  --brand-bg-text: #ffffff;
+
+  --accent-text: #2979ff;
+  --accent-bg: #2979ff;
+  --accent-bg-text: #ffffff;
+  
+  --ring: #2979ff;
 }
 
-/* Basic Resets and Body Styles */
-* {
-  box-sizing: border-box;
-}
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
+/* ------------------------------ */
+/* Global Resets & Body Styles    */
+/* ------------------------------ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Hebrew", Heebo, Rubik, Arial, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button {
   font: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Accessibility Focus Ring */
-button:focus-visible, a:focus-visible, [role="button"]:focus-visible {
+*:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
-/* Global Header */
+
+/* ------------------------------ */
+/* Header & Footer Styling        */
+/* ------------------------------ */
+.app-header, .app-footer {
+  background: rgba(18, 18, 18, 0.7); /* Translucent background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border);
+}
+:root[data-theme="light"] .app-header, :root[data-theme="light"] .app-footer {
+   background: rgba(255, 255, 255, 0.7);
+}
+
+
 .app-header {
   position: sticky;
   top: 0;
-  z-index: 100;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
 }
 
-.header-inner {
-  max-width: 1100px;
+.header-inner, .footer-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 0.75rem 1rem; /* 12px 16px */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
 }
 
 .logo {
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  background: linear-gradient(90deg, #fff, #a7f3d0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.burger {
-  background: transparent;
+  font-size: 1.25rem; /* 20px */
+  font-weight: 800;
+  letter-spacing: -0.5px;
   color: var(--ink);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 8px 12px;
-  border-radius: 14px;
 }
 
-/* Global Drawer (Side Menu) */
-.drawer {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: none;
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
 }
 
-.drawer.open {
-  display: block;
+.control-btn, .lang-select {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid transparent;
+  padding: 0.5rem 0.75rem; /* 8px 12px */
+  border-radius: 9999px; /* Pill shape */
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  transition: background-color 150ms ease, color 150ms ease;
 }
-
-.drawer-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+.control-btn:hover, .lang-select:hover {
+  background: var(--surface);
+  color: var(--ink);
 }
-
-.drawer-panel {
-  position: absolute;
-  inset: 0 0 0 auto;
-  width: min(86vw, 360px);
-  background: var(--panel);
-  height: 100%;
-  padding: 18px;
-  box-shadow: var(--shadow);
-  display: grid;
-  align-content: start;
-  gap: 10px;
-}
-
-.nav-btn {
+.lang-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--ink);
-  padding: 10px 14px;
-  border-radius: 14px;
-  text-align: start;
+  padding-right: 2rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
 }
 
-.nav-btn.active {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25) inset;
-}
 
-/* Global Footer */
 .app-footer {
   position: sticky;
   bottom: 0;
-  z-index: 90;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: 50;
+  border-top: 1px solid var(--border);
 }
 
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 10px 16px;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 8px;
-  justify-content: space-between;
+.footer-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0.5rem;
+  border-radius: 0.75rem; /* 12px */
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 0.75rem; /* 12px */
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.footer-nav-btn.active {
+  color: var(--brand-text);
+}
+.footer-nav-btn:hover {
+  background-color: var(--surface);
 }
 
 /* General Purpose Buttons */
 .btn-primary {
+  background: var(--brand-bg);
+  color: var(--brand-bg-text);
   border: none;
-  background: linear-gradient(90deg, #22c55e, #10b981);
-  color: #0b1020;
-  padding: 10px 16px;
-  border-radius: 14px;
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  border-radius: 9999px;
+  font-weight: 700;
+  transition: transform 150ms ease;
+}
+.btn-primary:hover {
+  transform: scale(1.05);
 }
 .btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
-.btn-ghost {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: transparent;
+.btn-secondary {
+  background: var(--surface);
   color: var(--ink);
-  padding: 10px 16px;
-  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  transition: background-color 150ms ease;
+}
+.btn-secondary:hover {
+  background-color: var(--border);
 }
 
-.muted {
-  color: var(--muted);
-}
+/* Drawer styles - assuming drawer exists */
+.drawer-panel { background: var(--panel); }
+.drawer-backdrop { background: rgba(0,0,0,0.5); }
 
