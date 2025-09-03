@@ -1,4 +1,4 @@
-import './globals.css'; // This line is crucial! It loads the global styles.
+import './globals.css'; // We keep this for Next.js conventions
 import Header from './(ui)/Header';
 import AppFooter from './(ui)/AppFooter';
 
@@ -25,6 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" dir="ltr">
       <head>
+        {/* Direct link to the global styles as a failsafe */}
+        <link rel="stylesheet" href="/globals.css" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
