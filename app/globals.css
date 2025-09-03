@@ -66,7 +66,6 @@ html[data-theme='dark'] {
 /* -- Base & Reset Styles -- */
 /* -- ============================================= -- */
 * { box-sizing: border-box; padding: 0; margin: 0; }
-a { text-decoration: none; color: inherit; }
 body { font-family: var(--font-sans); color: var(--foreground); background-color: var(--background); transition: background-color var(--transition), color var(--transition); }
 
 /* -- ============================================= -- */
@@ -89,7 +88,6 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
 /* -- ============================================= -- */
 .appHeader { position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom-width: 1px; }
 
-/* New Logo Style */
 .logo { 
   font-size: 24px; 
   font-weight: 800; 
@@ -97,7 +95,6 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   position: relative;
   padding-bottom: 4px;
   color: var(--foreground);
-  text-decoration: none; /* Removes default underline */
 }
 .logo::after {
   content: '';
@@ -115,18 +112,53 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
 .headerBtn svg { width: 20px; height: 20px; }
 
-/* User Dropdown Menu */
-.userDropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; width: 220px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 4px; z-index: 1010; }
-.userDropdownItem { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 8px 12px; font-size: 14px; border-radius: 6px; background: none; border: none; color: inherit; cursor: pointer; }
-.userDropdownItem:hover { background-color: var(--accent); }
-.userDropdownItem svg { color: var(--muted-foreground); }
-.userDropdownDivider { height: 1px; background-color: var(--border); margin: 4px 0; }
-.userDropdownHeading { font-size: 12px; font-weight: 600; color: var(--muted-foreground); padding: 4px 12px; text-transform: uppercase; }
-.langSelector { display: flex; gap: 4px; padding: 4px 8px; }
-.langBtn { flex: 1; padding: 4px; font-size: 12px; border-radius: 4px; background: none; border: 1px solid transparent; color: var(--muted-foreground); cursor: pointer; }
-.langBtn:hover { background-color: var(--accent); }
-.langBtn.active { background-color: var(--accent); border-color: var(--border); color: var(--accent-foreground); }
 
+/* -- ============================================= -- */
+/* -- Search Overlay -- */
+/* -- ============================================= -- */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.searchOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  animation: fadeIn 0.3s ease;
+}
+html[data-theme='dark'] .searchOverlay {
+    background-color: hsla(240, 10%, 3.9%, 0.5);
+}
+.searchPanel { width: 100%; max-width: 600px; position: relative; padding: 0 16px; }
+.searchInput {
+  width: 100%;
+  padding: 16px 56px 16px 24px;
+  font-size: 18px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+}
+.searchInput:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15), 0 10px 25px -5px rgb(0 0 0 / 0.1);
+}
+.closeSearchBtn {
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    transform: translateY(-50%);
+    background: none; border: none;
+    color: var(--muted-foreground); cursor: pointer;
+    padding: 8px;
+}
+html[dir="rtl"] .closeSearchBtn { right: auto; left: 32px; }
+html[dir="rtl"] .searchInput { padding: 16px 24px 16px 56px; }
 
 /* -- ============================================= -- */
 /* -- Premium Footer -- */
@@ -155,7 +187,5 @@ main { padding-top: var(--header-height); padding-bottom: var(--footer-height); 
 select[dir="rtl"] { background-position: left 16px center; padding-left: 48px; padding-right: 16px; }
 html[dir="rtl"] {
   .appHeader { flex-direction: row-reverse; }
-  .userDropdown { right: auto; left: 0; }
-  .userDropdownItem, .userDropdownHeading { text-align: right; flex-direction: row-reverse; }
 }
 
