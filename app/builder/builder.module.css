@@ -30,30 +30,29 @@
   --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* -- Main Layout -- */
+/* -- Main Layout: Centered and simple -- */
 .builderPageContainer {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 5vh 24px; /* Use viewport height for flexible padding */
-  min-height: calc(100vh - 80px); /* Adjust based on header height */
+  align-items: center; /* Vertically center the panel */
+  padding: 24px;
+  min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
   background-color: var(--bg-primary);
   width: 100%;
   font-family: var(--font-sans);
 }
 
-/* -- Starter Panel: The main attraction -- */
+/* -- Starter Panel: Cleaner and more focused -- */
 .starterPanel {
   width: 100%;
-  max-width: 640px;
+  max-width: 580px; /* Slightly smaller for a tighter look */
   background: var(--bg-secondary);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: 48px;
+  box-shadow: var(--shadow-md); /* More subtle shadow */
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  border: 1px solid #e5e7eb;
+  gap: 24px; /* Reduced gap */
   animation: fadeIn 0.6s var(--transition-slow) both;
 }
 
@@ -64,7 +63,7 @@
 
 /* -- Typography -- */
 .starterTitle {
-  font-size: clamp(24px, 5vw, 32px); /* Responsive font size */
+  font-size: clamp(22px, 5vw, 28px); /* Slightly smaller title */
   font-weight: 800;
   color: var(--text-primary);
   margin: 0;
@@ -73,9 +72,9 @@
 }
 
 .starterSubtitle {
-  font-size: clamp(16px, 3vw, 18px);
+  font-size: clamp(15px, 3vw, 16px);
   color: var(--text-secondary);
-  margin: -16px 0 8px;
+  margin: -12px 0 8px; /* Reduced margin */
   text-align: center;
   line-height: 1.6;
 }
@@ -99,7 +98,7 @@
   padding: 14px 16px;
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
-  font-size: 16px;
+  font-size: 16px; /* Prevents zoom on mobile */
   font-family: inherit;
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -132,7 +131,7 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 16px; /* Reduced margin */
   border-top: 1px solid #e5e7eb;
   padding-top: 24px;
 }
@@ -276,11 +275,20 @@
 
 /* -- Responsive Design -- */
 @media (max-width: 640px) {
+  .builderPageContainer {
+    padding: 16px; /* Less padding on mobile */
+    min-height: calc(100vh - 100px);
+  }
+
   .starterPanel {
     padding: 24px;
     gap: 20px;
   }
   
+  .formSelect, .formTextarea {
+    font-size: 16px !important; /* Force font size to prevent zoom */
+  }
+
   .starterActions {
     flex-direction: column-reverse;
   }
