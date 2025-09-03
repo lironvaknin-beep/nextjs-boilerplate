@@ -1,9 +1,18 @@
-// --- Builder Logic v2.0: Inline Editing & React State Sync ---
+// --- Builder Logic v3.0: Inline Editing, SVG Icons & Full QA ---
 
 // Wait for the DOM and the React component to be ready
 document.addEventListener('DOMContentLoaded', () => {
+    // --- SVG Icon Library ---
+    const ICONS = {
+        like: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+        edit: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
+        dislike: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+        undo: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.8-6.3"></path><polyline points="21 3 21 8 16 8"></polyline></svg>`,
+        save: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13H7v8"></polyline><polyline points="7 3 7 8H15"></polyline></svg>`
+    };
+
     // --- Initial Setup ---
-    const seed = (window as any).__builderSeed;
+    const seed = window.__builderSeed;
     if (!seed) {
         console.error("Builder seed data not found!");
         return;
@@ -23,28 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const histories = new Map();
 
     // --- Core Functions ---
-
-    /**
-     * Creates a button with consistent styling and behavior.
-     * @param {string} cls - CSS class for styling (e.g., 'like', 'edit').
-     * @param {string} text - The text/icon for the button.
-     * @param {Function} fn - The function to call on click.
-     * @returns {HTMLButtonElement}
-     */
-    function createActionButton(cls, text, fn) {
+    function createActionButton(cls, iconSvg, fn) {
         const btn = document.createElement('button');
         btn.className = `actionBtn ${cls}`;
-        btn.innerHTML = text; // Use innerHTML to support SVG icons later
-        btn.onclick = fn;
+        btn.innerHTML = iconSvg;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            fn();
+        };
         return btn;
     }
 
-    /**
-     * Creates a new content slot/card in the scroller.
-     * @param {object} slotData - The data for the slot.
-     * @param {number} index - The index of the slot.
-     * @returns {HTMLElement}
-     */
     function createSlot(slotData, index) {
         const wrap = document.createElement('section');
         wrap.className = 'slot';
@@ -60,28 +58,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const actions = document.createElement('div');
         actions.className = 'actions';
 
-        // --- Action Buttons ---
-        const likeBtn = createActionButton('like', '✓', () => setSelection(slotData, wrap, wordEl.textContent));
-        const editBtn = createActionButton('edit', '✎', () => enterEditMode(slotData, wrap, wordEl, actions));
-        const dislikeBtn = createActionButton('dislike', '✕', () => changeWord(slotData, 1, wordEl));
-        const undoBtn = createActionButton('undo', '↺', () => undoLast(slotData, wordEl));
+        const likeBtn = createActionButton('like', ICONS.like, () => setSelection(slotData, wrap, wordEl.textContent));
+        const editBtn = createActionButton('edit', ICONS.edit, () => enterEditMode(slotData, wrap, wordEl, actions));
+        const dislikeBtn = createActionButton('dislike', ICONS.dislike, () => changeWord(slotData, 1, wordEl));
+        const undoBtn = createActionButton('undo', ICONS.undo, () => undoLast(slotData, wordEl));
 
         actions.append(likeBtn, editBtn, dislikeBtn, undoBtn);
         card.append(wordEl, actions);
         wrap.append(card);
 
-        histories.set(slotData.key, [0]); // Initialize history
+        histories.set(slotData.key, [0]);
         return wrap;
     }
 
-    /**
-     * Locks in a word selection, updates state, and reveals the next slot.
-     */
     function setSelection(slotData, wrap, text) {
         chosen[slotData.key] = text;
-        wrap.classList.add('is-selected'); // Visual feedback for selection
         
-        updateFullSentence(); // Sync with React state
+        // Mark as selected and prevent further edits unless explicitly re-enabled
+        document.querySelectorAll('.slot').forEach(el => el.classList.remove('is-active'));
+        wrap.classList.add('is-selected');
+        wrap.classList.add('is-active');
+
+        updateFullSentence();
 
         const currentIndex = Number(wrap.dataset.index);
         const nextIndex = currentIndex + 1;
@@ -90,32 +88,28 @@ document.addEventListener('DOMContentLoaded', () => {
             renderUpTo(nextIndex);
             centerOnIndex(nextIndex);
         } else {
-            // Last word selected, maybe show a "Done" message or pulse the preview button
             document.getElementById('previewBtn')?.focus();
         }
     }
 
-    /**
-     * Enters inline-editing mode for a word.
-     */
     function enterEditMode(slotData, wrap, wordEl, actions) {
+        if (wrap.classList.contains('is-editing')) return;
+
+        wrap.classList.add('is-editing');
         actions.style.display = 'none';
         wordEl.contentEditable = 'true';
         wordEl.focus();
         
-        // Select all text in the div for easy replacement
         const selection = window.getSelection();
         const range = document.createRange();
         range.selectNodeContents(wordEl);
         selection.removeAllRanges();
         selection.addRange(range);
 
-        const saveBtn = createActionButton('saveBtn', '✓', () => exitEditMode(slotData, wrap, wordEl, actions, saveBtn));
-        
+        const saveBtn = createActionButton('saveBtn', ICONS.save, () => exitEditMode(slotData, wrap, wordEl, actions, saveBtn));
         const card = wrap.querySelector('.card');
         card.append(saveBtn);
 
-        // Save on Enter key press
         wordEl.onkeydown = (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -124,10 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    /**
-     * Exits inline-editing mode and saves the new word.
-     */
     function exitEditMode(slotData, wrap, wordEl, actions, saveBtn) {
+        wrap.classList.remove('is-editing');
         wordEl.contentEditable = 'false';
         wordEl.onkeydown = null;
         saveBtn.remove();
@@ -135,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const newText = wordEl.textContent.trim();
         if (newText) {
-            // Add new word to the list if it's unique
             if (!slotData.words.includes(newText)) {
                 slotData.words.push(newText);
                 pushHistory(slotData.key, slotData.words.length - 1);
@@ -144,9 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    /**
-     * Cycles to the next word in the list.
-     */
     function changeWord(slotData, delta, wordEl) {
         if (!slotData.words || !slotData.words.length) return;
         const currentIndex = slotData.words.indexOf(wordEl.textContent);
@@ -155,12 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         pushHistory(slotData.key, nextIndex);
     }
     
-    /**
-     * Reverts to the previously used word for a slot.
-     */
     function undoLast(slotData, wordEl) {
         const historyStack = histories.get(slotData.key) || [];
-        if (historyStack.length <= 1) return; // Can't undo the first word
+        if (historyStack.length <= 1) return;
         historyStack.pop();
         const previousIndex = historyStack[historyStack.length - 1];
         wordEl.textContent = slotData.words[previousIndex];
@@ -172,18 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
         histories.set(key, historyStack);
     }
 
-    /**
-     * Renders slots up to a specific index.
-     */
     function renderUpTo(targetIndex) {
         for (let i = scroller.children.length; i <= targetIndex && i < slots.length; i++) {
             scroller.appendChild(createSlot(slots[i], i));
         }
     }
     
-    /**
-     * Smoothly scrolls the viewport to center on a specific slot.
-     */
     function centerOnIndex(index) {
         const el = document.querySelector(`.slot[data-index="${index}"]`);
         if (!el) return;
@@ -193,17 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    /**
-     * Builds the complete sentence from chosen words.
-     * @returns {string}
-     */
     function buildSentence() {
         return slots.map(s => chosen[s.key] || '...').join(' ');
     }
 
-    /**
-     * Updates the React state with the current sentence.
-     */
     function updateFullSentence() {
         if (setComposedText) {
             setComposedText(buildSentence());
@@ -215,19 +187,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const sentenceEl = document.getElementById('previewSentence');
         if (sentenceEl) sentenceEl.textContent = buildSentence();
         const modal = document.getElementById('previewModal');
-        if (modal) modal.classList.add(styles.isOpen);
+        // FIX: Use simple class name, not CSS module object
+        if (modal) modal.classList.add('isOpen');
     }
 
     const closePreviewBtn = document.getElementById('closePreview');
     if (closePreviewBtn) closePreviewBtn.onclick = () => {
         const modal = document.getElementById('previewModal');
-        if (modal) modal.classList.remove(styles.isOpen);
+        // FIX: Use simple class name, not CSS module object
+        if (modal) modal.classList.remove('isOpen');
     };
 
     const previewBtn = document.getElementById('previewBtn');
     if (previewBtn) previewBtn.onclick = openPreview;
 
-
     // --- Start the Builder ---
     renderUpTo(0);
 });
+
