@@ -15,6 +15,7 @@ export default function LanguageSwitcher() {
   const [currentLang, setCurrentLang] = useState<LangCode>('en');
 
   useEffect(() => {
+    // On initial load, read the saved language from localStorage
     const savedLang = (localStorage.getItem('wa_lang') as LangCode) || 'en';
     setCurrentLang(savedLang);
   }, []);
