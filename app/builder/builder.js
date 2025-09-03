@@ -1,4 +1,4 @@
-// --- Builder Logic v3.0: Inline Editing, SVG Icons & Full QA ---
+// --- Builder Logic v3.1: Final QA & UX Polish ---
 
 // Wait for the DOM and the React component to be ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -136,18 +136,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function changeWord(slotData, delta, wordEl) {
         if (!slotData.words || !slotData.words.length) return;
-        const currentIndex = slotData.words.indexOf(wordEl.textContent);
-        const nextIndex = (currentIndex + delta + slotData.words.length) % slotData.words.length;
-        wordEl.textContent = slotData.words[nextIndex];
-        pushHistory(slotData.key, nextIndex);
+        
+        wordEl.classList.add('is-changing'); // Trigger fade-out animation
+
+        setTimeout(() => {
+            const currentIndex = slotData.words.indexOf(wordEl.textContent);
+            const nextIndex = (currentIndex + delta + slotData.words.length) % slotData.words.length;
+            wordEl.textContent = slotData.words[nextIndex];
+            pushHistory(slotData.key, nextIndex);
+            wordEl.classList.remove('is-changing'); // Trigger fade-in animation
+        }, 200); // Match animation duration
     }
     
     function undoLast(slotData, wordEl) {
         const historyStack = histories.get(slotData.key) || [];
         if (historyStack.length <= 1) return;
-        historyStack.pop();
-        const previousIndex = historyStack[historyStack.length - 1];
-        wordEl.textContent = slotData.words[previousIndex];
+        
+        wordEl.classList.add('is-changing');
+
+        setTimeout(() => {
+            historyStack.pop();
+            const previousIndex = historyStack[historyStack.length - 1];
+            wordEl.textContent = slotData.words[previousIndex];
+            wordEl.classList.remove('is-changing');
+        }, 200);
     }
     
     function pushHistory(key, index) {
