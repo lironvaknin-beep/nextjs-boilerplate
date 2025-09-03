@@ -183,3 +183,30 @@ main {
   padding-bottom: var(--footer-height);
 }
 
+
+/* -- ============================================= -- */
+/* -- RTL Support -- */
+/* -- ============================================= -- */
+html[dir="rtl"] {
+  /* Flip header items */
+  .appHeader {
+    flex-direction: row-reverse;
+  }
+  
+  /* Adjust language dropdown position */
+  .headerActions .relative > div {
+    right: auto;
+    left: 0;
+  }
+  
+  /* Align text in language dropdown and mobile menu */
+  .headerActions .relative > div button,
+  .mobile-menu button {
+    text-align: right;
+  }
+
+  .headerBtn.justify-start {
+    justify-content: flex-start;
+  }
+}
+
