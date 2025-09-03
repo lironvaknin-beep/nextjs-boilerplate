@@ -1,5 +1,5 @@
 /* Builder Module CSS - Premium & Complete Redesign
-  Version 8.2: Final QA and UX Polish.
+  Version 8.3: Comprehensive RTL fixes for Builder form.
 */
 
 /* -- ============================================= -- */
@@ -10,7 +10,7 @@
   --font-serif-display: "DM Serif Display", serif;
   
   --brand-gradient: linear-gradient(90deg, #5D5CDE, #5685E6);
-  --brand-gradient-hover: linear-gradient(90deg, #4c4ae0, #4a77d8);
+  --brand-gradient-hover: linear-gradient(90deg, #4c4ae0, #4a7T7d8);
   
   /* Light Mode Palette */
   --bg-main: #f9fafb;
@@ -24,11 +24,12 @@
 
   --border-focus: #5D5CDE;
 
-  --action-like: #16a34a;
-  --action-dislike: #dc2626;
-  --action-edit: #2563eb;
-  --action-undo: #f59e0b;
-  --action-save: #059669;
+  /* UX-driven Action Colors */
+  --action-like: #16a34a;  /* Green for confirmation */
+  --action-dislike: #ef4444; /* Red for rejection */
+  --action-edit: #3b82f6;   /* Blue for editing/info */
+  --action-undo: #f97316;    /* Orange for undo */
+  --action-save: #16a34a;   /* Green for saving */
   
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -138,8 +139,23 @@
 }
 
 /* -- ============================================= -- */
-/* -- Part 4: Responsive Design (Final) -- */
+/* -- Part 4: RTL & Responsive Design (Final) -- */
 /* -- ============================================= -- */
+:global(html[dir="rtl"]) .starterTitle,
+:global(html[dir="rtl"]) .formLabel,
+:global(html[dir="rtl"]) .formTextarea::placeholder,
+:global(html[dir="rtl"]) .btnSecondary {
+    text-align: right;
+}
+
+:global(html[dir="rtl"]) .formSelect {
+  background-position: left 16px center;
+  padding-left: 48px;
+  padding-right: 16px;
+  text-align: right;
+  direction: rtl;
+}
+
 @media (max-width: 640px) {
   .builderPageContainer { padding: 0; align-items: flex-start; }
   .starterPanel { padding: 24px 16px; border-radius: 0; border: none; max-height: none; min-height: calc(100vh - 100px); }
