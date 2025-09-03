@@ -7,12 +7,23 @@ import { usePathname } from 'next/navigation';
 const FOOTER_DICT = {
     en: { home: 'Home', explore: 'Explore', create: 'Create', library: 'Library', settings: 'Settings' },
     he: { home: 'בית', explore: 'גילוי', create: 'יצירה', library: 'ספרייה', settings: 'הגדרות' },
+    ar: { home: 'الرئيسية', explore: 'استكشف', create: 'إنشاء', library: 'المكتبة', settings: 'الإعدادات' },
     es: { home: 'Inicio', explore: 'Explorar', create: 'Crear', library: 'Biblioteca', settings: 'Ajustes' },
     fr: { home: 'Accueil', explore: 'Explorer', create: 'Créer', library: 'Bibliothèque', settings: 'Paramètres' },
     de: { home: 'Start', explore: 'Entdecken', create: 'Erstellen', library: 'Bibliothek', settings: 'Einstellungen' },
+    it: { home: 'Home', explore: 'Esplora', create: 'Crea', library: 'Libreria', settings: 'Impostazioni' },
     pt: { home: 'Início', explore: 'Explorar', create: 'Criar', library: 'Biblioteca', settings: 'Configurações' },
+    ru: { home: 'Главная', explore: 'Обзор', create: 'Создать', library: 'Библиотека', settings: 'Настройки' },
+    pl: { home: 'Start', explore: 'Odkrywaj', create: 'Utwórz', library: 'Biblioteka', settings: 'Ustawienia' },
+    tr: { home: 'Anasayfa', explore: 'Keşfet', create: 'Oluştur', library: 'Kütüphane', settings: 'Ayarlar' },
+    nl: { home: 'Home', explore: 'Verkennen', create: 'Creëren', library: 'Bibliotheek', settings: 'Instellingen' },
+    sv: { home: 'Hem', explore: 'Utforska', create: 'Skapa', library: 'Bibliotek', settings: 'Inställningar' },
     zh: { home: '首页', explore: '发现', create: '创建', library: '图书馆', settings: '设置' },
+    ja: { home: 'ホーム', explore: '発見', create: '作成', library: 'ライブラリ', settings: '設定' },
+    ko: { home: '홈', explore: '탐색', create: '만들기', library: '라이브러리', settings: '설정' },
     hi: { home: 'होम', explore: 'अन्वेषण', create: 'बनाएं', library: 'पुस्तकालय', settings: 'सेटिंग्स' },
+    id: { home: 'Beranda', explore: 'Jelajahi', create: 'Buat', library: 'Perpustakaan', settings: 'Pengaturan' },
+    vi: { home: 'Trang chủ', explore: 'Khám phá', create: 'Tạo', library: 'Thư viện', settings: 'Cài đặt' },
 };
 
 type LangCode = keyof typeof FOOTER_DICT;
@@ -37,7 +48,6 @@ export default function AppFooter() {
     const [lang, setLang] = useState<LangCode>('en');
 
     useEffect(() => {
-        // Read the language from the root HTML element on mount.
         const currentLang = (document.documentElement.lang || 'en') as LangCode;
         if (currentLang in FOOTER_DICT) {
             setLang(currentLang);
