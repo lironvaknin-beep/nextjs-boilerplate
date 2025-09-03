@@ -1,22 +1,24 @@
-/* Builder Module CSS - Redesigned for a Premium Experience */
+/* Builder Module CSS - Premium & Complete Redesign
+  Version 3.0: Covers both Starter Form and Builder Scroller states.
+*/
 
 /* -- Design System: Variables -- */
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   
-  /* Palette: Modern, clean, and engaging */
+  /* Palette: Sophisticated, clean, and trustworthy */
   --brand-gradient: linear-gradient(45deg, #4f46e5, #7c3aed);
   --brand-gradient-hover: linear-gradient(45deg, #4338ca, #6d28d9);
-  --accent-color: #c084fc; /* A softer purple for highlights */
   
-  --bg-primary: #f7f7f8; /* Softer than pure white */
-  --bg-secondary: #ffffff;
+  --bg-main: #f9fafb; /* Lighter, cleaner background */
+  --bg-panel: #ffffff;
+  --bg-interactive: #f3f4f6;
   
   --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
+  --text-secondary: #4b5563;
+  --text-placeholder: #9ca3af;
 
-  --border-primary: #d1d5db;
+  --border-primary: #e5e7eb;
   --border-focus: #4f46e5;
   
   --radius-md: 12px;
@@ -26,167 +28,218 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* -- Main Layout: Centered and simple -- */
+/* -- ============================================= -- */
+/* -- Part 1: Main Layout & Starter Panel -- */
+/* -- ============================================= -- */
+
 .builderPageContainer {
   display: flex;
   justify-content: center;
-  align-items: center; /* Vertically center the panel */
+  align-items: center;
   padding: 24px;
-  min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
-  background-color: var(--bg-primary);
+  min-height: calc(100vh - 120px);
+  background-color: var(--bg-main);
   width: 100%;
   font-family: var(--font-sans);
 }
 
-/* -- Starter Panel: Cleaner and more focused -- */
 .starterPanel {
   width: 100%;
-  max-width: 580px; /* Slightly smaller for a tighter look */
-  background: var(--bg-secondary);
+  max-width: 580px;
+  background: var(--bg-panel);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md); /* More subtle shadow */
+  box-shadow: var(--shadow-md);
   padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 24px; /* Reduced gap */
-  animation: fadeIn 0.6s var(--transition-slow) both;
+  gap: 24px;
+  animation: fadeIn 0.6s var(--transition) both;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* -- Typography -- */
 .starterTitle {
-  font-size: clamp(22px, 5vw, 28px); /* Slightly smaller title */
+  font-size: clamp(24px, 5vw, 30px);
   font-weight: 800;
   color: var(--text-primary);
-  margin: 0;
   text-align: center;
   letter-spacing: -0.02em;
 }
 
 .starterSubtitle {
-  font-size: clamp(15px, 3vw, 16px);
+  font-size: clamp(16px, 3vw, 18px);
   color: var(--text-secondary);
-  margin: -12px 0 8px; /* Reduced margin */
+  margin: -12px 0 8px;
   text-align: center;
   line-height: 1.6;
 }
 
-/* -- Form Elements: Gamified and interactive -- */
 .formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: flex; flex-direction: column; gap: 10px;
 }
 
 .formLabel {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 14px; font-weight: 600; color: var(--text-primary);
 }
 
-.formSelect,
-.formTextarea {
+.formSelect, .formTextarea {
   width: 100%;
   padding: 14px 16px;
   border: 1px solid var(--border-primary);
   border-radius: var(--radius-md);
-  font-size: 16px; /* Prevents zoom on mobile */
+  font-size: 16px;
   font-family: inherit;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-main);
   color: var(--text-primary);
-  transition: all var(--transition-fast);
+  transition: all var(--transition);
 }
-
-.formSelect:hover,
-.formTextarea:hover {
-  border-color: var(--accent-color);
+.formSelect:hover, .formTextarea:hover {
+  border-color: #9ca3af;
 }
-
-.formSelect:focus-within,
-.formTextarea:focus-within,
-.formSelect:focus,
-.formTextarea:focus {
+.formSelect:focus, .formTextarea:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
-  background-color: var(--bg-secondary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background-color: var(--bg-panel);
 }
 
-.formTextarea {
-  resize: vertical;
-  min-height: 90px;
-}
+.formTextarea { resize: vertical; min-height: 100px; }
 
-/* -- Action Buttons: The satisfying click -- */
 .starterActions {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 16px; /* Reduced margin */
-  border-top: 1px solid #e5e7eb;
+  margin-top: 16px;
+  border-top: 1px solid var(--border-primary);
   padding-top: 24px;
 }
 
-.btnPrimary,
-.btnSecondary {
+.btnPrimary, .btnSecondary {
   padding: 14px 28px;
   font-size: 16px;
   font-weight: 700;
   border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition);
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-
 .btnPrimary {
   background: var(--brand-gradient);
   color: white;
+  box-shadow: var(--shadow-sm);
+}
+.btnPrimary:hover {
+  transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
-
-.btnPrimary:hover {
-  background: var(--brand-gradient-hover);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
 .btnPrimary:disabled {
-  background: #a5b4fc; /* Disabled brand color */
+  background: #a5b4fc;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
-
 .btnSecondary {
   background-color: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border-primary);
 }
-
 .btnSecondary:hover {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-interactive);
   color: var(--text-primary);
-  border-color: #9ca3af;
 }
 
 
-/* -- Builder View (After Start) -- */
+/* -- ============================================= -- */
+/* -- Part 2: Builder Scroller & Content Cards      -- */
+/* -- This is the view after clicking 'Start'       -- */
+/* -- ============================================= -- */
+
 .scroller {
   width: 100%;
-  max-width: 800px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between cards */
 }
+
+/* Individual Content Card */
+.contentCard {
+  background: var(--bg-panel);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* Staggered animation for new cards */
+  animation: slideInUp 0.7s var(--transition) both;
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.cardText {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  white-space: pre-wrap; /* Preserves formatting */
+}
+
+/* Actions per card: Like, Dislike, Edit */
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--border-primary);
+  padding-top: 20px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-color: var(--bg-interactive);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.actionButton svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  transition: color var(--transition);
+}
+
+.actionButton:hover {
+  transform: scale(1.1);
+  background-color: #e5e7eb;
+}
+
+/* Specific button styles */
+.likeBtn:hover svg { color: #16a34a; /* Green */ }
+.dislikeBtn:hover svg { color: #dc2626; /* Red */ }
+.editBtn:hover svg { color: #2563eb; /* Blue */ }
+
+
+/* -- ============================================= -- */
+/* -- Part 3: Floating Actions & Modals -- */
+/* -- ============================================= -- */
 
 .floatingActions {
   position: fixed;
@@ -196,114 +249,60 @@
   gap: 16px;
   z-index: 1000;
 }
-
-.floatingActions button { /* Style the buttons inside */
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+.floatingActions button {
+  padding: 16px 24px;
   box-shadow: var(--shadow-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* -- Modal: Polished and smooth -- */
 .modal {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--transition-slow), visibility var(--transition-slow);
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; justify-content: center; align-items: center;
+  padding: 24px; opacity: 0; visibility: hidden;
+  transition: opacity var(--transition), visibility var(--transition);
 }
-
-.modal.isOpen {
-  opacity: 1;
-  visibility: visible;
-}
-
+.modal.isOpen { opacity: 1; visibility: visible; }
 .modalBackdrop {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(17, 24, 39, 0.6); /* Darker, more cinematic backdrop */
+  position: absolute; inset: 0;
+  background-color: rgba(17, 24, 39, 0.6);
   backdrop-filter: blur(4px);
 }
-
 .modalPanel {
-  position: relative;
-  background: var(--bg-secondary);
-  padding: 32px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  max-width: 520px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  position: relative; background: var(--bg-panel);
+  padding: 32px; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); max-width: 520px; width: 100%;
+  display: flex; flex-direction: column; gap: 16px;
   transform: scale(0.95);
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition);
 }
+.modal.isOpen .modalPanel { transform: scale(1); }
+.modalTitle { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+.previewContent { font-size: 16px; line-height: 1.7; color: var(--text-secondary); max-height: 40vh; overflow-y: auto; }
+.modalActions { display: flex; justify-content: flex-end; margin-top: 16px; }
 
-.modal.isOpen .modalPanel {
-  transform: scale(1);
-}
 
-.modalTitle {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  color: var(--text-primary);
-}
+/* -- ============================================= -- */
+/* -- Part 4: Responsive Design -- */
+/* -- ============================================= -- */
 
-.previewContent {
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--text-secondary);
-  max-height: 40vh;
-  overflow-y: auto;
-}
-
-.modalActions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
-}
-
-/* -- Responsive Design -- */
 @media (max-width: 640px) {
   .builderPageContainer {
-    padding: 16px; /* Less padding on mobile */
-    min-height: calc(100vh - 100px);
+    padding: 16px;
+    align-items: flex-start; /* Allow scrolling on small screens */
   }
-
-  .starterPanel {
+  .starterPanel, .contentCard {
     padding: 24px;
-    gap: 20px;
   }
-  
-  .formSelect, .formTextarea {
-    font-size: 16px !important; /* Force font size to prevent zoom */
-  }
-
   .starterActions {
     flex-direction: column-reverse;
   }
-
   .starterActions button {
     width: 100%;
   }
-
-  .floatingActions {
-    right: 16px;
-    bottom: 16px;
+  .formSelect, .formTextarea {
+    font-size: 16px !important; /* Prevents iOS zoom */
   }
-
-  .modalPanel {
-    padding: 24px;
+  .floatingActions {
+    right: 16px; bottom: 16px;
   }
 }
 
