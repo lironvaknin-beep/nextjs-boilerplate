@@ -1,34 +1,44 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { applyLang, LangCode } from '../(utils)/theme';
 
-type LangCode = 'en'|'he'|'ar'|'fr'|'es'|'ru';
-function applyLang(lang: LangCode) {
-  try {
-    document.documentElement.setAttribute('lang', lang);
-    const rtl = (lang === 'he' || lang === 'ar');
-    document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr');
-    localStorage.setItem('wa_lang', lang);
-  } catch (e) {}
-}
-
-const options: { code: LangCode; label: string }[] = [
-  { code: 'en', label: 'EN' }, { code: 'he', label: 'HE' }, { code: 'ar', label: 'AR' },
-  { code: 'fr', label: 'FR' }, { code: 'es', label: 'ES' }, { code: 'ru', label: 'RU' },
+const langOptions: { code: LangCode; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'he', label: 'HE' },
+  { code: 'ar', label: 'AR' },
+  { code: 'fr', label: 'FR' },
+  { code: 'es', label: 'ES' },
+  { code: 'ru', label: 'RU' },
 ];
 
 export default function LanguageSwitcher() {
-  const [lang, setLang] = useState<LangCode>('en');
-  useEffect(() => { setLang((localStorage.getItem('wa_lang') as LangCode) || 'en'); }, []);
+  const [currentLang, setCurrentLang] = useState<LangCode>('en');
+
+  useEffect(() => {
+    const savedLang = (localStorage.getItem('wa_lang') as LangCode) || 'en';
+    setCurrentLang(savedLang);
+  }, []);
+
+  function handleLangChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const newLang = e.target.value as LangCode;
+    setCurrentLang(newLang);
+    applyLang(newLang);
+  }
+
   return (
-    <label style={{display:'inline-flex', alignItems:'center', gap:8}} title="Language" aria-label="Language">
-      <span className="muted" style={{opacity:.8}}>🌐</span>
+    <div className="lang-switcher-wrapper">
+      <span className="lang-switcher-icon" aria-hidden="true">🌐</span>
       <select
-        value={lang}
-        onChange={(e)=>{ const next=e.target.value as LangCode; setLang(next); applyLang(next); }}
-        className="burger" style={{padding:'6px 10px', borderRadius:12}}
+        value={currentLang}
+        onChange={handleLangChange}
+        className="lang-select"
+        aria-label="Select language"
       >
-        {options.map(o => <option key={o.code} value={o.code}>{o.label}</option>)}
+        {langOptions.map(opt => (
+          <option key={opt.code} value={opt.code}>{opt.label}</option>
+        ))}
       </select>
-    </label>
+    </div>
   );
 }
+
