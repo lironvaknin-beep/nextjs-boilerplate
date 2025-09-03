@@ -1,4 +1,4 @@
-// --- Builder Logic v3.1: Final QA & UX Polish ---
+// --- Builder Logic v3.1: True Inline Editing, SVG Icons & Full QA ---
 
 // Wait for the DOM and the React component to be ready
 document.addEventListener('DOMContentLoaded', () => {
