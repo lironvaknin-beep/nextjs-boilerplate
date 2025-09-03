@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function setSelection(slotData, wrap, text) {
         chosen[slotData.key] = text;
         
-        // Mark as selected and prevent further edits unless explicitly re-enabled
         document.querySelectorAll('.slot').forEach(el => el.classList.remove('is-active'));
         wrap.classList.add('is-selected');
         wrap.classList.add('is-active');
@@ -187,14 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const sentenceEl = document.getElementById('previewSentence');
         if (sentenceEl) sentenceEl.textContent = buildSentence();
         const modal = document.getElementById('previewModal');
-        // FIX: Use simple class name, not CSS module object
         if (modal) modal.classList.add('isOpen');
     }
 
     const closePreviewBtn = document.getElementById('closePreview');
     if (closePreviewBtn) closePreviewBtn.onclick = () => {
         const modal = document.getElementById('previewModal');
-        // FIX: Use simple class name, not CSS module object
         if (modal) modal.classList.remove('isOpen');
     };
 
