@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-// --- Helper functions for cookies ---
+// --- Helper function for setting a cookie ---
 function setCookie(name: string, value: string, days: number) {
   let expires = "";
   if (days) {
@@ -39,7 +39,7 @@ export default function Header() {
   const [theme, setTheme] = useState('light');
   const langMenuRef = useRef<HTMLDivElement>(null);
 
-  // Set initial theme and add listener for clicks outside lang menu
+  // Set initial theme on component mount
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTheme(initialTheme);
@@ -60,11 +60,14 @@ export default function Header() {
     setCookie('user-theme', newTheme, 365);
   };
 
+  /**
+   * BUG FIX: Changes the language and reloads the page.
+   * Reloading is the simplest and most robust way to ensure all components
+   * across the app re-render with the correct language strings from their dictionaries.
+   */
   const changeLanguage = (langCode: string) => {
-    document.documentElement.lang = langCode;
     setCookie('user-lang', langCode, 365);
-    setIsLangOpen(false);
-    // The language will be picked up by the hook in the page component
+    window.location.reload(); 
   };
 
   return (
@@ -80,12 +83,12 @@ export default function Header() {
             <GlobeIcon />
           </button>
           {isLangOpen && (
-            <div className="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1">
+            <div className="absolute top-full right-0 mt-2 w-40 bg-[var(--popover)] text-[var(--popover-foreground)] border border-[var(--border)] rounded-lg shadow-lg py-1">
               {LANGUAGES.map(({ code, label }) => (
                 <button
                   key={code}
                   onClick={() => changeLanguage(code)}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="w-full text-left px-4 py-2 text-sm hover:bg-[var(--accent)]"
                 >
                   {label}
                 </button>
@@ -108,19 +111,19 @@ export default function Header() {
       
       {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md sm:hidden p-4">
+        <div className="absolute top-full left-0 w-full bg-[var(--card)] shadow-md sm:hidden p-4 border-b border-[var(--border)]">
             <div className="flex flex-col gap-4">
                  <button onClick={toggleTheme} className="headerBtn justify-start">
                     {theme === 'light' ? <SunIcon /> : <MoonIcon />}
                     <span>Toggle Theme</span>
                 </button>
-                <div className="border-t border-gray-200 dark:border-gray-700"></div>
-                <h3 className="text-sm font-semibold text-gray-500 px-2 pt-2">Language</h3>
+                <div className="border-t border-[var(--border)]"></div>
+                <h3 className="text-sm font-semibold text-[var(--muted-foreground)] px-2 pt-2">Language</h3>
                 {LANGUAGES.map(({ code, label }) => (
                     <button
                     key={code}
                     onClick={() => { changeLanguage(code); setIsMenuOpen(false); }}
-                    className="w-full text-left px-2 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
+                    className="w-full text-left px-2 py-2 text-sm rounded-md hover:bg-[var(--accent)]"
                     >
                     {label}
                     </button>
@@ -131,3 +134,4 @@ export default function Header() {
     </header>
   );
 }
+
