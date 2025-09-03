@@ -59,11 +59,9 @@ export default function Header() {
     setCurrentLang(initialLang);
 
     function handleClickOutside(event: MouseEvent) {
-      // Close lang dropdown if click is outside
       if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
       }
-      // Close mobile menu if click is outside the entire header
       if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
@@ -137,17 +135,15 @@ export default function Header() {
                 </button>
                 <div className="mobileMenuDivider" />
                 <h3 className="mobileMenuHeading">{t.language}</h3>
-                <div className="mobileMenuLangList">
-                    {LANGUAGES.map((lang) => (
-                        <button
-                        key={lang.code}
-                        onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
-                        className="mobileMenuItem"
-                        >
-                        {lang.label}
-                        </button>
-                    ))}
-                </div>
+                {LANGUAGES.map((lang) => (
+                    <button
+                    key={lang.code}
+                    onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
+                    className="mobileMenuItem"
+                    >
+                    {lang.label}
+                    </button>
+                ))}
             </div>
         </div>
       )}
