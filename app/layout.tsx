@@ -1,42 +1,27 @@
-import './globals.css'; // We keep this for Next.js conventions
+import type { Metadata } from 'next';
+import './(ui)/globals.css';
 import Header from './(ui)/Header';
 import AppFooter from './(ui)/AppFooter';
 
-export const metadata = {
-  title: 'Write AI',
-  description: 'The viral, multilingual text platform.',
+export const metadata: Metadata = {
+  title: 'write - AI-Powered Creation',
+  description: 'A smart, guided builder for creating stories, recipes, and more.',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1', // Prevents zoom on mobile
 };
 
-// This script prevents theme flashing on page load
-const themeInitScript = `
-(function() {
-  try {
-    var theme = localStorage.getItem('wa_theme') || 'auto';
-    if (theme === 'auto') {
-      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-    } else {
-      document.documentElement.setAttribute('data-theme', theme);
-    }
-  } catch (e) {}
-})();`;
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" dir="ltr">
-      <head>
-        {/* Direct link to the global styles as a failsafe */}
-        <link rel="stylesheet" href="/globals.css" />
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
+    // Default values; will be updated by client-side hooks
+    <html lang="en" data-theme="light">
       <body>
         <Header />
-        <main className="app-main-content">
-          {children}
-        </main>
+        <main>{children}</main>
         <AppFooter />
       </body>
     </html>
   );
 }
-
