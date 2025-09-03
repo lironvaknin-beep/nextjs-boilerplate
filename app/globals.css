@@ -66,6 +66,7 @@ html[data-theme='dark'] {
 /* -- Base & Reset Styles -- */
 /* -- ============================================= -- */
 * { box-sizing: border-box; padding: 0; margin: 0; }
+a { text-decoration: none; color: inherit; }
 body { font-family: var(--font-sans); color: var(--foreground); background-color: var(--background); transition: background-color var(--transition), color var(--transition); }
 
 /* -- ============================================= -- */
@@ -95,6 +96,7 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   position: relative;
   padding-bottom: 4px;
   color: var(--foreground);
+  text-decoration: none;
 }
 .logo::after {
   content: '';
@@ -112,11 +114,22 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
 .headerBtn svg { width: 20px; height: 20px; }
 
+/* User Dropdown Menu */
+.userDropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; width: 220px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 4px; z-index: 1010; }
+.userDropdownItem { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 8px 12px; font-size: 14px; border-radius: 6px; background: none; border: none; color: inherit; cursor: pointer; }
+.userDropdownItem:hover { background-color: var(--accent); }
+.userDropdownItem svg { color: var(--muted-foreground); }
+.userDropdownDivider { height: 1px; background-color: var(--border); margin: 4px 0; }
+.userDropdownHeading { font-size: 12px; font-weight: 600; color: var(--muted-foreground); padding: 4px 12px; text-transform: uppercase; }
+.langSelector { display: flex; gap: 4px; padding: 4px 8px; }
+.langBtn { flex: 1; padding: 4px; font-size: 12px; border-radius: 4px; background: none; border: 1px solid transparent; color: var(--muted-foreground); cursor: pointer; }
+.langBtn:hover { background-color: var(--accent); }
+.langBtn.active { background-color: var(--accent); border-color: var(--border); color: var(--accent-foreground); }
 
 /* -- ============================================= -- */
 /* -- Search Overlay -- */
 /* -- ============================================= -- */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
 .searchOverlay {
   position: fixed;
   inset: 0;
@@ -127,7 +140,7 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   display: flex;
   justify-content: center;
   padding-top: 15vh;
-  animation: fadeIn 0.3s ease;
+  animation: fadeInOverlay 0.3s ease;
 }
 html[data-theme='dark'] .searchOverlay {
     background-color: hsla(240, 10%, 3.9%, 0.5);
@@ -157,8 +170,6 @@ html[data-theme='dark'] .searchOverlay {
     color: var(--muted-foreground); cursor: pointer;
     padding: 8px;
 }
-html[dir="rtl"] .closeSearchBtn { right: auto; left: 32px; }
-html[dir="rtl"] .searchInput { padding: 16px 24px 16px 56px; }
 
 /* -- ============================================= -- */
 /* -- Premium Footer -- */
@@ -187,5 +198,9 @@ main { padding-top: var(--header-height); padding-bottom: var(--footer-height); 
 select[dir="rtl"] { background-position: left 16px center; padding-left: 48px; padding-right: 16px; }
 html[dir="rtl"] {
   .appHeader { flex-direction: row-reverse; }
+  .userDropdown { right: auto; left: 0; }
+  .userDropdownItem, .userDropdownHeading { text-align: right; flex-direction: row-reverse; }
+  .closeSearchBtn { right: auto; left: 32px; }
+  .searchInput { padding: 16px 24px 16px 56px; }
 }
 
