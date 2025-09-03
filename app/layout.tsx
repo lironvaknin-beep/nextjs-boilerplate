@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css'; // FIX: The import path is now corrected
+import './globals.css'; // Corrected path
 import Header from './(ui)/Header';
 import AppFooter from './(ui)/AppFooter';
 
