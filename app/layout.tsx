@@ -4,7 +4,7 @@ import Header from './(ui)/Header';
 import AppFooter from './(ui)/AppFooter';
 
 export const metadata: Metadata = {
-  title: 'write - AI-Powered Creation',
+  title: 'TextSpot - AI-Powered Creation',
   description: 'A smart, guided builder for creating stories, recipes, and more.',
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', // Prevents zoom on mobile
 };
@@ -26,5 +26,4 @@ export default function RootLayout({
     </html>
   );
 }
-
 
