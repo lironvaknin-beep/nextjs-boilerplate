@@ -6,7 +6,7 @@ import AppFooter from './(ui)/AppFooter';
 export const metadata: Metadata = {
   title: 'write - AI-Powered Creation',
   description: 'A smart, guided builder for creating stories, recipes, and more.',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1', // Prevents zoom on mobile
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', // Prevents zoom on mobile
 };
 
 export default function RootLayout({
@@ -15,7 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // Default values; will be updated by client-side hooks
+    // The client-side hook in Header.tsx will set the correct theme and lang on load.
+    // We provide safe defaults here.
     <html lang="en" data-theme="light">
       <body>
         <Header />
@@ -25,3 +26,4 @@ export default function RootLayout({
     </html>
   );
 }
+
