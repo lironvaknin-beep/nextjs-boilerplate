@@ -1,173 +1,214 @@
-/* Builder Module CSS 
-  This file styles the BuilderPage component using CSS Modules.
-*/
+/* Builder Module CSS - Redesigned for a Premium Experience */
 
-/* -- Variables -- */
+/* -- Design System: Variables -- */
 :root {
-  --primary-color: #007aff;
-  --primary-color-hover: #0056b3;
-  --secondary-color: #6c757d;
-  --secondary-color-hover: #5a6268;
-  --background-color: #f8f9fa;
-  --panel-background: #ffffff;
-  --text-color: #212529;
-  --label-color: #495057;
-  --border-color: #ced4da;
-  --border-radius: 8px;
-  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  
+  /* Palette: Modern, clean, and engaging */
+  --brand-gradient: linear-gradient(45deg, #4f46e5, #7c3aed);
+  --brand-gradient-hover: linear-gradient(45deg, #4338ca, #6d28d9);
+  --accent-color: #c084fc; /* A softer purple for highlights */
+  
+  --bg-primary: #f7f7f8; /* Softer than pure white */
+  --bg-secondary: #ffffff;
+  
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+
+  --border-primary: #d1d5db;
+  --border-focus: #4f46e5;
+  
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* -- Main Container -- */
+/* -- Main Layout -- */
 .builderPageContainer {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px;
+  padding: 5vh 24px; /* Use viewport height for flexible padding */
   min-height: calc(100vh - 80px); /* Adjust based on header height */
-  background-color: var(--background-color);
+  background-color: var(--bg-primary);
   width: 100%;
+  font-family: var(--font-sans);
 }
 
-/* -- Starter Panel -- */
+/* -- Starter Panel: The main attraction -- */
 .starterPanel {
-  max-width: 600px;
   width: 100%;
-  background: var(--panel-background);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: 30px 40px;
+  max-width: 640px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 48px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  animation: fadeIn 0.5s ease-out;
+  gap: 28px;
+  border: 1px solid #e5e7eb;
+  animation: fadeIn 0.6s var(--transition-slow) both;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* -- Typography -- */
 .starterTitle {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-color);
+  font-size: clamp(24px, 5vw, 32px); /* Responsive font size */
+  font-weight: 800;
+  color: var(--text-primary);
   margin: 0;
   text-align: center;
+  letter-spacing: -0.02em;
 }
 
 .starterSubtitle {
-  font-size: 16px;
-  color: var(--secondary-color);
-  margin: -10px 0 10px;
+  font-size: clamp(16px, 3vw, 18px);
+  color: var(--text-secondary);
+  margin: -16px 0 8px;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* -- Form Elements -- */
+/* -- Form Elements: Gamified and interactive -- */
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .formLabel {
   font-size: 14px;
   font-weight: 600;
-  color: var(--label-color);
+  color: var(--text-primary);
 }
 
 .formSelect,
 .formTextarea {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  padding: 14px 16px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
   font-size: 16px;
   font-family: inherit;
-  background-color: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
 }
 
+.formSelect:hover,
+.formTextarea:hover {
+  border-color: var(--accent-color);
+}
+
+.formSelect:focus-within,
+.formTextarea:focus-within,
 .formSelect:focus,
 .formTextarea:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  background-color: var(--bg-secondary);
 }
 
 .formTextarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 90px;
 }
 
-/* -- Action Buttons -- */
+/* -- Action Buttons: The satisfying click -- */
 .starterActions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 15px;
-  border-top: 1px solid #e9ecef;
-  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
 }
 
 .btnPrimary,
 .btnSecondary {
-  padding: 12px 24px;
+  padding: 14px 28px;
   font-size: 16px;
-  font-weight: 600;
-  border-radius: var(--border-radius);
+  font-weight: 700;
+  border-radius: var(--radius-md);
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btnPrimary {
-  background-color: var(--primary-color);
+  background: var(--brand-gradient);
   color: white;
+  box-shadow: var(--shadow-md);
 }
 
 .btnPrimary:hover {
-  background-color: var(--primary-color-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--brand-gradient-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
 }
 
 .btnPrimary:disabled {
-  background-color: #a0c7ff;
+  background: #a5b4fc; /* Disabled brand color */
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
 .btnSecondary {
-  background-color: #e9ecef;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
 }
 
 .btnSecondary:hover {
-  background-color: #dde1e5;
-  border-color: #adb5bd;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #9ca3af;
 }
 
 
-/* -- Builder View (after start) -- */
+/* -- Builder View (After Start) -- */
 .scroller {
-  /* This will be controlled by builder.js */
   width: 100%;
-  max-width: 800px; /* Or whatever the design dictates */
+  max-width: 800px;
 }
 
 .floatingActions {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 24px;
+  right: 24px;
   display: flex;
-  gap: 15px;
+  gap: 16px;
   z-index: 1000;
 }
 
-/* -- Modal -- */
+.floatingActions button { /* Style the buttons inside */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -- Modal: Polished and smooth -- */
 .modal {
   position: fixed;
   inset: 0;
@@ -175,12 +216,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity var(--transition-slow), visibility var(--transition-slow);
 }
 
-/* This is a helper class to be toggled with JS */
 .modal.isOpen {
   opacity: 1;
   visibility: visible;
@@ -189,22 +230,23 @@
 .modalBackdrop {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(17, 24, 39, 0.6); /* Darker, more cinematic backdrop */
+  backdrop-filter: blur(4px);
 }
 
 .modalPanel {
   position: relative;
-  background: white;
-  padding: 30px;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  max-width: 500px;
-  width: calc(100% - 40px);
+  background: var(--bg-secondary);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 520px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
   transform: scale(0.95);
-  transition: transform 0.3s ease-out;
+  transition: transform var(--transition-slow);
 }
 
 .modal.isOpen .modalPanel {
@@ -212,21 +254,48 @@
 }
 
 .modalTitle {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   margin: 0;
+  color: var(--text-primary);
 }
 
 .previewContent {
   font-size: 16px;
-  line-height: 1.6;
-  color: var(--label-color);
-  max-height: 300px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-height: 40vh;
   overflow-y: auto;
 }
 
 .modalActions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 16px;
 }
+
+/* -- Responsive Design -- */
+@media (max-width: 640px) {
+  .starterPanel {
+    padding: 24px;
+    gap: 20px;
+  }
+  
+  .starterActions {
+    flex-direction: column-reverse;
+  }
+
+  .starterActions button {
+    width: 100%;
+  }
+
+  .floatingActions {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .modalPanel {
+    padding: 24px;
+  }
+}
+
