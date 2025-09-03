@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 // --- Helper function for setting a cookie ---
 function setCookie(name: string, value: string, days: number) {
@@ -20,23 +19,45 @@ function setCookie(name: string, value: string, days: number) {
 const LANGUAGES = [
   { code: 'en', label: 'English', dir: 'ltr' },
   { code: 'he', label: 'עברית', dir: 'rtl' },
+  { code: 'ar', label: 'العربية', dir: 'rtl' },
   { code: 'es', label: 'Español', dir: 'ltr' },
   { code: 'fr', label: 'Français', dir: 'ltr' },
   { code: 'de', label: 'Deutsch', dir: 'ltr' },
+  { code: 'it', label: 'Italiano', dir: 'ltr' },
   { code: 'pt', label: 'Português', dir: 'ltr' },
+  { code: 'ru', label: 'Русский', dir: 'ltr' },
+  { code: 'pl', label: 'Polski', dir: 'ltr' },
+  { code: 'tr', label: 'Türkçe', dir: 'ltr' },
+  { code: 'nl', label: 'Nederlands', dir: 'ltr' },
+  { code: 'sv', label: 'Svenska', dir: 'ltr' },
   { code: 'zh', label: '中文', dir: 'ltr' },
+  { code: 'ja', label: '日本語', dir: 'ltr' },
+  { code: 'ko', label: '한국어', dir: 'ltr' },
   { code: 'hi', label: 'हिन्दी', dir: 'ltr' },
+  { code: 'id', label: 'Bahasa Indonesia', dir: 'ltr' },
+  { code: 'vi', label: 'Tiếng Việt', dir: 'ltr' },
 ];
 
 const HEADER_DICT = {
     en: { appearance: 'Appearance', language: 'Language', settings: 'Settings', light: 'Light', dark: 'Dark' },
     he: { appearance: 'מראה', language: 'שפה', settings: 'הגדרות', light: 'בהיר', dark: 'כהה' },
+    ar: { appearance: 'المظهر', language: 'اللغة', settings: 'الإعدادات', light: 'فاتح', dark: 'داكن' },
     es: { appearance: 'Apariencia', language: 'Idioma', settings: 'Ajustes', light: 'Claro', dark: 'Oscuro' },
     fr: { appearance: 'Apparence', language: 'Langue', settings: 'Paramètres', light: 'Clair', dark: 'Sombre' },
     de: { appearance: 'Erscheinungsbild', language: 'Sprache', settings: 'Einstellungen', light: 'Hell', dark: 'Dunkel' },
+    it: { appearance: 'Aspetto', language: 'Lingua', settings: 'Impostazioni', light: 'Chiaro', dark: 'Scuro' },
     pt: { appearance: 'Aparência', language: 'Idioma', settings: 'Configurações', light: 'Claro', dark: 'Escuro' },
+    ru: { appearance: 'Внешний вид', language: 'Язык', settings: 'Настройки', light: 'Светлая', dark: 'Тёмная' },
+    pl: { appearance: 'Wygląd', language: 'Język', settings: 'Ustawienia', light: 'Jasny', dark: 'Ciemny' },
+    tr: { appearance: 'Görünüm', language: 'Dil', settings: 'Ayarlar', light: 'Açık', dark: 'Koyu' },
+    nl: { appearance: 'Uiterlijk', language: 'Taal', settings: 'Instellingen', light: 'Licht', dark: 'Donker' },
+    sv: { appearance: 'Utseende', language: 'Språk', settings: 'Inställningar', light: 'Ljus', dark: 'Mörk' },
     zh: { appearance: '外观', language: '语言', settings: '设置', light: '浅色', dark: '深色' },
+    ja: { appearance: '外観', language: '言語', settings: '設定', light: 'ライト', dark: 'ダーク' },
+    ko: { appearance: '테마', language: '언어', settings: '설정', light: '라이트', dark: '다크' },
     hi: { appearance: 'दिखावट', language: 'भाषा', settings: 'सेटिंग्स', light: 'लाइट', dark: 'डार्क' },
+    id: { appearance: 'Tampilan', language: 'Bahasa', settings: 'Pengaturan', light: 'Terang', dark: 'Gelap' },
+    vi: { appearance: 'Giao diện', language: 'Ngôn ngữ', settings: 'Cài đặt', light: 'Sáng', dark: 'Tối' },
 }
 
 type LangCode = keyof typeof HEADER_DICT;
