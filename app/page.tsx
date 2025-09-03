@@ -21,7 +21,22 @@ const HOME_DICT = {
     en: { title: "What's new on TextSpot?", all: "All" },
     he: { title: "מה חדש ב-TextSpot?", all: "הכל" },
     ar: { title: "ما الجديد في TextSpot؟", all: "الكل" },
-    // Other languages can be added here
+    es: { title: "¿Qué hay de nuevo en TextSpot?", all: "Todos" },
+    fr: { title: "Quoi de neuf sur TextSpot ?", all: "Tout" },
+    de: { title: "Was gibt's Neues auf TextSpot?", all: "Alle" },
+    it: { title: "Cosa c'è di nuovo su TextSpot?", all: "Tutti" },
+    pt: { title: "O que há de novo no TextSpot?", all: "Todos" },
+    ru: { title: "Что нового в TextSpot?", all: "Все" },
+    pl: { title: "Co nowego w TextSpot?", all: "Wszystko" },
+    tr: { title: "TextSpot'ta yenilikler neler?", all: "Tümü" },
+    nl: { title: "Wat is er nieuw op TextSpot?", all: "Alles" },
+    sv: { title: "Vad är nytt på TextSpot?", all: "Alla" },
+    zh: { title: "TextSpot 有什么新内容？", all: "全部" },
+    ja: { title: "TextSpotの新着情報", all: "すべて" },
+    ko: { title: "TextSpot의 새로운 소식", all: "전체" },
+    hi: { title: "TextSpot पर नया क्या है?", all: "सभी" },
+    id: { title: "Apa yang baru di TextSpot?", all: "Semua" },
+    vi: { title: "Có gì mới trên TextSpot?", all: "Tất cả" },
 };
 
 type LangCode = keyof typeof HOME_DICT;
@@ -35,7 +50,6 @@ const sampleData = [
     { id: 6, title: "A Journey Through Ancient Rome", snippet: "Exploring the history that shaped our world.", category: "History", designVariant: 'gradient-burst', },
 ];
 
-// Dynamically get all unique categories from the data
 const allCategories = ['All', ...Array.from(new Set(sampleData.map(item => item.category)))];
 
 
