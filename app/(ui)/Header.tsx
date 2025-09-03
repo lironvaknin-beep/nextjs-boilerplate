@@ -39,12 +39,6 @@ const HEADER_DICT = {
     hi: { appearance: 'दिखावट', language: 'भाषा', settings: 'सेटिंग्स', light: 'लाइट', dark: 'डार्क' },
 }
 
-// Based on UX research, desktop navigation is focused and minimal.
-const DESKTOP_NAV_LINKS = [
-    { href: '/explore', label: 'Explore' },
-    { href: '/pricing', label: 'Pricing' },
-];
-
 type LangCode = keyof typeof HEADER_DICT;
 
 // --- SVG Icons ---
@@ -58,7 +52,6 @@ export default function Header() {
   const [theme, setTheme] = useState('light');
   const [currentLang, setCurrentLang] = useState<LangCode>('en');
   const menuRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -92,17 +85,8 @@ export default function Header() {
 
   return (
     <header className="appHeader">
-      <div className="flex items-center gap-8">
         <Link href="/" className="logo">TextSpot</Link>
-        {/* Desktop Navigation */}
-        <nav className="desktopNav hidden sm:flex">
-            {DESKTOP_NAV_LINKS.map(({ href, label }) => {
-                const isActive = pathname.startsWith(href);
-                return ( <Link key={href} href={href} className={`desktopNavLink ${isActive ? 'active' : ''}`}>{label}</Link> )
-            })}
-        </nav>
-      </div>
-
+      
       {/* User Menu & Actions */}
       <div className="headerActions">
         <div className="relative" ref={menuRef}>
