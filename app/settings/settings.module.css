@@ -1,0 +1,145 @@
+/* -- Settings Page Styles -- */
+
+.settingsPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.title {
+  font-size: clamp(28px, 5vw, 36px);
+  font-weight: 800;
+  color: var(--foreground);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settingsCard {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+/* -- Profile Form Styles -- */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-family: inherit;
+  background-color: var(--muted);
+  color: var(--foreground);
+  transition: all var(--transition);
+}
+.formInput:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* -- Theme & Language Selectors -- */
+.themeSelector {
+  display: inline-flex;
+  padding: 4px;
+  background-color: var(--muted);
+  border-radius: var(--radius);
+}
+
+.themeBtn {
+  padding: 8px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  background-color: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.themeBtn.active {
+  background-color: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.langGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.langBtn {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  background-color: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.langBtn:hover {
+  background-color: var(--accent);
+}
+.langBtn.active {
+  background-color: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary);
+}
+
+/* -- Actions -- */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.saveBtn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  background: var(--brand-gradient);
+  color: white;
+  transition: all var(--transition);
+}
+.saveBtn:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 14px 0 rgb(79 70 229 / 20%);
+}
+
+/* -- RTL Support -- */
+html[dir="rtl"] .title,
+html[dir="rtl"] .cardTitle {
+  text-align: right;
+}
