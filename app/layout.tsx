@@ -2,9 +2,12 @@ import './globals.css';
 import Header from './(ui)/Header';
 import AppFooter from './(ui)/AppFooter';
 
-export const metadata = { title: 'Write AI', description: 'Text-first creative platform' };
+export const metadata = {
+  title: 'Write AI',
+  description: 'Text-first creative platform',
+};
 
-// סקריפט אתחול כדי למנוע הבהוב ולהגדיר theme/language על <html> לפני הרינדור
+// This script runs before React hydration to prevent theme/language flickering.
 const initScript = `
 (function(){
   try {
@@ -17,19 +20,25 @@ const initScript = `
     document.documentElement.setAttribute('lang', lang);
     document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr');
   } catch(e) {}
-})();`;
+})();
+`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr">
       <head>
+        {/* The init script must be in the head to run before the body renders */}
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
+        
+        {/* This is the most stable way to load the builder's specific CSS */}
+        <link rel="stylesheet" href="/builder/style.css?v=1" />
       </head>
       <body>
         <Header />
-        <div style={{minHeight:'calc(100vh - 120px)'}}>{children}</div>
+        <main style={{ minHeight: 'calc(100vh - 120px)' }}>{children}</main>
         <AppFooter />
       </body>
     </html>
   );
 }
+
