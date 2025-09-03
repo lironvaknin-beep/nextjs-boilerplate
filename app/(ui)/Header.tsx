@@ -17,13 +17,24 @@ function setCookie(name: string, value: string, days: number) {
 }
 
 const LANGUAGES = [
-  { code: 'en', label: 'English' },
-  { code: 'he', label: 'עברית' },
-  { code: 'es', label: 'Español' },
-  { code: 'fr', label: 'Français' },
-  { code: 'zh', label: '中文' },
-  { code: 'hi', label: 'हिन्दी' },
+  { code: 'en', label: 'English', dir: 'ltr' },
+  { code: 'he', label: 'עברית', dir: 'rtl' },
+  { code: 'es', label: 'Español', dir: 'ltr' },
+  { code: 'fr', label: 'Français', dir: 'ltr' },
+  { code: 'zh', label: '中文', dir: 'ltr' },
+  { code: 'hi', label: 'हिन्दी', dir: 'ltr' },
 ];
+
+const HEADER_DICT = {
+    en: { toggleTheme: 'Toggle Theme', language: 'Language' },
+    he: { toggleTheme: 'שנה עיצוב', language: 'שפה' },
+    es: { toggleTheme: 'Cambiar tema', language: 'Idioma' },
+    fr: { toggleTheme: 'Changer de thème', language: 'Langue' },
+    zh: { toggleTheme: '切换主题', language: '语言' },
+    hi: { toggleTheme: 'थीम टॉगल करें', language: 'भाषा' },
+}
+
+type LangCode = keyof typeof HEADER_DICT;
 
 // --- SVG Icons ---
 const GlobeIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>;
@@ -37,12 +48,15 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [currentLang, setCurrentLang] = useState<LangCode>('en');
   const langMenuRef = useRef<HTMLDivElement>(null);
 
-  // Set initial theme on component mount
+  // Set initial theme and language on component mount
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTheme(initialTheme);
+    const initialLang = (document.documentElement.lang || 'en') as LangCode;
+    setCurrentLang(initialLang);
 
     function handleClickOutside(event: MouseEvent) {
       if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
@@ -60,15 +74,15 @@ export default function Header() {
     setCookie('user-theme', newTheme, 365);
   };
 
-  /**
-   * BUG FIX: Changes the language and reloads the page.
-   * Reloading is the simplest and most robust way to ensure all components
-   * across the app re-render with the correct language strings from their dictionaries.
-   */
-  const changeLanguage = (langCode: string) => {
-    setCookie('user-lang', langCode, 365);
+  const changeLanguage = (lang: { code: string, dir: string }) => {
+    setCookie('user-lang', lang.code, 365);
+    // Set attributes on the root element for immediate effect before reload
+    document.documentElement.lang = lang.code;
+    document.documentElement.dir = lang.dir;
     window.location.reload(); 
   };
+  
+  const t = HEADER_DICT[currentLang] || HEADER_DICT.en;
 
   return (
     <header className="appHeader">
@@ -84,13 +98,13 @@ export default function Header() {
           </button>
           {isLangOpen && (
             <div className="absolute top-full right-0 mt-2 w-40 bg-[var(--popover)] text-[var(--popover-foreground)] border border-[var(--border)] rounded-lg shadow-lg py-1">
-              {LANGUAGES.map(({ code, label }) => (
+              {LANGUAGES.map((lang) => (
                 <button
-                  key={code}
-                  onClick={() => changeLanguage(code)}
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang)}
                   className="w-full text-left px-4 py-2 text-sm hover:bg-[var(--accent)]"
                 >
-                  {label}
+                  {lang.label}
                 </button>
               ))}
             </div>
@@ -115,17 +129,17 @@ export default function Header() {
             <div className="flex flex-col gap-4">
                  <button onClick={toggleTheme} className="headerBtn justify-start">
                     {theme === 'light' ? <SunIcon /> : <MoonIcon />}
-                    <span>Toggle Theme</span>
+                    <span>{t.toggleTheme}</span>
                 </button>
                 <div className="border-t border-[var(--border)]"></div>
-                <h3 className="text-sm font-semibold text-[var(--muted-foreground)] px-2 pt-2">Language</h3>
-                {LANGUAGES.map(({ code, label }) => (
+                <h3 className="text-sm font-semibold text-[var(--muted-foreground)] px-2 pt-2">{t.language}</h3>
+                {LANGUAGES.map((lang) => (
                     <button
-                    key={code}
-                    onClick={() => { changeLanguage(code); setIsMenuOpen(false); }}
+                    key={lang.code}
+                    onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
                     className="w-full text-left px-2 py-2 text-sm rounded-md hover:bg-[var(--accent)]"
                     >
-                    {label}
+                    {lang.label}
                     </button>
                 ))}
             </div>
