@@ -27,19 +27,18 @@ const LANGUAGES = [
 ];
 
 const HEADER_DICT = {
-    en: { toggleTheme: 'Toggle Theme', language: 'Language' },
-    he: { toggleTheme: 'שנה עיצוב', language: 'שפה' },
-    es: { toggleTheme: 'Cambiar tema', language: 'Idioma' },
-    fr: { toggleTheme: 'Changer de thème', language: 'Langue' },
-    zh: { toggleTheme: '切换主题', language: '语言' },
-    hi: { toggleTheme: 'थीम टॉगल करें', language: 'भाषा' },
+    en: { toggleTheme: 'Toggle Theme', language: 'Language', settings: 'Settings', create: 'Create' },
+    he: { toggleTheme: 'שנה עיצוב', language: 'שפה', settings: 'הגדרות', create: 'יצירה' },
+    es: { toggleTheme: 'Cambiar tema', language: 'Idioma', settings: 'Ajustes', create: 'Crear' },
+    fr: { toggleTheme: 'Changer de thème', language: 'Langue', settings: 'Paramètres', create: 'Créer' },
+    zh: { toggleTheme: '切换主题', language: '语言', settings: '设置', create: '创建' },
+    hi: { toggleTheme: 'थीम टॉगल करें', language: 'भाषा', settings: 'सेटिंग्स', create: 'बनाएं' },
 }
 
-// Desktop navigation - focused on discovery and management.
-const NAV_LINKS = [
-    { href: '/', label: 'Home' },
+// Based on UX research, desktop navigation is focused and minimal.
+const DESKTOP_NAV_LINKS = [
     { href: '/explore', label: 'Explore' },
-    { href: '/me/library', label: 'Library' },
+    { href: '/pricing', label: 'Pricing' },
 ];
 
 type LangCode = keyof typeof HEADER_DICT;
@@ -50,7 +49,7 @@ const SunIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height=
 const MoonIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>;
 const MenuIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
 const XIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
-
+const SettingsIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>;
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,12 +67,8 @@ export default function Header() {
     setCurrentLang(initialLang);
 
     function handleClickOutside(event: MouseEvent) {
-      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
-        setIsLangOpen(false);
-      }
-      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) setIsLangOpen(false);
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) setIsMenuOpen(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -97,58 +92,44 @@ export default function Header() {
 
   return (
     <header className="appHeader" ref={headerRef}>
-      <Link href="/" className="logo">
-        write
-      </Link>
-
-      {/* Desktop Navigation & Actions */}
-      <div className="hidden sm:flex items-center gap-8">
-        <nav className="flex items-center gap-6 text-sm font-medium text-[var(--muted-foreground)]">
-            {NAV_LINKS.map(({ href, label }) => {
-                const isActive = (href === '/' && pathname === '/') || (href !== '/' && pathname.startsWith(href));
-                return (
-                <Link key={href} href={href} className={`hover:text-[var(--foreground)] transition-colors ${isActive ? 'text-[var(--foreground)]' : ''}`}>
-                    {label}
-                </Link>
-                )
+      <div className="flex items-center gap-8">
+        <Link href="/" className="logo">write</Link>
+        {/* Desktop Navigation */}
+        <nav className="desktopNav hidden sm:flex">
+            {DESKTOP_NAV_LINKS.map(({ href, label }) => {
+                const isActive = pathname.startsWith(href);
+                return ( <Link key={href} href={href} className={`desktopNavLink ${isActive ? 'active' : ''}`}>{label}</Link> )
             })}
         </nav>
-        <div className="headerActions">
-            <div className="relative" ref={langMenuRef}>
-            <button onClick={() => setIsLangOpen(!isLangOpen)} className="headerBtn">
-                <GlobeIcon />
-            </button>
-            {isLangOpen && (
-                <div className="langDropdown">
-                {LANGUAGES.map((lang) => (
-                    <button
-                    key={lang.code}
-                    onClick={() => changeLanguage(lang)}
-                    className="langDropdownItem"
-                    >
-                    {lang.label}
-                    </button>
-                ))}
-                </div>
-            )}
+      </div>
+
+      {/* Desktop Actions */}
+      <div className="hidden sm:flex headerActions">
+        <Link href="/builder" className="headerBtn primary">{t.create}</Link>
+        <div className="relative" ref={langMenuRef}>
+          <button onClick={() => setIsLangOpen(!isLangOpen)} className="headerBtn"><GlobeIcon /></button>
+          {isLangOpen && (
+            <div className="langDropdown">
+              {LANGUAGES.map((lang) => (<button key={lang.code} onClick={() => changeLanguage(lang)} className="langDropdownItem">{lang.label}</button>))}
             </div>
-            <button onClick={toggleTheme} className="headerBtn">
-            {theme === 'light' ? <SunIcon /> : <MoonIcon />}
-            </button>
+          )}
         </div>
+        <button onClick={toggleTheme} className="headerBtn">{theme === 'light' ? <SunIcon /> : <MoonIcon />}</button>
       </div>
 
       {/* Mobile Menu Button (Burger) */}
       <div className="sm:hidden">
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="headerBtn">
-          {isMenuOpen ? <XIcon /> : <MenuIcon />}
-        </button>
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="headerBtn">{isMenuOpen ? <XIcon /> : <MenuIcon />}</button>
       </div>
       
-      {/* Mobile Menu Panel - Now for secondary actions only */}
+      {/* Mobile Menu Panel */}
       {isMenuOpen && (
         <div className="mobileMenu">
             <div className="mobileMenuContent">
+                 <Link href="/settings" className="mobileMenuItem" onClick={() => setIsMenuOpen(false)}>
+                    <SettingsIcon />
+                    <span>{t.settings}</span>
+                 </Link>
                  <button onClick={toggleTheme} className="mobileMenuItem">
                     {theme === 'light' ? <SunIcon /> : <MoonIcon />}
                     <span>{t.toggleTheme}</span>
@@ -156,13 +137,7 @@ export default function Header() {
                 <div className="mobileMenuDivider" />
                 <h3 className="mobileMenuHeading">{t.language}</h3>
                 {LANGUAGES.map((lang) => (
-                    <button
-                    key={lang.code}
-                    onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
-                    className="mobileMenuItem"
-                    >
-                    {lang.label}
-                    </button>
+                    <button key={lang.code} onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }} className="mobileMenuItem">{lang.label}</button>
                 ))}
             </div>
         </div>
