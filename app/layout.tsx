@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // The client-side hook in Header.tsx will set the correct theme and lang on load.
+    // The client-side hook in the settings page will set the correct theme and lang on load.
     // We provide safe defaults here.
     <html lang="en" data-theme="light">
       <body>
