@@ -93,7 +93,7 @@ export default function Header() {
   return (
     <header className="appHeader">
       <div className="flex items-center gap-8">
-        <Link href="/" className="logo">write</Link>
+        <Link href="/" className="logo">TextSpot</Link>
         {/* Desktop Navigation */}
         <nav className="desktopNav hidden sm:flex">
             {DESKTOP_NAV_LINKS.map(({ href, label }) => {
