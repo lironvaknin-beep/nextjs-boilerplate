@@ -1,190 +1,287 @@
+/*
+  Write AI - Global Design System
+  File: app/globals.css
+  ---
+  This file defines the core visual identity of the application, including
+  color palettes for light/dark modes, typography, and base styles for
+  global components like headers, footers, and buttons.
+*/
+
 /* ------------------------------ */
-/* Design System & Global Tokens  */
+/* 1. Design Tokens (Variables)   */
 /* ------------------------------ */
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --radius: 1.25rem; /* 20px */
-  --shadow-lg: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius-sm: 0.5rem;   /* 8px */
+  --radius-md: 0.75rem;  /* 12px */
+  --radius-lg: 1rem;     /* 16px */
+  --radius-xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
 }
 
-/* ------------------------------ */
-/* Dark & Light Theme Variables   */
-/* ------------------------------ */
 /* Dark Theme (Default) */
-:root, :root[data-theme="dark"] {
-  --bg: #121212;            /* Almost black, common in media apps */
-  --panel: #181818;          /* Slightly lighter panels */
-  --surface: #282828;        /* Hover, interactive surfaces */
-  --ink: #ffffff;           /* Primary text */
-  --muted: #b3b3b3;         /* Secondary text */
-  --border: #282828;         /* Subtle borders */
-  
-  --brand-text: #1ed760;     /* Spotify Green for highlights */
-  --brand-bg: #1ed760;
-  --brand-bg-text: #000000;
+:root,
+:root[data-theme="dark"] {
+  --bg: #0A0A0A;          /* Near black */
+  --surface: #1A1A1A;     /* Slightly lighter for panels */
+  --panel: #1F1F1F;
+  --border: #333333;      /* Subtle borders */
+  --ring: #0070F3;        /* Focus ring (Vercel blue) */
 
-  --accent-text: #509bf5;    /* A calm blue for accents */
-  --accent-bg: #509bf5;
-  --accent-bg-text: #ffffff;
+  --ink: #FFFFFF;         /* Primary text */
+  --muted: #A3A3A3;      /* Secondary text */
+  --subtle: #525252;     /* Tertiary text / icons */
 
-  --ring: #509bf5;          /* Focus ring color */
+  --brand: #4ADE80;        /* Bright green */
+  --brand-text: #BEF264;
+  --accent: #60A5FA;       /* Bright blue */
+  --accent-text: #93C5FD;
+  --danger: #F87171;       /* Bright red */
+
+  --card-bg: #FFFFFF;
+  --card-ink: #111827;
 }
 
 /* Light Theme */
 :root[data-theme="light"] {
-  --bg: #f5f5f5;
-  --panel: #ffffff;
-  --surface: #e5e5e5;
-  --ink: #121212;
-  --muted: #5a5a5a;
-  --border: #e0e0e0;
-  
-  --brand-text: #1db954;
-  --brand-bg: #1db954;
-  --brand-bg-text: #ffffff;
+  --bg: #F5F5F5;          /* Off-white */
+  --surface: #FFFFFF;
+  --panel: #FFFFFF;
+  --border: #E5E5E5;
+  --ring: #0070F3;
 
-  --accent-text: #2979ff;
-  --accent-bg: #2979ff;
-  --accent-bg-text: #ffffff;
-  
-  --ring: #2979ff;
+  --ink: #171717;
+  --muted: #525252;
+  --subtle: #A3A3A3;
+
+  --brand: #16A34A;        /* Darker green */
+  --brand-text: #16A34A;
+  --accent: #2563EB;       /* Darker blue */
+  --accent-text: #2563EB;
+  --danger: #DC2626;       /* Darker red */
+
+  --card-bg: #FFFFFF;
+  --card-ink: #111827;
 }
 
 
 /* ------------------------------ */
-/* Global Resets & Body Styles    */
+/* 2. Base & Reset Styles         */
 /* ------------------------------ */
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape mode */
+}
 
 body {
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Accessibility Focus Ring */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Focus styles for accessibility */
 *:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 
 /* ------------------------------ */
-/* Header & Footer Styling        */
+/* 3. Global Components           */
 /* ------------------------------ */
-.app-header, .app-footer {
-  background: rgba(18, 18, 18, 0.7); /* Translucent background */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-color: var(--border);
-}
-:root[data-theme="light"] .app-header, :root[data-theme="light"] .app-footer {
-   background: rgba(255, 255, 255, 0.7);
+
+/* Main App Layout */
+.app-main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
 }
 
-
+/* Header */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 50;
+  width: 100%;
+  background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
 
-.header-inner, .footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.75rem 1rem; /* 12px 16px */
+.header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 .logo {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--ink);
+  letter-spacing: -0.02em;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* 8px */
+  gap: 0.75rem;
 }
 
 .control-btn, .lang-select {
-  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 0.75rem;
+  background-color: transparent;
   color: var(--muted);
-  border: 1px solid transparent;
-  padding: 0.5rem 0.75rem; /* 8px 12px */
-  border-radius: 9999px; /* Pill shape */
-  font-size: 0.875rem; /* 14px */
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   font-weight: 500;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition: color 150ms ease, background-color 150ms ease;
 }
 .control-btn:hover, .lang-select:hover {
-  background: var(--surface);
   color: var(--ink);
+  background-color: var(--surface);
 }
 .lang-select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding-right: 2rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
+  background-image: none;
+  padding-right: 2rem; /* space for icon */
+}
+.lang-switcher-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.lang-switcher-icon {
+  position: absolute;
+  left: 0.75rem;
+  pointer-events: none;
+  color: var(--subtle);
 }
 
+/* Drawer Menu */
+.drawer { display: none; }
+.drawer.open {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+.drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0; /* Assumes LTR default, adjusts for RTL */
+  [dir="rtl"] & {
+      right: auto;
+      left: 0;
+  }
+  width: min(85vw, 320px);
+  background-color: var(--surface);
+  padding: 1rem;
+  box-shadow: var(--shadow-xl);
+  border-left: 1px solid var(--border);
+  [dir="rtl"] & {
+    border-left: none;
+    border-right: 1px solid var(--border);
+  }
+}
 
+/* Footer */
 .app-footer {
   position: sticky;
   bottom: 0;
   z-index: 50;
+  background-color: color-mix(in srgb, var(--surface) 80%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-top: 1px solid var(--border);
 }
 
+.footer-inner {
+  display: flex;
+  justify-content: space-around;
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .footer-nav-btn {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 0.5rem;
-  border-radius: 0.75rem; /* 12px */
-  background: transparent;
-  border: none;
+  flex: 1;
   color: var(--muted);
-  font-size: 0.75rem; /* 12px */
-  transition: background-color 150ms ease, color 150ms ease;
-}
-.footer-nav-btn.active {
-  color: var(--brand-text);
+  font-size: 0.75rem;
+  transition: color 150ms ease;
 }
 .footer-nav-btn:hover {
-  background-color: var(--surface);
+  color: var(--ink);
+}
+.footer-nav-btn.active {
+  color: var(--accent-text);
+  font-weight: 600;
 }
 
-/* General Purpose Buttons */
+
+/* ------------------------------ */
+/* 4. Common UI Elements          */
+/* ------------------------------ */
 .btn-primary {
-  background: var(--brand-bg);
-  color: var(--brand-bg-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--brand);
+  color: var(--bg);
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
-  padding: 0.75rem 1.5rem; /* 12px 24px */
-  border-radius: 9999px;
-  font-weight: 700;
   transition: transform 150ms ease;
 }
 .btn-primary:hover {
@@ -197,19 +294,31 @@ button {
 }
 
 .btn-secondary {
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  font-weight: 700;
+  border-radius: var(--radius-full);
+  background-color: var(--surface);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
   transition: background-color 150ms ease;
 }
 .btn-secondary:hover {
-  background-color: var(--border);
+  background-color: color-mix(in srgb, var(--ink) 5%, var(--surface));
 }
 
-/* Drawer styles - assuming drawer exists */
-.drawer-panel { background: var(--panel); }
-.drawer-backdrop { background: rgba(0,0,0,0.5); }
+.nav-btn {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: background-color 150ms ease;
+}
+.nav-btn:hover, .nav-btn.active {
+  background-color: var(--surface);
+  color: var(--ink);
+}
 
