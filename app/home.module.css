@@ -1,5 +1,5 @@
-/* -- Home Page Styles - "Evolve" V1.1 -- */
-/* -- Inspired by high-contrast, typography-driven thumbnails -- */
+/* -- Home Page Styles - "Evolve" V1.2 -- */
+/* -- Added filter bar styles inspired by YouTube -- */
 
 .homePage {
   max-width: 1200px;
@@ -17,6 +17,55 @@
   color: var(--foreground);
   text-align: center;
 }
+
+/* -- Filter Bar -- */
+.filterBar {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 0 24px;
+    margin-bottom: 32px;
+    /* For snapping scroll on mobile */
+    scroll-snap-type: x mandatory; 
+    /* Hide scrollbar for a cleaner look */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.filterBar::-webkit-scrollbar {
+    display: none;
+}
+
+.filterBtn {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.filterBtn:hover {
+    background-color: var(--accent);
+    color: var(--foreground);
+    border-color: var(--ring);
+}
+
+.filterBtn.active {
+    background-color: var(--foreground);
+    color: var(--background);
+    border-color: var(--foreground);
+}
+
+html[data-theme='dark'] .filterBtn.active {
+    background-color: var(--foreground);
+    color: var(--background);
+}
+
 
 .feedGrid {
   display: grid;
