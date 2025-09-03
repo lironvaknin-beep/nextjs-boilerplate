@@ -1,5 +1,5 @@
-/* -- Home Page Styles - "Evolve" V1.0 -- */
-/* -- Based on A/B testing and case studies for high-engagement feeds -- */
+/* -- Home Page Styles - "Evolve" V1.1 -- */
+/* -- Inspired by high-contrast, typography-driven thumbnails -- */
 
 .homePage {
   max-width: 1200px;
@@ -18,8 +18,6 @@
   text-align: center;
 }
 
-/* -- The Feed Grid -- */
-/* A masonry-like grid that's responsive and dynamic */
 .feedGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -27,17 +25,16 @@
 }
 
 /* -- Base Card Styles -- */
-/* The foundation for all design variants */
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Aligns content to the bottom */
   height: 350px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--border);
+  color: #FFFFFF; /* Default text color for most variants */
 }
 .card:hover {
   transform: translateY(-5px);
@@ -53,6 +50,9 @@ html[data-theme='dark'] .card:hover {
   position: relative;
   z-index: 2;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .category {
@@ -61,59 +61,56 @@ html[data-theme='dark'] .card:hover {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: inline-block;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 99px;
   margin-bottom: 12px;
+  align-self: flex-start; /* Aligns to the start of the flex direction */
 }
 
 .cardTitle {
-  font-family: var(--font-serif-display);
-  font-size: 28px;
-  line-height: 1.2;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.1;
   margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .snippet {
   font-size: 15px;
   line-height: 1.6;
-  opacity: 0.8;
+  opacity: 0.9;
+  margin-top: auto; /* Pushes snippet to the bottom */
 }
 
 /* -- ============================================= -- */
-/* -- Design Variant 1: Gradient Burst -- */
-/* -- For dynamic, eye-catching content like stories and history. -- */
+/* -- Design Variant 1: Gradient Burst (Updated) -- */
 /* -- ============================================= -- */
 .gradientBurst {
-  color: white;
-  background: linear-gradient(45deg, #6D28D9, #4F46E5, #D946EF);
+  background: linear-gradient(135deg, #6D28D9, #4F46E5);
   border: none;
 }
 .gradientBurst .category {
   background-color: rgba(255, 255, 255, 0.15);
-  color: white;
 }
-.gradientBurst .snippet {
-  opacity: 0.9;
+.gradientBurst .cardTitle {
+    font-size: 36px;
 }
 
 /* -- ============================================= -- */
-/* -- Design Variant 2: Solid Bold -- */
-/* -- For authoritative content like tech and business. -- */
+/* -- Design Variant 2: Solid Bold (Updated) -- */
 /* -- ============================================= -- */
 .solidBold {
   background-color: #111827;
-  color: white;
-  justify-content: center; /* Center content vertically */
+  justify-content: center;
   text-align: center;
   border: none;
 }
 html[data-theme='dark'] .solidBold {
-    background-color: #E4E4E7;
-    color: #111827;
+    background-color: var(--muted);
+    color: var(--foreground);
 }
 .solidBold .cardContent {
-    display: flex;
-    flex-direction: column;
     align-items: center;
 }
 .solidBold .category {
@@ -123,48 +120,60 @@ html[data-theme='dark'] .solidBold .category {
     background-color: rgba(0,0,0,0.1);
 }
 .solidBold .cardTitle {
-  font-size: 32px;
+  font-size: 40px;
+  max-width: 90%;
+}
+.solidBold .snippet {
+    display: none; /* Hide snippet for more impact */
 }
 
 /* -- ============================================= -- */
-/* -- Design Variant 3: Minimalist Light -- */
-/* -- For clean, elegant content like recipes. -- */
+/* -- Design Variant 3: Minimalist Light (Updated) -- */
 /* -- ============================================= -- */
 .minimalistLight {
-  background-color: var(--muted);
-  color: var(--foreground);
+  background-color: #F3F4F6;
+  color: #1F2937;
+  justify-content: flex-start; /* Content from top */
+}
+html[data-theme='dark'] .minimalistLight {
+    background-color: #374151;
+    color: #F9FAFB;
 }
 .minimalistLight .category {
-  background-color: var(--background);
-  color: var(--muted-foreground);
+  background-color: #E5E7EB;
+  color: #4B5563;
+}
+html[data-theme='dark'] .minimalistLight .category {
+    background-color: #4B5569;
+    color: #E5E7EB;
 }
 .minimalistLight .cardTitle {
+  font-size: 28px;
   color: var(--brand-primary);
+  text-shadow: none;
 }
 
 /* -- ============================================= -- */
-/* -- Design Variant 4: Dark & Dramatic -- */
-/* -- For artistic content like music. -- */
+/* -- Design Variant 4: Dark & Dramatic (Updated) -- */
 /* -- ============================================= -- */
 .darkDramatic {
-  background-color: #1E293B;
-  color: #F8FAFC;
-  border-color: #334155;
+  background-color: #4C1D95; /* Deep purple */
+  border: none;
 }
-.darkDramatic::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
-  z-index: 1;
+.darkDramatic .cardContent {
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: var(--radius);
+    margin: 16px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 .darkDramatic .category {
-  color: #94A3B8; /* Slate 400 */
-  background: none;
-  border: 1px solid #475569;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
 }
 .darkDramatic .cardTitle {
-  font-size: 36px;
+  font-size: 30px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
@@ -173,8 +182,13 @@ html[data-theme='dark'] .solidBold .category {
 /* -- ============================================= -- */
 
 html[dir="rtl"] .title,
-html[dir="rtl"] .cardContent {
+html[dir="rtl"] .cardContent,
+html[dir="rtl"] .solidBold {
   text-align: right;
+}
+
+html[dir="rtl"] .category {
+    align-self: flex-end;
 }
 
 @media (max-width: 768px) {
@@ -189,6 +203,10 @@ html[dir="rtl"] .cardContent {
     height: 300px;
   }
   .cardTitle {
-    font-size: 24px;
+    font-size: 26px;
+  }
+   .solidBold .cardTitle {
+    font-size: 32px;
   }
 }
+
