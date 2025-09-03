@@ -66,6 +66,7 @@ html[data-theme='dark'] {
 /* -- Base & Reset Styles -- */
 /* -- ============================================= -- */
 * { box-sizing: border-box; padding: 0; margin: 0; }
+a { text-decoration: none; color: inherit; }
 body { font-family: var(--font-sans); color: var(--foreground); background-color: var(--background); transition: background-color var(--transition), color var(--transition); }
 
 /* -- ============================================= -- */
@@ -96,6 +97,7 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   position: relative;
   padding-bottom: 4px;
   color: var(--foreground);
+  text-decoration: none; /* Removes default underline */
 }
 .logo::after {
   content: '';
@@ -108,17 +110,12 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   border-radius: 2px;
 }
 
-/* Desktop Navigation */
-.desktopNav { display: flex; align-items: center; gap: 24px; }
-.desktopNavLink { font-size: 14px; font-weight: 500; color: var(--muted-foreground); transition: color var(--transition); }
-.desktopNavLink:hover { color: var(--foreground); }
-.desktopNavLink.active { color: var(--foreground); }
-
 .headerActions { display: flex; align-items: center; gap: 12px; }
 .headerBtn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 99px; border: 1px solid var(--border); background-color: transparent; color: var(--muted-foreground); cursor: pointer; transition: all var(--transition); }
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
+.headerBtn svg { width: 20px; height: 20px; }
 
-/* New User Dropdown Menu */
+/* User Dropdown Menu */
 .userDropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; width: 220px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 4px; z-index: 1010; }
 .userDropdownItem { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 8px 12px; font-size: 14px; border-radius: 6px; background: none; border: none; color: inherit; cursor: pointer; }
 .userDropdownItem:hover { background-color: var(--accent); }
@@ -155,14 +152,7 @@ main { padding-top: var(--header-height); padding-bottom: var(--footer-height); 
 /* -- ============================================= -- */
 /* -- RTL & Form Fixes -- */
 /* -- ============================================= -- */
-
-/* Fix for select element in RTL */
-select[dir="rtl"] {
-  background-position: left 16px center;
-  padding-left: 48px;
-  padding-right: 16px;
-}
-
+select[dir="rtl"] { background-position: left 16px center; padding-left: 48px; padding-right: 16px; }
 html[dir="rtl"] {
   .appHeader { flex-direction: row-reverse; }
   .userDropdown { right: auto; left: 0; }
