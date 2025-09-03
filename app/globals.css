@@ -98,7 +98,7 @@ body {
 /* -- Header & Footer Shared Styles -- */
 /* -- ============================================= -- */
 .appHeader, .appFooter {
-  background-color: hsla(0, 0%, 100%, 0.8); /* Fallback */
+  background-color: hsla(0, 0%, 100%, 0.8);
   background-color: var(--card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -148,6 +148,36 @@ html[data-theme='dark'] .appFooter {
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
 .headerBtn svg { width: 16px; height: 16px; }
 
+.langDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  width: 160px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  padding: 4px;
+  z-index: 1010;
+}
+
+.mobileMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--card);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
 /* -- ============================================= -- */
 /* -- Premium Footer -- */
 /* -- ============================================= -- */
@@ -194,18 +224,19 @@ html[dir="rtl"] {
   }
   
   /* Adjust language dropdown position */
-  .headerActions .relative > div {
+  .langDropdown {
     right: auto;
     left: 0;
   }
   
   /* Align text in language dropdown and mobile menu */
-  .headerActions .relative > div button,
-  .mobile-menu button {
+  .langDropdown button,
+  .mobileMenu button,
+  .mobileMenu h3 {
     text-align: right;
   }
-
-  .headerBtn.justify-start {
+  
+  .mobileMenu .headerBtn {
     justify-content: flex-start;
   }
 }
