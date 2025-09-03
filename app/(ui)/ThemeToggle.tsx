@@ -3,24 +3,32 @@ import { useEffect, useState } from 'react';
 import { applyTheme, ThemeMode } from '../(utils)/theme';
 
 export default function ThemeToggle() {
-  const [mode, setMode] = useState<ThemeMode>('auto');
+  const [currentMode, setCurrentMode] = useState<ThemeMode>('auto');
 
   useEffect(() => {
-    const saved = (localStorage.getItem('wa_theme') as ThemeMode) || 'auto';
-    setMode(saved);
+    // On initial load, read the saved theme from localStorage
+    const savedMode = (localStorage.getItem('wa_theme') as ThemeMode) || 'auto';
+    setCurrentMode(savedMode);
   }, []);
 
   function cycleTheme() {
-    const nextMode = mode === 'auto' ? 'dark' : mode === 'dark' ? 'light' : 'auto';
-    setMode(nextMode);
+    // Cycle through: auto -> light -> dark -> auto
+    const nextMode = currentMode === 'auto' ? 'light' : currentMode === 'light' ? 'dark' : 'auto';
+    setCurrentMode(nextMode);
     applyTheme(nextMode);
   }
-
-  const label = mode.charAt(0).toUpperCase() + mode.slice(1);
+  
+  // Capitalize the first letter for display
+  const buttonLabel = currentMode.charAt(0).toUpperCase() + currentMode.slice(1);
 
   return (
-    <button className="control-btn" title="Cycle theme" aria-label="Cycle theme" onClick={cycleTheme}>
-      {label}
+    <button
+      className="control-btn"
+      onClick={cycleTheme}
+      title="Cycle theme"
+      aria-label="Cycle theme"
+    >
+      {buttonLabel}
     </button>
   );
 }
