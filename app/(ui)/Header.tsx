@@ -50,6 +50,7 @@ export default function Header() {
   const [theme, setTheme] = useState('light');
   const [currentLang, setCurrentLang] = useState<LangCode>('en');
   const langMenuRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -58,8 +59,13 @@ export default function Header() {
     setCurrentLang(initialLang);
 
     function handleClickOutside(event: MouseEvent) {
+      // Close lang dropdown if click is outside
       if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
+      }
+      // Close mobile menu if click is outside the entire header
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -83,13 +89,13 @@ export default function Header() {
   const t = HEADER_DICT[currentLang] || HEADER_DICT.en;
 
   return (
-    <header className="appHeader">
+    <header className="appHeader" ref={headerRef}>
       <Link href="/" className="logo colored">
         write
       </Link>
 
       {/* Desktop Actions */}
-      <div className="hidden sm:flex headerActions">
+      <div className="headerActions hidden sm:flex">
         <div className="relative" ref={langMenuRef}>
           <button onClick={() => setIsLangOpen(!isLangOpen)} className="headerBtn">
             <GlobeIcon />
@@ -100,7 +106,7 @@ export default function Header() {
                 <button
                   key={lang.code}
                   onClick={() => changeLanguage(lang)}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-[var(--accent)]"
+                  className="langDropdownItem"
                 >
                   {lang.label}
                 </button>
@@ -123,23 +129,25 @@ export default function Header() {
       
       {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <div className="mobileMenu sm:hidden">
-            <div className="flex flex-col gap-4">
-                 <button onClick={toggleTheme} className="headerBtn justify-start">
+        <div className="mobileMenu">
+            <div className="mobileMenuContent">
+                 <button onClick={toggleTheme} className="mobileMenuItem">
                     {theme === 'light' ? <SunIcon /> : <MoonIcon />}
                     <span>{t.toggleTheme}</span>
                 </button>
-                <div className="border-t border-[var(--border)]"></div>
-                <h3 className="text-sm font-semibold text-[var(--muted-foreground)] px-2 pt-2">{t.language}</h3>
-                {LANGUAGES.map((lang) => (
-                    <button
-                    key={lang.code}
-                    onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
-                    className="w-full text-left px-2 py-2 text-sm rounded-md hover:bg-[var(--accent)]"
-                    >
-                    {lang.label}
-                    </button>
-                ))}
+                <div className="mobileMenuDivider" />
+                <h3 className="mobileMenuHeading">{t.language}</h3>
+                <div className="mobileMenuLangList">
+                    {LANGUAGES.map((lang) => (
+                        <button
+                        key={lang.code}
+                        onClick={() => { changeLanguage(lang); setIsMenuOpen(false); }}
+                        className="mobileMenuItem"
+                        >
+                        {lang.label}
+                        </button>
+                    ))}
+                </div>
             </div>
         </div>
       )}
