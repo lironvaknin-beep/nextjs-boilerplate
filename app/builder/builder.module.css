@@ -85,7 +85,7 @@
 :global(.slot.is-editing .card) { border-color: var(--border-focus); box-shadow: 0 0 0 3px rgba(93, 92, 222, 0.15); }
 :global(.slot.is-selected) { opacity: 0.8; }
 :global(.slot.is-active) { opacity: 1; }
-:global(.word) { font-family: var(--font-serif-display); font-size: clamp(32px, 8vw, 48px); font-weight: 400; line-height: 1.2; color: var(--text-primary); text-align: center; transition: color var(--transition), opacity 0.2s linear; outline: none; border-radius: var(--radius-md); min-width: 50px; }
+:global(.word) { font-family: var(--font-serif-display); font-size: clamp(32px, 8vw, 48px); font-weight: 400; line-height: 1.2; color: var(--text-primary); text-align: center; transition: color var(--transition), opacity 0.2s linear, background-color var(--transition); outline: none; border-radius: var(--radius-md); min-width: 50px; }
 :global(.word.is-changing) { opacity: 0; }
 :global(.slot.is-editing .word) { padding: 0 8px; background-color: var(--bg-interactive); cursor: text; }
 :global(.actions) { display: flex; align-items: center; gap: 16px; background-color: var(--bg-interactive); padding: 8px; border-radius: 99px; border: 1px solid var(--border-primary); transition: background-color var(--transition), border-color var(--transition); }
