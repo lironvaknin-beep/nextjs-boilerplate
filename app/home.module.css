@@ -1,0 +1,194 @@
+/* -- Home Page Styles - "Evolve" V1.0 -- */
+/* -- Based on A/B testing and case studies for high-engagement feeds -- */
+
+.homePage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.pageHeader {
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  color: var(--foreground);
+  text-align: center;
+}
+
+/* -- The Feed Grid -- */
+/* A masonry-like grid that's responsive and dynamic */
+.feedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* -- Base Card Styles -- */
+/* The foundation for all design variants */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Aligns content to the bottom */
+  height: 350px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--border);
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  border-color: var(--brand-primary);
+}
+html[data-theme='dark'] .card:hover {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.cardContent {
+  padding: 24px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.category {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 99px;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  font-family: var(--font-serif-display);
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.snippet {
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* -- ============================================= -- */
+/* -- Design Variant 1: Gradient Burst -- */
+/* -- For dynamic, eye-catching content like stories and history. -- */
+/* -- ============================================= -- */
+.gradientBurst {
+  color: white;
+  background: linear-gradient(45deg, #6D28D9, #4F46E5, #D946EF);
+  border: none;
+}
+.gradientBurst .category {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+.gradientBurst .snippet {
+  opacity: 0.9;
+}
+
+/* -- ============================================= -- */
+/* -- Design Variant 2: Solid Bold -- */
+/* -- For authoritative content like tech and business. -- */
+/* -- ============================================= -- */
+.solidBold {
+  background-color: #111827;
+  color: white;
+  justify-content: center; /* Center content vertically */
+  text-align: center;
+  border: none;
+}
+html[data-theme='dark'] .solidBold {
+    background-color: #E4E4E7;
+    color: #111827;
+}
+.solidBold .cardContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.solidBold .category {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+html[data-theme='dark'] .solidBold .category {
+    background-color: rgba(0,0,0,0.1);
+}
+.solidBold .cardTitle {
+  font-size: 32px;
+}
+
+/* -- ============================================= -- */
+/* -- Design Variant 3: Minimalist Light -- */
+/* -- For clean, elegant content like recipes. -- */
+/* -- ============================================= -- */
+.minimalistLight {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+.minimalistLight .category {
+  background-color: var(--background);
+  color: var(--muted-foreground);
+}
+.minimalistLight .cardTitle {
+  color: var(--brand-primary);
+}
+
+/* -- ============================================= -- */
+/* -- Design Variant 4: Dark & Dramatic -- */
+/* -- For artistic content like music. -- */
+/* -- ============================================= -- */
+.darkDramatic {
+  background-color: #1E293B;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+.darkDramatic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+  z-index: 1;
+}
+.darkDramatic .category {
+  color: #94A3B8; /* Slate 400 */
+  background: none;
+  border: 1px solid #475569;
+}
+.darkDramatic .cardTitle {
+  font-size: 36px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* -- ============================================= -- */
+/* -- RTL & Responsive -- */
+/* -- ============================================= -- */
+
+html[dir="rtl"] .title,
+html[dir="rtl"] .cardContent {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .homePage {
+    padding: 32px 16px;
+  }
+  .feedGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    height: 300px;
+  }
+  .cardTitle {
+    font-size: 24px;
+  }
+}
