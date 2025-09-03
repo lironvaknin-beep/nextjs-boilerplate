@@ -1,30 +1,25 @@
-'use client';
-// In a real app, you might use usePathname from next/navigation to determine the active link
-// For now, we'll keep it simple and mark 'Builder' as active.
-// import { usePathname } from 'next/navigation';
-
 export default function AppFooter() {
-  // const pathname = usePathname();
+  // In a real app, you'd use a hook like `usePathname` from `next/navigation` to get the current path
+  const currentPath = '/builder'; 
 
   const navItems = [
-    { href: '/', label: 'Home' },
-    { href: '/builder', label: 'Builder' },
-    { href: '/explore', label: 'Explore' },
-    { href: '/me/library', label: 'Library' },
+    { href: "/", label: "Home", icon: "🏠" },
+    { href: "/builder", label: "Create", icon: "✨" },
+    { href: "/explore", label: "Explore", icon: "🧭" },
+    { href: "/me/library", label: "Library", icon: "📚" },
   ];
 
   return (
     <footer className="app-footer" role="contentinfo">
-      <nav className="footer-nav">
+      <nav className="footer-inner">
         {navItems.map(item => (
           <a 
-            key={item.href} 
+            key={item.href}
             href={item.href} 
-            // In a real app, you would use a check like this:
-            // className={pathname === item.href ? 'footer-nav-btn active' : 'footer-nav-btn'}
-            className={item.href === '/builder' ? 'footer-nav-btn active' : 'footer-nav-btn'}
+            className={`footer-nav-btn ${currentPath === item.href ? 'active' : ''}`}
           >
-            {item.label}
+            <span aria-hidden="true">{item.icon}</span>
+            <span>{item.label}</span>
           </a>
         ))}
       </nav>
