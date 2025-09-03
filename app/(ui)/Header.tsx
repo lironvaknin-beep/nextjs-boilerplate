@@ -51,7 +51,6 @@ export default function Header() {
   const [currentLang, setCurrentLang] = useState<LangCode>('en');
   const langMenuRef = useRef<HTMLDivElement>(null);
 
-  // Set initial theme and language on component mount
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTheme(initialTheme);
@@ -76,7 +75,6 @@ export default function Header() {
 
   const changeLanguage = (lang: { code: string, dir: string }) => {
     setCookie('user-lang', lang.code, 365);
-    // Set attributes on the root element for immediate effect before reload
     document.documentElement.lang = lang.code;
     document.documentElement.dir = lang.dir;
     window.location.reload(); 
@@ -97,7 +95,7 @@ export default function Header() {
             <GlobeIcon />
           </button>
           {isLangOpen && (
-            <div className="absolute top-full right-0 mt-2 w-40 bg-[var(--popover)] text-[var(--popover-foreground)] border border-[var(--border)] rounded-lg shadow-lg py-1">
+            <div className="langDropdown">
               {LANGUAGES.map((lang) => (
                 <button
                   key={lang.code}
@@ -125,7 +123,7 @@ export default function Header() {
       
       {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[var(--card)] shadow-md sm:hidden p-4 border-b border-[var(--border)]">
+        <div className="mobileMenu sm:hidden">
             <div className="flex flex-col gap-4">
                  <button onClick={toggleTheme} className="headerBtn justify-start">
                     {theme === 'light' ? <SunIcon /> : <MoonIcon />}
