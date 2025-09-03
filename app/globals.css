@@ -95,6 +95,7 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   letter-spacing: -0.04em; 
   position: relative;
   padding-bottom: 4px;
+  color: var(--foreground);
 }
 .logo::after {
   content: '';
@@ -107,9 +108,24 @@ html[data-theme='dark'] .appFooter { background-color: hsla(240, 10%, 3.9%, 0.8)
   border-radius: 2px;
 }
 
+/* Desktop Navigation */
+.desktopNav { display: flex; align-items: center; gap: 24px; }
+.desktopNavLink { font-size: 14px; font-weight: 500; color: var(--muted-foreground); transition: color var(--transition); }
+.desktopNavLink:hover { color: var(--foreground); }
+.desktopNavLink.active { color: var(--foreground); }
+
 .headerActions { display: flex; align-items: center; gap: 12px; }
 .headerBtn { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 99px; border: 1px solid var(--border); background-color: transparent; color: var(--muted-foreground); font-size: 14px; font-weight: 500; cursor: pointer; transition: all var(--transition); }
 .headerBtn:hover { background-color: var(--accent); color: var(--foreground); }
+.headerBtn.primary {
+    background: var(--brand-gradient);
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+.headerBtn.primary:hover {
+    opacity: 0.9;
+}
 .headerBtn svg { width: 16px; height: 16px; }
 
 .langDropdown { position: absolute; top: 100%; right: 0; margin-top: 8px; width: 160px; background-color: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 4px; z-index: 1010; }
@@ -134,7 +150,6 @@ html[data-theme='dark'] .appFooter { box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.2
 .footerLink:hover { color: var(--foreground); }
 .footerLink.active { color: var(--brand-primary); }
 
-/* New style for the primary "Create" button */
 .footerLink.primary {
   transform: translateY(-8px);
   background: var(--brand-gradient);
@@ -143,11 +158,9 @@ html[data-theme='dark'] .appFooter { box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.2
   border-radius: 99px;
   box-shadow: 0 4px 14px 0 rgb(79 70 229 / 30%);
 }
-.footerLink.primary.active {
-    color: white; /* Ensure active state is also white */
-}
+.footerLink.primary.active { color: white; }
 .footerLink.primary svg { width: 24px; height: 24px; }
-.footerLink.primary span { display: none; } /* Hide label on primary button */
+.footerLink.primary span { display: none; }
 
 /* -- ============================================= -- */
 /* -- Main Content Area -- */
