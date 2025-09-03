@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 // --- Helper function for setting a cookie ---
 function setCookie(name: string, value: string, days: number) {
@@ -34,6 +35,13 @@ const HEADER_DICT = {
     hi: { toggleTheme: 'थीम टॉगल करें', language: 'भाषा' },
 }
 
+// Desktop navigation - focused on discovery and management.
+const NAV_LINKS = [
+    { href: '/', label: 'Home' },
+    { href: '/explore', label: 'Explore' },
+    { href: '/me/library', label: 'Library' },
+];
+
 type LangCode = keyof typeof HEADER_DICT;
 
 // --- SVG Icons ---
@@ -51,6 +59,7 @@ export default function Header() {
   const [currentLang, setCurrentLang] = useState<LangCode>('en');
   const langMenuRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
@@ -88,44 +97,55 @@ export default function Header() {
 
   return (
     <header className="appHeader" ref={headerRef}>
-      <Link href="/" className="logo colored">
+      <Link href="/" className="logo">
         write
       </Link>
 
-      {/* Desktop Actions */}
-      <div className="headerActions hidden sm:flex">
-        <div className="relative" ref={langMenuRef}>
-          <button onClick={() => setIsLangOpen(!isLangOpen)} className="headerBtn">
-            <GlobeIcon />
-          </button>
-          {isLangOpen && (
-            <div className="langDropdown">
-              {LANGUAGES.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => changeLanguage(lang)}
-                  className="langDropdownItem"
-                >
-                  {lang.label}
-                </button>
-              ))}
+      {/* Desktop Navigation & Actions */}
+      <div className="hidden sm:flex items-center gap-8">
+        <nav className="flex items-center gap-6 text-sm font-medium text-[var(--muted-foreground)]">
+            {NAV_LINKS.map(({ href, label }) => {
+                const isActive = (href === '/' && pathname === '/') || (href !== '/' && pathname.startsWith(href));
+                return (
+                <Link key={href} href={href} className={`hover:text-[var(--foreground)] transition-colors ${isActive ? 'text-[var(--foreground)]' : ''}`}>
+                    {label}
+                </Link>
+                )
+            })}
+        </nav>
+        <div className="headerActions">
+            <div className="relative" ref={langMenuRef}>
+            <button onClick={() => setIsLangOpen(!isLangOpen)} className="headerBtn">
+                <GlobeIcon />
+            </button>
+            {isLangOpen && (
+                <div className="langDropdown">
+                {LANGUAGES.map((lang) => (
+                    <button
+                    key={lang.code}
+                    onClick={() => changeLanguage(lang)}
+                    className="langDropdownItem"
+                    >
+                    {lang.label}
+                    </button>
+                ))}
+                </div>
+            )}
             </div>
-          )}
+            <button onClick={toggleTheme} className="headerBtn">
+            {theme === 'light' ? <SunIcon /> : <MoonIcon />}
+            </button>
         </div>
-
-        <button onClick={toggleTheme} className="headerBtn">
-          {theme === 'light' ? <SunIcon /> : <MoonIcon />}
-        </button>
       </div>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button (Burger) */}
       <div className="sm:hidden">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="headerBtn">
           {isMenuOpen ? <XIcon /> : <MenuIcon />}
         </button>
       </div>
       
-      {/* Mobile Menu Panel */}
+      {/* Mobile Menu Panel - Now for secondary actions only */}
       {isMenuOpen && (
         <div className="mobileMenu">
             <div className="mobileMenuContent">
