@@ -1,13 +1,15 @@
-/* -- Home Page Styles - "Evolve" V2.0 (Netflix-style Sliders) -- */
+/* -- Home Page Styles - "Evolve" V3.0 (The Netflix Vision) -- */
+/* -- Built from the ground up for a premium, dynamic feed experience -- */
 
 .homePage {
-  /* No max-width for a full-bleed feel */
+  /* No max-width for a full-bleed feel, padding is handled by rows */
   padding: 48px 0;
+  overflow-x: hidden; /* Prevent horizontal scroll on the page itself */
 }
 
 .pageHeader {
   margin-bottom: 32px;
-  padding: 0 48px;
+  padding: 0 48px; /* Standard horizontal padding */
 }
 
 .title {
@@ -16,11 +18,58 @@
   color: var(--foreground);
 }
 
-/* -- Feed Container & Category Rows -- */
+/* -- ============================================= -- */
+/* -- Filter Bar (Polished) -- */
+/* -- ============================================= -- */
+.filterBar {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 48px 24px;
+    margin-bottom: 32px;
+    scroll-snap-type: x mandatory; 
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.filterBar::-webkit-scrollbar {
+    display: none;
+}
+
+.filterBtn {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background-color: var(--muted);
+    color: var(--muted-foreground);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.filterBtn:hover {
+    background-color: var(--accent);
+    color: var(--foreground);
+}
+.filterBtn.active {
+    background-color: var(--foreground);
+    color: var(--background);
+    border-color: var(--foreground);
+}
+html[data-theme='dark'] .filterBtn.active {
+    background-color: var(--foreground);
+    color: var(--background);
+}
+
+/* -- ============================================= -- */
+/* -- Netflix-Style Feed Container -- */
+/* -- ============================================= -- */
+
 .feedContainer {
   display: flex;
   flex-direction: column;
-  gap: 48px; /* Space between rows */
+  gap: 48px;
 }
 
 .categoryRow {
@@ -42,35 +91,46 @@
   overflow-x: auto;
   padding: 4px 48px 24px; /* Padding for scroll and hover effects */
   scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 .rowSlider::-webkit-scrollbar {
   display: none;
 }
 
-/* -- Base Card Styles (for Sliders) -- */
+/* -- ============================================= -- */
+/* -- Base Card & Card Types (The Netflix Vision) -- */
+/* -- ============================================= -- */
 .card {
   scroll-snap-align: start;
   flex-shrink: 0;
-  width: 320px;
-  height: 200px;
   display: flex;
-  flex-direction: column;
   border-radius: var(--radius);
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--border);
+  background-color: var(--muted);
   color: #FFFFFF;
 }
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   z-index: 10;
 }
 html[data-theme='dark'] .card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Different card types for visual variety */
+.poster { width: 180px; height: 250px; }
+.thumbnail { width: 320px; height: 180px; }
+.circle { width: 160px; height: 160px; border-radius: 50%; }
+
+/* The color gradient from JSON is applied here */
+.cardOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    /* Add a dark gradient on top of the color gradient to ensure readability */
+    background-image: linear-gradient(to top, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0) 60%) !important;
 }
 
 .cardContent {
@@ -87,11 +147,10 @@ html[data-theme='dark'] .card:hover {
 .cardTitle {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
-
 .snippet {
   font-size: 14px;
   line-height: 1.5;
@@ -103,60 +162,22 @@ html[data-theme='dark'] .card:hover {
   overflow: hidden;
 }
 
-/* -- ============================================= -- */
-/* -- Design Variants (Adapted for Sliders) -- */
-/* -- ============================================= -- */
-
-.gradientBurst {
-  background: linear-gradient(135deg, #6D28D9, #4F46E5);
-  border: none;
+/* Specific styles for card types */
+.circle .cardContent {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
-.gradientBurst .cardTitle { font-size: 24px; }
-
-.solidBold {
-  background-color: #111827;
-  justify-content: center;
-  text-align: center;
-  border: none;
+.circle .cardTitle {
+    font-size: 18px;
 }
-html[data-theme='dark'] .solidBold {
-    background-color: var(--muted);
-    color: var(--foreground);
-}
-.solidBold .cardContent { align-items: center; }
-.solidBold .cardTitle { font-size: 28px; max-width: 90%; }
-.solidBold .snippet { display: none; }
-
-.minimalistLight {
-  background-color: #F3F4F6;
-  color: #1F2937;
-  justify-content: center;
-  text-align: center;
-}
-html[data-theme='dark'] .minimalistLight {
-    background-color: #374151;
-    color: #F9FAFB;
-}
-.minimalistLight .cardContent { align-items: center; }
-.minimalistLight .cardTitle {
-  font-family: var(--font-serif-display);
-  font-size: 26px;
-  color: var(--brand-primary);
-  text-shadow: none;
+.circle .snippet {
+    display: none;
 }
 
-.darkDramatic {
-  background-color: #4C1D95;
-  border: none;
+.poster .cardTitle {
+    font-size: 22px;
 }
-.darkDramatic::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
-  z-index: 1;
-}
-.darkDramatic .cardTitle { font-size: 26px; }
 
 /* -- ============================================= -- */
 /* -- RTL & Responsive -- */
@@ -172,8 +193,12 @@ html[dir="rtl"] .cardContent {
   .homePage { padding: 32px 0; }
   .pageHeader, .rowTitle { padding: 0 24px; }
   .rowSlider { padding: 4px 24px 16px; gap: 12px; }
-  .card { width: 250px; height: 160px; }
-  .cardTitle { font-size: 18px; }
-}
+  
+  .poster { width: 140px; height: 200px; }
+  .thumbnail { width: 250px; height: 140px; }
+  .circle { width: 120px; height: 120px; }
 
+  .cardTitle { font-size: 16px; }
+  .circle .cardTitle { font-size: 14px; }
+}
 
