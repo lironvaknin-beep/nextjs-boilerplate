@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
+import sampleData from './sample-data.json'; // Import data from the new JSON file
 
 // --- Helper function for getting a cookie ---
 function getCookie(name: string): string | null {
@@ -63,33 +64,12 @@ const CATEGORIES_DICT = {
 
 type LangCode = keyof typeof DICT;
 
-const sampleData = [
-    // Trending Now
-    { id: 1, title: "The Robot on the Beach", snippet: "A short story about a discovery that changed everything.", category: "Trending Now", designVariant: 'gradient-burst' },
-    { id: 2, title: "5 Principles of Modern UI Design", snippet: "Key takeaways from A/B testing at scale.", category: "Trending Now", designVariant: 'solid-bold' },
-    { id: 5, title: "How to Pitch Your Startup in 60 Seconds", snippet: "A practical guide for entrepreneurs.", category: "Trending Now", designVariant: 'solid-bold' },
-    { id: 11, title: "The Art of Saying No", snippet: "Protect your time and energy.", category: "Trending Now", designVariant: 'minimalist-light' },
-
-    // Short Stories
-    { id: 7, title: "Galaxy's Edge", snippet: "A sci-fi adventure beyond the stars.", category: "Short Stories", designVariant: 'dark-dramatic' },
-    { id: 8, title: "The Last Librarian", snippet: "In a world without books, one woman remembers.", category: "Short Stories", designVariant: 'minimalist-light' },
-    { id: 12, title: "Whispers in the Old Manor", snippet: "A gothic mystery unfolds.", category: "Short Stories", designVariant: 'dark-dramatic' },
-    { id: 13, title: "A Summer in Tuscany", snippet: "Finding love and pasta.", category: "Short Stories", designVariant: 'gradient-burst' },
-    
-    // For You
-    { id: 3, title: "My Grandmother's Secret Pasta Recipe", snippet: "More than just food, it's a taste of home.", category: "For You", designVariant: 'minimalist-light' },
-    { id: 10, title: "The Perfect Sourdough", snippet: "A step-by-step guide to baking bread.", category: "For You", designVariant: 'gradient-burst' },
-    { id: 4, title: "Echoes in the Silence", snippet: "A new song about finding your voice.", category: "For You", designVariant: 'dark-dramatic' },
-
-    // Tech & Future
-    { id: 9, title: "Getting Started with React Server Components", snippet: "A deep dive into the future of React.", category: "Tech & Future", designVariant: 'solid-bold' },
-    { id: 14, title: "Is AI Conscious?", snippet: "A philosophical debate for the modern age.", category: "Tech & Future", designVariant: 'dark-dramatic' },
-    { id: 15, title: "The Future of Remote Work", snippet: "How technology is reshaping the office.", category: "Tech & Future", designVariant: 'minimalist-light' },
-];
-
+// Group data by category for the Netflix-style rows
 const groupedData = sampleData.reduce((acc, item) => {
     const category = item.category;
-    if (!acc[category]) acc[category] = [];
+    if (!acc[category]) {
+        acc[category] = [];
+    }
     acc[category].push(item);
     return acc;
 }, {} as Record<string, typeof sampleData>);
@@ -103,9 +83,6 @@ export default function HomePage() {
         if (currentLang in DICT) {
             setLang(currentLang);
         }
-        // Ensure theme is applied on load
-        const currentTheme = getCookie('user-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', currentTheme);
     }, []);
 
     const t = useMemo(() => DICT[lang] || DICT.en, [lang]);
