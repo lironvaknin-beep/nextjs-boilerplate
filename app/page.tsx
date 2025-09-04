@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
-import sampleData from './sample-data.json';
+import sampleData from './sample-data.json'; // Import data from the new JSON file
 
 // --- Helper function for getting a cookie ---
 function getCookie(name: string): string | null {
@@ -53,7 +53,7 @@ const CATEGORIES_DICT = {
     pl: { "Trending Now": "Na czasie", "Short Stories": "Opowiadania", "For You": "Dla Ciebie", "Characters": "Postacie", "Tech & Future": "Technologia i przyszłość", "Productivity Hacks": "Sztuczki produktywności", "World History": "Historia świata" },
     tr: { "Trending Now": "Şu An Trend Olanlar", "Short Stories": "Kısa Hikayeler", "For You": "Sizin İçin", "Characters": "Karakterler", "Tech & Future": "Teknoloji ve Gelecek", "Productivity Hacks": "Üretkenlik Hileleri", "World History": "Dünya Tarihi" },
     nl: { "Trending Now": "Nu populair", "Short Stories": "Korte verhalen", "For You": "Voor jou", "Characters": "Personages", "Tech & Future": "Tech & toekomst", "Productivity Hacks": "Productiviteitshacks", "World History": "Wereldgeschiedenis" },
-    sv: { "Trending Now": "Populärt just nu", "Short Stories": "Noveller", "For You": "För dig", "Characters": "Karaktärer", "Tech & Future": "Teknik & framtid", "Productivity Hacks": "Produktivitetshacks", "Världshistoria": "Världshistoria" },
+    sv: { "Trending Now": "Populärt just nu", "Short Stories": "Noveller", "For You": "För dig", "Characters": "Karaktärer", "World History": "Världshistoria", "Productivity Hacks": "Produktivitetshacks" },
     zh: { "Trending Now": "时下流行", "Short Stories": "短篇故事", "For You": "为你推荐", "Characters": "人物", "Tech & Future": "科技与未来", "Productivity Hacks": "生产力技巧", "World History": "世界历史" },
     ja: { "Trending Now": "現在のトレンド", "Short Stories": "短編小説", "For You": "あなたへのおすすめ", "Characters": "キャラクター", "Tech & Future": "テクノロジーと未来", "Productivity Hacks": "生産性ハック", "World History": "世界史" },
     ko: { "Trending Now": "현재 트렌드", "Short Stories": "단편 소설", "For You": "당신을 위해", "Characters": "캐릭터", "Tech & Future": "기술 및 미래", "Productivity Hacks": "생산성 팁", "World History": "세계사" },
@@ -64,9 +64,12 @@ const CATEGORIES_DICT = {
 
 type LangCode = keyof typeof DICT;
 
+// Group data by category for the Netflix-style rows
 const groupedData = sampleData.reduce((acc, item) => {
     const category = item.category;
-    if (!acc[category]) acc[category] = [];
+    if (!acc[category]) {
+        acc[category] = [];
+    }
     acc[category].push(item);
     return acc;
 }, {} as Record<string, typeof sampleData>);
@@ -122,6 +125,7 @@ export default function HomePage() {
                                     <div className={styles.cardOverlay} style={{background: item.colorGradient}}/>
                                     <div className={styles.cardContent}>
                                         <h3 className={styles.cardTitle}>{item.title}</h3>
+                                        {/* Snippet is now optional, for cleaner cards */}
                                         {item.snippet && <p className={styles.snippet}>{item.snippet}</p>}
                                     </div>
                                 </Link>
