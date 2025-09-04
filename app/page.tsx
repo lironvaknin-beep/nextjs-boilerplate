@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
-import sampleData from './sample-data.json'; // Import data from the new JSON file
+import sampleData from './sample-data.json';
 
 // --- Helper function for getting a cookie ---
 function getCookie(name: string): string | null {
@@ -41,35 +41,32 @@ const DICT = {
 };
 
 const CATEGORIES_DICT = {
-    en: { "Trending Now": "Trending Now", "Short Stories": "Short Stories", "For You": "For You", "Tech & Future": "Tech & Future", "Creative Corner": "Creative Corner" },
-    he: { "Trending Now": "פופולרי עכשיו", "Short Stories": "סיפורים קצרים", "For You": "בשבילך", "Tech & Future": "טכנולוגיה ועתיד", "Creative Corner": "פינה יצירתית" },
-    ar: { "Trending Now": "الرائج الآن", "Short Stories": "قصص قصيرة", "For You": "لك", "Tech & Future": "التكنولوجيا والمستقبل", "Creative Corner": "ركن الإبداع" },
-    es: { "Trending Now": "Tendencias ahora", "Short Stories": "Cuentos cortos", "For You": "Para ti", "Tech & Future": "Tecnología y futuro", "Creative Corner": "Rincón creativo" },
-    fr: { "Trending Now": "Tendances actuelles", "Short Stories": "Histoires courtes", "For You": "Pour vous", "Tech & Future": "Technologie et avenir", "Creative Corner": "Coin créatif" },
-    de: { "Trending Now": "Aktuelle Trends", "Short Stories": "Kurzgeschichten", "For You": "Für dich", "Tech & Future": "Technik & Zukunft", "Creative Corner": "Kreativecke" },
-    it: { "Trending Now": "Tendenze del momento", "Short Stories": "Racconti brevi", "For You": "Per te", "Tech & Future": "Tecnologia e futuro", "Creative Corner": "Angolo creativo" },
-    pt: { "Trending Now": "Em alta agora", "Short Stories": "Contos", "For You": "Para você", "Tech & Future": "Tecnologia e futuro", "Creative Corner": "Canto criativo" },
-    ru: { "Trending Now": "В тренде сейчас", "Short Stories": "Короткие рассказы", "For You": "Для вас", "Tech & Future": "Технологии и будущее", "Creative Corner": "Творческий уголок" },
-    pl: { "Trending Now": "Na czasie", "Short Stories": "Opowiadania", "For You": "Dla Ciebie", "Tech & Future": "Technologia i przyszłość", "Creative Corner": "Kącik kreatywny" },
-    tr: { "Trending Now": "Şu An Trend Olanlar", "Short Stories": "Kısa Hikayeler", "For You": "Sizin İçin", "Tech & Future": "Teknoloji ve Gelecek", "Creative Corner": "Yaratıcı Köşe" },
-    nl: { "Trending Now": "Nu populair", "Short Stories": "Korte verhalen", "For You": "Voor jou", "Tech & Future": "Tech & toekomst", "Creative Corner": "Creatieve hoek" },
-    sv: { "Trending Now": "Populärt just nu", "Short Stories": "Noveller", "For You": "För dig", "Tech & Future": "Teknik & framtid", "Creative Corner": "Kreativa hörnan" },
-    zh: { "Trending Now": "时下流行", "Short Stories": "短篇故事", "For You": "为你推荐", "Tech & Future": "科技与未来", "Creative Corner": "创意角" },
-    ja: { "Trending Now": "現在のトレンド", "Short Stories": "短編小説", "For You": "あなたへのおすすめ", "Tech & Future": "テクノロジーと未来", "Creative Corner": "クリエイティブコーナー" },
-    ko: { "Trending Now": "현재 트렌드", "Short Stories": "단편 소설", "For You": "당신을 위해", "Tech & Future": "기술 및 미래", "Creative Corner": "창작 코너" },
-    hi: { "Trending Now": "अभी ट्रेंडिंग में", "Short Stories": "लघु कथाएँ", "For You": "आपके लिए", "Tech & Future": "प्रौद्योगिकी और भविष्य", "Creative Corner": "रचनात्मक कोना" },
-    id: { "Trending Now": "Sedang Tren", "Short Stories": "Cerita Pendek", "For You": "Untuk Anda", "Tech & Future": "Teknologi & Masa Depan", "Creative Corner": "Sudut Kreatif" },
-    vi: { "Trending Now": "Thịnh hành", "Short Stories": "Truyện ngắn", "For You": "Dành cho bạn", "Tech & Future": "Công nghệ & Tương lai", "Creative Corner": "Góc sáng tạo" },
+    en: { "Trending Now": "Trending Now", "Short Stories": "Short Stories", "For You": "For You", "Tech & Future": "Tech & Future", "Characters": "Characters" },
+    he: { "Trending Now": "פופולרי עכשיו", "Short Stories": "סיפורים קצרים", "For You": "בשבילך", "Tech & Future": "טכנולוגיה ועתיד", "Characters": "דמויות" },
+    ar: { "Trending Now": "الرائج الآن", "Short Stories": "قصص قصيرة", "For You": "لك", "Tech & Future": "التكنولوجيا والمستقبل", "Characters": "شخصيات" },
+    es: { "Trending Now": "Tendencias ahora", "Short Stories": "Cuentos cortos", "For You": "Para ti", "Tech & Future": "Tecnología y futuro", "Characters": "Personajes" },
+    fr: { "Trending Now": "Tendances actuelles", "Short Stories": "Histoires courtes", "For You": "Pour vous", "Tech & Future": "Technologie et avenir", "Characters": "Personnages" },
+    de: { "Trending Now": "Aktuelle Trends", "Short Stories": "Kurzgeschichten", "For You": "Für dich", "Tech & Future": "Technik & Zukunft", "Characters": "Charaktere" },
+    it: { "Trending Now": "Tendenze del momento", "Short Stories": "Racconti brevi", "For You": "Per te", "Tech & Future": "Tecnologia e futuro", "Characters": "Personaggi" },
+    pt: { "Trending Now": "Em alta agora", "Short Stories": "Contos", "For You": "Para você", "Tech & Future": "Tecnologia e futuro", "Characters": "Personagens" },
+    ru: { "Trending Now": "В тренде сейчас", "Short Stories": "Короткие рассказы", "For You": "Для вас", "Tech & Future": "Технологии и будущее", "Characters": "Персонажи" },
+    pl: { "Trending Now": "Na czasie", "Short Stories": "Opowiadania", "For You": "Dla Ciebie", "Tech & Future": "Technologia i przyszłość", "Characters": "Postacie" },
+    tr: { "Trending Now": "Şu An Trend Olanlar", "Short Stories": "Kısa Hikayeler", "For You": "Sizin İçin", "Tech & Future": "Teknoloji ve Gelecek", "Characters": "Karakterler" },
+    nl: { "Trending Now": "Nu populair", "Short Stories": "Korte verhalen", "For You": "Voor jou", "Tech & Future": "Tech & toekomst", "Characters": "Personages" },
+    sv: { "Trending Now": "Populärt just nu", "Short Stories": "Noveller", "For You": "För dig", "Tech & Future": "Teknik & framtid", "Characters": "Karaktärer" },
+    zh: { "Trending Now": "时下流行", "Short Stories": "短篇故事", "For You": "为你推荐", "Tech & Future": "科技与未来", "Characters": "人物" },
+    ja: { "Trending Now": "現在のトレンド", "Short Stories": "短編小説", "For You": "あなたへのおすすめ", "Tech & Future": "テクノロジーと未来", "Characters": "キャラクター" },
+    ko: { "Trending Now": "현재 트렌드", "Short Stories": "단편 소설", "For You": "당신을 위해", "Tech & Future": "기술 및 미래", "Characters": "캐릭터" },
+    hi: { "Trending Now": "अभी ट्रेंडिंग में", "Short Stories": "लघु कथाएँ", "For You": "आपके लिए", "Tech & Future": "प्रौद्योगिकी और भविष्य", "Characters": "पात्र" },
+    id: { "Trending Now": "Sedang Tren", "Short Stories": "Cerita Pendek", "For You": "Untuk Anda", "Tech & Future": "Teknologi & Masa Depan", "Characters": "Karakter" },
+    vi: { "Trending Now": "Thịnh hành", "Short Stories": "Truyện ngắn", "For You": "Dành cho bạn", "Tech & Future": "Công nghệ & Tương lai", "Characters": "Nhân vật" },
 };
 
 type LangCode = keyof typeof DICT;
 
-// Group data by category for the Netflix-style rows
 const groupedData = sampleData.reduce((acc, item) => {
     const category = item.category;
-    if (!acc[category]) {
-        acc[category] = [];
-    }
+    if (!acc[category]) acc[category] = [];
     acc[category].push(item);
     return acc;
 }, {} as Record<string, typeof sampleData>);
@@ -100,7 +97,8 @@ export default function HomePage() {
                         <h2 className={styles.rowTitle}>{t_cat[category as keyof typeof t_cat] || category}</h2>
                         <div className={styles.rowSlider}>
                             {items.map(item => (
-                                <Link href={`/item/${item.id}`} key={item.id} className={`${styles.card} ${styles[item.designVariant]}`}>
+                                <Link href={`/item/${item.id}`} key={item.id} className={`${styles.card} ${styles[item.cardType]}`}>
+                                    <div className={styles.cardOverlay} style={{background: item.colorGradient}}/>
                                     <div className={styles.cardContent}>
                                         <h3 className={styles.cardTitle}>{item.title}</h3>
                                         <p className={styles.snippet}>{item.snippet}</p>
