@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import styles from './item.module.css';
-import sampleData from '../../sample-data.json';
+import sampleData from '../sample-data.json';
 
 // --- Helper function for getting a cookie ---
 function getCookie(name: string): string | null {
