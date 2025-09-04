@@ -1,154 +1,118 @@
-/* -- Home Page Styles - "Evolve" V1.2 -- */
-/* -- Added filter bar styles inspired by YouTube -- */
+/* -- Home Page Styles - "Evolve" V2.0 (Netflix-style Sliders) -- */
 
 .homePage {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 24px;
+  /* No max-width for a full-bleed feel */
+  padding: 48px 0;
 }
 
 .pageHeader {
   margin-bottom: 32px;
+  padding: 0 48px;
 }
 
 .title {
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(28px, 5vw, 40px);
   font-weight: 800;
   color: var(--foreground);
-  text-align: center;
 }
 
-/* -- Filter Bar -- */
-.filterBar {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 4px 0 24px;
-    margin-bottom: 32px;
-    /* For snapping scroll on mobile */
-    scroll-snap-type: x mandatory; 
-    /* Hide scrollbar for a cleaner look */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}
-.filterBar::-webkit-scrollbar {
-    display: none;
-}
-
-.filterBtn {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 99px;
-    border: 1px solid var(--border);
-    background-color: var(--muted);
-    color: var(--muted-foreground);
-    cursor: pointer;
-    transition: all var(--transition);
-}
-
-.filterBtn:hover {
-    background-color: var(--accent);
-    color: var(--foreground);
-    border-color: var(--ring);
-}
-
-.filterBtn.active {
-    background-color: var(--foreground);
-    color: var(--background);
-    border-color: var(--foreground);
-}
-
-html[data-theme='dark'] .filterBtn.active {
-    background-color: var(--foreground);
-    color: var(--background);
-}
-
-
-.feedGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-/* -- Base Card Styles -- */
-.card {
+/* -- Feed Container & Category Rows -- */
+.feedContainer {
   display: flex;
   flex-direction: column;
-  height: 350px;
-  border-radius: var(--radius-lg);
+  gap: 48px; /* Space between rows */
+}
+
+.categoryRow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rowTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+  padding: 0 48px;
+}
+
+.rowSlider {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 4px 48px 24px; /* Padding for scroll and hover effects */
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.rowSlider::-webkit-scrollbar {
+  display: none;
+}
+
+/* -- Base Card Styles (for Sliders) -- */
+.card {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 320px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
   overflow: hidden;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--border);
-  color: #FFFFFF; /* Default text color for most variants */
+  color: #FFFFFF;
 }
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  border-color: var(--brand-primary);
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  z-index: 10;
 }
 html[data-theme='dark'] .card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 }
 
 .cardContent {
-  padding: 24px;
+  padding: 20px;
   position: relative;
   z-index: 2;
   width: 100%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-}
-
-.category {
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 99px;
-  margin-bottom: 12px;
-  align-self: flex-start; /* Aligns to the start of the flex direction */
+  justify-content: flex-end;
 }
 
 .cardTitle {
   font-family: 'Inter', sans-serif;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 1.1;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .snippet {
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.5;
   opacity: 0.9;
-  margin-top: auto; /* Pushes snippet to the bottom */
+  margin-top: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* -- ============================================= -- */
-/* -- Design Variant 1: Gradient Burst (Updated) -- */
+/* -- Design Variants (Adapted for Sliders) -- */
 /* -- ============================================= -- */
+
 .gradientBurst {
   background: linear-gradient(135deg, #6D28D9, #4F46E5);
   border: none;
 }
-.gradientBurst .category {
-  background-color: rgba(255, 255, 255, 0.15);
-}
-.gradientBurst .cardTitle {
-    font-size: 36px;
-}
+.gradientBurst .cardTitle { font-size: 24px; }
 
-/* -- ============================================= -- */
-/* -- Design Variant 2: Solid Bold (Updated) -- */
-/* -- ============================================= -- */
 .solidBold {
   background-color: #111827;
   justify-content: center;
@@ -159,103 +123,56 @@ html[data-theme='dark'] .solidBold {
     background-color: var(--muted);
     color: var(--foreground);
 }
-.solidBold .cardContent {
-    align-items: center;
-}
-.solidBold .category {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-html[data-theme='dark'] .solidBold .category {
-    background-color: rgba(0,0,0,0.1);
-}
-.solidBold .cardTitle {
-  font-size: 40px;
-  max-width: 90%;
-}
-.solidBold .snippet {
-    display: none; /* Hide snippet for more impact */
-}
+.solidBold .cardContent { align-items: center; }
+.solidBold .cardTitle { font-size: 28px; max-width: 90%; }
+.solidBold .snippet { display: none; }
 
-/* -- ============================================= -- */
-/* -- Design Variant 3: Minimalist Light (Updated) -- */
-/* -- ============================================= -- */
 .minimalistLight {
   background-color: #F3F4F6;
   color: #1F2937;
-  justify-content: flex-start; /* Content from top */
+  justify-content: center;
+  text-align: center;
 }
 html[data-theme='dark'] .minimalistLight {
     background-color: #374151;
     color: #F9FAFB;
 }
-.minimalistLight .category {
-  background-color: #E5E7EB;
-  color: #4B5563;
-}
-html[data-theme='dark'] .minimalistLight .category {
-    background-color: #4B5569;
-    color: #E5E7EB;
-}
+.minimalistLight .cardContent { align-items: center; }
 .minimalistLight .cardTitle {
-  font-size: 28px;
+  font-family: var(--font-serif-display);
+  font-size: 26px;
   color: var(--brand-primary);
   text-shadow: none;
 }
 
-/* -- ============================================= -- */
-/* -- Design Variant 4: Dark & Dramatic (Updated) -- */
-/* -- ============================================= -- */
 .darkDramatic {
-  background-color: #4C1D95; /* Deep purple */
+  background-color: #4C1D95;
   border: none;
 }
-.darkDramatic .cardContent {
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: var(--radius);
-    margin: 16px;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
+.darkDramatic::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+  z-index: 1;
 }
-.darkDramatic .category {
-  border: 1px solid rgba(255,255,255,0.3);
-  background: transparent;
-}
-.darkDramatic .cardTitle {
-  font-size: 30px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
+.darkDramatic .cardTitle { font-size: 26px; }
 
 /* -- ============================================= -- */
 /* -- RTL & Responsive -- */
 /* -- ============================================= -- */
 
 html[dir="rtl"] .title,
-html[dir="rtl"] .cardContent,
-html[dir="rtl"] .solidBold {
+html[dir="rtl"] .rowTitle,
+html[dir="rtl"] .cardContent {
   text-align: right;
 }
 
-html[dir="rtl"] .category {
-    align-self: flex-end;
-}
-
 @media (max-width: 768px) {
-  .homePage {
-    padding: 32px 16px;
-  }
-  .feedGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .card {
-    height: 300px;
-  }
-  .cardTitle {
-    font-size: 26px;
-  }
-   .solidBold .cardTitle {
-    font-size: 32px;
-  }
+  .homePage { padding: 32px 0; }
+  .pageHeader, .rowTitle { padding: 0 24px; }
+  .rowSlider { padding: 4px 24px 16px; gap: 12px; }
+  .card { width: 250px; height: 160px; }
+  .cardTitle { font-size: 18px; }
 }
 
