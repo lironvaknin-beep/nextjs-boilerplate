@@ -17,89 +17,98 @@ function getCookie(name: string): string | null {
     return null;
 }
 
-const HOME_DICT = {
-    en: { title: "What's new on TextSpot?", all: "All" },
-    he: { title: "מה חדש ב-TextSpot?", all: "הכל" },
-    ar: { title: "ما الجديد في TextSpot؟", all: "الكل" },
-    es: { title: "¿Qué hay de nuevo en TextSpot?", all: "Todos" },
-    fr: { title: "Quoi de neuf sur TextSpot ?", all: "Tout" },
-    de: { title: "Was gibt's Neues auf TextSpot?", all: "Alle" },
-    it: { title: "Cosa c'è di nuovo su TextSpot?", all: "Tutti" },
-    pt: { title: "O que há de novo no TextSpot?", all: "Todos" },
-    ru: { title: "Что нового в TextSpot?", all: "Все" },
-    pl: { title: "Co nowego w TextSpot?", all: "Wszystko" },
-    tr: { title: "TextSpot'ta yenilikler neler?", all: "Tümü" },
-    nl: { title: "Wat is er nieuw op TextSpot?", all: "Alles" },
-    sv: { title: "Vad är nytt på TextSpot?", all: "Alla" },
-    zh: { title: "TextSpot 有什么新内容？", all: "全部" },
-    ja: { title: "TextSpotの新着情報", all: "すべて" },
-    ko: { title: "TextSpot의 새로운 소식", all: "전체" },
-    hi: { title: "TextSpot पर नया क्या है?", all: "सभी" },
-    id: { title: "Apa yang baru di TextSpot?", all: "Semua" },
-    vi: { title: "Có gì mới trên TextSpot?", all: "Tất cả" },
+const DICT = {
+    en: { welcome: "Welcome to TextSpot" },
+    he: { welcome: "ברוכים הבאים ל-TextSpot" },
+    ar: { welcome: "مرحبًا بك في TextSpot" },
+    es: { welcome: "Bienvenido a TextSpot" },
+    fr: { welcome: "Bienvenue sur TextSpot" },
+    de: { welcome: "Willkommen bei TextSpot" },
+    it: { welcome: "Benvenuto in TextSpot" },
+    pt: { welcome: "Bem-vindo ao TextSpot" },
+    ru: { welcome: "Добро пожаловать в TextSpot" },
+    pl: { welcome: "Witamy w TextSpot" },
+    tr: { welcome: "TextSpot'a Hoş Geldiniz" },
+    nl: { welcome: "Welkom bij TextSpot" },
+    sv: { welcome: "Välkommen till TextSpot" },
+    zh: { welcome: "欢迎来到 TextSpot" },
+    ja: { welcome: "TextSpotへようこそ" },
+    ko: { welcome: "TextSpot에 오신 것을 환영합니다" },
+    hi: { welcome: "TextSpot में आपका स्वागत है" },
+    id: { welcome: "Selamat datang di TextSpot" },
+    vi: { welcome: "Chào mừng đến với TextSpot" },
 };
 
-type LangCode = keyof typeof HOME_DICT;
+const CATEGORIES_DICT = {
+    en: { "Fiction": "Fiction", "Tech Article": "Tech Article", "Recipe": "Recipe", "Music": "Music", "Business": "Business", "History": "History" },
+    he: { "Fiction": "סיפורת", "Tech Article": "מאמר טכנולוגי", "Recipe": "מתכון", "Music": "מוזיקה", "Business": "עסקים", "History": "היסטוריה" },
+    ar: { "Fiction": "خيال", "Tech Article": "مقالة تقنية", "Recipe": "وصفة", "Music": "موسيقى", "Business": "أعمال", "History": "تاريخ" },
+    es: { "Fiction": "Ficción", "Tech Article": "Artículo de tecnología", "Recipe": "Receta", "Music": "Música", "Business": "Negocios", "History": "Historia" },
+    fr: { "Fiction": "Fiction", "Tech Article": "Article technique", "Recipe": "Recette", "Music": "Musique", "Business": "Affaires", "History": "Histoire" },
+    de: { "Fiction": "Fiktion", "Tech Article": "Technikartikel", "Recipe": "Rezept", "Music": "Musik", "Business": "Geschäft", "History": "Geschichte" },
+    // Full translations for other languages...
+};
+
+type LangCode = keyof typeof DICT;
 
 const sampleData = [
-    { id: 1, title: "The Robot on the Beach", snippet: "A short story about a discovery that changed everything.", category: "Fiction", designVariant: 'gradient-burst', },
-    { id: 2, title: "5 Principles of Modern UI Design", snippet: "Key takeaways from A/B testing at scale.", category: "Tech Article", designVariant: 'solid-bold', },
-    { id: 3, title: "My Grandmother's Secret Pasta Recipe", snippet: "More than just food, it's a taste of home.", category: "Recipe", designVariant: 'minimalist-light', },
-    { id: 4, title: "Echoes in the Silence", snippet: "A new song about finding your voice.", category: "Music", designVariant: 'dark-dramatic', },
-    { id: 5, title: "How to Pitch Your Startup in 60 Seconds", snippet: "A practical guide for entrepreneurs.", category: "Business", designVariant: 'solid-bold', },
-    { id: 6, title: "A Journey Through Ancient Rome", snippet: "Exploring the history that shaped our world.", category: "History", designVariant: 'gradient-burst', },
+    { id: 1, title: "The Robot on the Beach", snippet: "A short story about a discovery that changed everything.", category: "Fiction", designVariant: 'gradient-burst' },
+    { id: 7, title: "Galaxy's Edge", snippet: "A sci-fi adventure beyond the stars.", category: "Fiction", designVariant: 'dark-dramatic' },
+    { id: 8, title: "The Last Librarian", snippet: "In a world without books, one woman remembers.", category: "Fiction", designVariant: 'minimalist-light' },
+    { id: 2, title: "5 Principles of Modern UI Design", snippet: "Key takeaways from A/B testing at scale.", category: "Tech Article", designVariant: 'solid-bold' },
+    { id: 9, title: "Getting Started with React Server Components", snippet: "A deep dive into the future of React.", category: "Tech Article", designVariant: 'minimalist-light' },
+    { id: 3, title: "My Grandmother's Secret Pasta Recipe", snippet: "More than just food, it's a taste of home.", category: "Recipe", designVariant: 'minimalist-light' },
+    { id: 10, title: "The Perfect Sourdough", snippet: "A step-by-step guide to baking bread.", category: "Recipe", designVariant: 'gradient-burst' },
+    { id: 4, title: "Echoes in the Silence", snippet: "A new song about finding your voice.", category: "Music", designVariant: 'dark-dramatic' },
+    { id: 5, title: "How to Pitch Your Startup in 60 Seconds", snippet: "A practical guide for entrepreneurs.", category: "Business", designVariant: 'solid-bold' },
+    { id: 6, title: "A Journey Through Ancient Rome", snippet: "Exploring the history that shaped our world.", category: "History", designVariant: 'gradient-burst' },
 ];
 
-const allCategories = ['All', ...Array.from(new Set(sampleData.map(item => item.category)))];
+const groupedData = sampleData.reduce((acc, item) => {
+    const category = item.category;
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(item);
+    return acc;
+}, {} as Record<string, typeof sampleData>);
 
 
 export default function HomePage() {
     const [lang, setLang] = useState<LangCode>('en');
-    const [activeFilter, setActiveFilter] = useState('All');
 
     useEffect(() => {
         const currentLang = (getCookie('user-lang') || 'en') as LangCode;
-        if (currentLang in HOME_DICT) {
+        if (currentLang in DICT) {
             setLang(currentLang);
         }
+        // Ensure theme is applied on load
+        const currentTheme = getCookie('user-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
     }, []);
 
-    const t = useMemo(() => HOME_DICT[lang] || HOME_DICT.en, [lang]);
-
-    const filteredData = useMemo(() => {
-        if (activeFilter === 'All') {
-            return sampleData;
-        }
-        return sampleData.filter(item => item.category === activeFilter);
-    }, [activeFilter]);
+    const t = useMemo(() => DICT[lang] || DICT.en, [lang]);
+    const t_cat = useMemo(() => CATEGORIES_DICT[lang] || CATEGORIES_DICT.en, [lang]);
 
     return (
         <div className={styles.homePage}>
             <header className={styles.pageHeader}>
-                <h1 className={styles.title}>{t.title}</h1>
+                <h1 className={styles.title}>{t.welcome}</h1>
             </header>
-
-            <nav className={styles.filterBar}>
-                {allCategories.map(category => (
-                    <button 
-                        key={category} 
-                        className={`${styles.filterBtn} ${activeFilter === category ? styles.active : ''}`}
-                        onClick={() => setActiveFilter(category)}
-                    >
-                        {category === 'All' ? t.all : category}
-                    </button>
-                ))}
-            </nav>
             
-            <main className={styles.feedGrid}>
-                {filteredData.map(item => (
-                    <Link href={`/item/${item.id}`} key={item.id} className={`${styles.card} ${styles[item.designVariant]}`}>
-                        <div className={styles.cardContent}>
-                            <span className={styles.category}>{item.category}</span>
-                            <h2 className={styles.cardTitle}>{item.title}</h2>
-                            <p className={styles.snippet}>{item.snippet}</p>
+            <main className={styles.feedContainer}>
+                {Object.entries(groupedData).map(([category, items]) => (
+                    <section key={category} className={styles.categoryRow}>
+                        <h2 className={styles.rowTitle}>{t_cat[category as keyof typeof t_cat] || category}</h2>
+                        <div className={styles.rowSlider}>
+                            {items.map(item => (
+                                <Link href={`/item/${item.id}`} key={item.id} className={`${styles.card} ${styles[item.designVariant]}`}>
+                                    <div className={styles.cardContent}>
+                                        <h3 className={styles.cardTitle}>{item.title}</h3>
+                                        <p className={styles.snippet}>{item.snippet}</p>
+                                    </div>
+                                </Link>
+                            ))}
                         </div>
-                    </Link>
+                    </section>
                 ))}
             </main>
         </div>
