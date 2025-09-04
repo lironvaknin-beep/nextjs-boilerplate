@@ -62,14 +62,12 @@ const CATEGORIES_DICT = {
     vi: { "Trending Now": "Thịnh hành", "Short Stories": "Truyện ngắn", "For You": "Dành cho bạn", "Characters": "Nhân vật", "Tech & Future": "Công nghệ & Tương lai", "Productivity Hacks": "Mẹo năng suất", "World History": "Lịch sử thế giới" },
 };
 
+
 type LangCode = keyof typeof DICT;
 
-// Group data by category for the Netflix-style rows
 const groupedData = sampleData.reduce((acc, item) => {
     const category = item.category;
-    if (!acc[category]) {
-        acc[category] = [];
-    }
+    if (!acc[category]) acc[category] = [];
     acc[category].push(item);
     return acc;
 }, {} as Record<string, typeof sampleData>);
