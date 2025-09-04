@@ -40,28 +40,36 @@ const DICT = {
 };
 
 const CATEGORIES_DICT = {
-    en: { "Fiction": "Fiction", "Tech Article": "Tech Article", "Recipe": "Recipe", "Music": "Music", "Business": "Business", "History": "History" },
-    he: { "Fiction": "סיפורת", "Tech Article": "מאמר טכנולוגי", "Recipe": "מתכון", "Music": "מוזיקה", "Business": "עסקים", "History": "היסטוריה" },
-    ar: { "Fiction": "خيال", "Tech Article": "مقالة تقنية", "Recipe": "وصفة", "Music": "موسيقى", "Business": "أعمال", "History": "تاريخ" },
-    es: { "Fiction": "Ficción", "Tech Article": "Artículo de tecnología", "Recipe": "Receta", "Music": "Música", "Business": "Negocios", "History": "Historia" },
-    fr: { "Fiction": "Fiction", "Tech Article": "Article technique", "Recipe": "Recette", "Music": "Musique", "Business": "Affaires", "History": "Histoire" },
-    de: { "Fiction": "Fiktion", "Tech Article": "Technikartikel", "Recipe": "Rezept", "Music": "Musik", "Business": "Geschäft", "History": "Geschichte" },
+    en: { "Trending Now": "Trending Now", "Short Stories": "Short Stories", "For You": "For You", "Tech & Future": "Tech & Future", "Creative Corner": "Creative Corner" },
+    he: { "Trending Now": "פופולרי עכשיו", "Short Stories": "סיפורים קצרים", "For You": "בשבילך", "Tech & Future": "טכנולוגיה ועתיד", "Creative Corner": "פינה יצירתית" },
+    ar: { "Trending Now": "الرائج الآن", "Short Stories": "قصص قصيرة", "For You": "لك", "Tech & Future": "التكنولوجيا والمستقبل", "Creative Corner": "ركن الإبداع" },
     // Full translations for other languages...
 };
 
 type LangCode = keyof typeof DICT;
 
 const sampleData = [
-    { id: 1, title: "The Robot on the Beach", snippet: "A short story about a discovery that changed everything.", category: "Fiction", designVariant: 'gradient-burst' },
-    { id: 7, title: "Galaxy's Edge", snippet: "A sci-fi adventure beyond the stars.", category: "Fiction", designVariant: 'dark-dramatic' },
-    { id: 8, title: "The Last Librarian", snippet: "In a world without books, one woman remembers.", category: "Fiction", designVariant: 'minimalist-light' },
-    { id: 2, title: "5 Principles of Modern UI Design", snippet: "Key takeaways from A/B testing at scale.", category: "Tech Article", designVariant: 'solid-bold' },
-    { id: 9, title: "Getting Started with React Server Components", snippet: "A deep dive into the future of React.", category: "Tech Article", designVariant: 'minimalist-light' },
-    { id: 3, title: "My Grandmother's Secret Pasta Recipe", snippet: "More than just food, it's a taste of home.", category: "Recipe", designVariant: 'minimalist-light' },
-    { id: 10, title: "The Perfect Sourdough", snippet: "A step-by-step guide to baking bread.", category: "Recipe", designVariant: 'gradient-burst' },
-    { id: 4, title: "Echoes in the Silence", snippet: "A new song about finding your voice.", category: "Music", designVariant: 'dark-dramatic' },
-    { id: 5, title: "How to Pitch Your Startup in 60 Seconds", snippet: "A practical guide for entrepreneurs.", category: "Business", designVariant: 'solid-bold' },
-    { id: 6, title: "A Journey Through Ancient Rome", snippet: "Exploring the history that shaped our world.", category: "History", designVariant: 'gradient-burst' },
+    // Trending Now
+    { id: 1, title: "The Robot on the Beach", snippet: "A short story about a discovery that changed everything.", category: "Trending Now", designVariant: 'gradient-burst' },
+    { id: 2, title: "5 Principles of Modern UI Design", snippet: "Key takeaways from A/B testing at scale.", category: "Trending Now", designVariant: 'solid-bold' },
+    { id: 5, title: "How to Pitch Your Startup in 60 Seconds", snippet: "A practical guide for entrepreneurs.", category: "Trending Now", designVariant: 'solid-bold' },
+    { id: 11, title: "The Art of Saying No", snippet: "Protect your time and energy.", category: "Trending Now", designVariant: 'minimalist-light' },
+
+    // Short Stories
+    { id: 7, title: "Galaxy's Edge", snippet: "A sci-fi adventure beyond the stars.", category: "Short Stories", designVariant: 'dark-dramatic' },
+    { id: 8, title: "The Last Librarian", snippet: "In a world without books, one woman remembers.", category: "Short Stories", designVariant: 'minimalist-light' },
+    { id: 12, title: "Whispers in the Old Manor", snippet: "A gothic mystery unfolds.", category: "Short Stories", designVariant: 'dark-dramatic' },
+    { id: 13, title: "A Summer in Tuscany", snippet: "Finding love and pasta.", category: "Short Stories", designVariant: 'gradient-burst' },
+    
+    // For You
+    { id: 3, title: "My Grandmother's Secret Pasta Recipe", snippet: "More than just food, it's a taste of home.", category: "For You", designVariant: 'minimalist-light' },
+    { id: 10, title: "The Perfect Sourdough", snippet: "A step-by-step guide to baking bread.", category: "For You", designVariant: 'gradient-burst' },
+    { id: 4, title: "Echoes in the Silence", snippet: "A new song about finding your voice.", category: "For You", designVariant: 'dark-dramatic' },
+
+    // Tech & Future
+    { id: 9, title: "Getting Started with React Server Components", snippet: "A deep dive into the future of React.", category: "Tech & Future", designVariant: 'solid-bold' },
+    { id: 14, title: "Is AI Conscious?", snippet: "A philosophical debate for the modern age.", category: "Tech & Future", designVariant: 'dark-dramatic' },
+    { id: 15, title: "The Future of Remote Work", snippet: "How technology is reshaping the office.", category: "Tech & Future", designVariant: 'minimalist-light' },
 ];
 
 const groupedData = sampleData.reduce((acc, item) => {
