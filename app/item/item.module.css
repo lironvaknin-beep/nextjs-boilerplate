@@ -1,204 +1,244 @@
-/* -- Home Page Styles - "Evolve" V3.0 (Netflix Vision) -- */
-/* -- Built from the ground up for a premium, dynamic feed experience -- */
+/* -- Item Page Styles - "Evolve" V1.0 -- */
 
-.homePage {
-  /* No max-width for a full-bleed feel, padding is handled by rows */
+.itemPageWrapper {
   padding: 48px 0;
-  overflow-x: hidden; /* Prevent horizontal scroll on the page itself */
+  background-color: var(--background);
 }
 
-.pageHeader {
+.itemPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.loading {
+  text-align: center;
+  padding: 80px;
+  color: var(--muted-foreground);
+}
+
+/* -- ============================================= -- */
+/* -- Item Header & Metadata -- */
+/* -- ============================================= -- */
+
+.itemHeader {
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 32px;
-  padding: 0 48px; /* Standard horizontal padding */
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: 24px;
+  transition: color var(--transition);
+}
+.backLink:hover {
+  color: var(--brand-primary);
+}
+
+.category {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
 }
 
 .title {
-  font-size: clamp(28px, 5vw, 40px);
-  font-weight: 800;
+  font-family: var(--font-serif-display);
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.2;
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.meta {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.author {
+  font-weight: 600;
   color: var(--foreground);
 }
 
 /* -- ============================================= -- */
-/* -- Filter Bar (Polished) -- */
-/* -- ============================================= -- */
-.filterBar {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 4px 48px 24px;
-    margin-bottom: 32px;
-    scroll-snap-type: x mandatory; 
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-.filterBar::-webkit-scrollbar {
-    display: none;
-}
-
-.filterBtn {
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 99px;
-    border: 1px solid var(--border);
-    background-color: var(--muted);
-    color: var(--muted-foreground);
-    cursor: pointer;
-    transition: all var(--transition);
-}
-.filterBtn:hover {
-    background-color: var(--accent);
-    color: var(--foreground);
-}
-.filterBtn.active {
-    background-color: var(--foreground);
-    color: var(--background);
-    border-color: var(--foreground);
-}
-html[data-theme='dark'] .filterBtn.active {
-    background-color: var(--foreground);
-    color: var(--background);
-}
-
-/* -- ============================================= -- */
-/* -- Netflix-Style Feed Container -- */
+/* -- Equalizer Controls -- */
 /* -- ============================================= -- */
 
-.feedContainer {
+.equalizer {
+  margin-top: 32px;
+  background-color: var(--muted);
+  border-radius: var(--radius-lg);
+  padding: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 48px;
+  flex-wrap: wrap;
+  gap: 32px;
 }
 
-.categoryRow {
+.equalizerSection {
+  flex: 1;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.rowTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--foreground);
-  padding: 0 48px;
+.equalizerTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.rowSlider {
+.controlGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.controlGroup > span {
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 80px;
+}
+.controlGroup button {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.controlGroup button:hover {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+.controlGroup button.active {
+  background-color: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary);
+}
+
+/* -- ============================================= -- */
+/* -- Content Body -- */
+/* -- ============================================= -- */
+
+.content {
+  color: var(--foreground);
+  transition: all var(--transition);
+}
+.content p {
+  line-height: 1.8;
+  margin-bottom: 1em;
+}
+
+/* Font Size Classes */
+.small { font-size: 16px; }
+.medium { font-size: 18px; }
+.large { font-size: 20px; }
+
+/* Font Family Classes */
+.serif { font-family: var(--font-serif-display); }
+.sansSerif { font-family: var(--font-sans); }
+
+
+/* -- ============================================= -- */
+/* -- Related Content Section (Slider) -- */
+/* -- ============================================= -- */
+.relatedSection {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.relatedTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  padding: 0 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.relatedGrid {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding: 4px 48px 24px;
+  padding: 4px 24px 24px;
   scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
-.rowSlider::-webkit-scrollbar {
+.relatedGrid::-webkit-scrollbar {
   display: none;
 }
 
-/* -- ============================================= -- */
-/* -- Base Card & Card Types (The Netflix Vision) -- */
-/* -- ============================================= -- */
-.card {
+.relatedCard {
   scroll-snap-align: start;
-  flex-shrink: 0;
-  display: flex;
+  flex: 0 0 280px;
+  height: 180px;
   border-radius: var(--radius);
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: var(--muted);
-  color: #FFFFFF;
-}
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  z-index: 10;
-}
-html[data-theme='dark'] .card:hover {
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-}
-
-/* Different card types for visual variety */
-.poster { width: 180px; height: 250px; }
-.thumbnail { width: 320px; height: 180px; }
-.circle { width: 160px; height: 160px; border-radius: 50%; }
-
-/* The color gradient from JSON is applied here */
-.cardOverlay {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    /* Add a dark gradient on top of the color gradient to ensure readability */
-    background-image: linear-gradient(to top, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0) 60%) !important;
-}
-
-.cardContent {
+  border: 1px solid var(--border);
+  background-color: var(--card);
   padding: 20px;
-  position: relative;
-  z-index: 2;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: space-between;
+  transition: all var(--transition);
+}
+.relatedCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-primary);
 }
 
-.cardTitle {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-.snippet {
-  font-size: 14px;
-  line-height: 1.5;
-  opacity: 0.9;
-  margin-top: 8px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.relatedCategory {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted-foreground);
 }
 
-/* Specific styles for card types */
-.circle .cardContent {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-.circle .cardTitle {
-    font-size: 18px;
-}
-.circle .snippet {
-    display: none;
+.relatedCardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--foreground);
 }
 
-.poster .cardTitle {
-    font-size: 22px;
-}
 
 /* -- ============================================= -- */
 /* -- RTL & Responsive -- */
 /* -- ============================================= -- */
 
 html[dir="rtl"] .title,
-html[dir="rtl"] .rowTitle,
-html[dir="rtl"] .cardContent {
+html[dir="rtl"] .meta,
+html[dir="rtl"] .content,
+html[dir="rtl"] .relatedTitle,
+html[dir="rtl"] .equalizerTitle,
+html[dir="rtl"] .controlGroup > span {
   text-align: right;
 }
 
-@media (max-width: 768px) {
-  .homePage { padding: 32px 0; }
-  .pageHeader, .rowTitle { padding: 0 24px; }
-  .rowSlider { padding: 4px 24px 16px; gap: 12px; }
-  
-  .poster { width: 140px; height: 200px; }
-  .thumbnail { width: 250px; height: 140px; }
-  .circle { width: 120px; height: 120px; }
+html[dir="rtl"] .backLink {
+  /* No change needed for arrow, it's universal */
+}
 
-  .cardTitle { font-size: 16px; }
-  .circle .cardTitle { font-size: 14px; }
+@media (max-width: 768px) {
+    .itemPageWrapper { padding: 24px 0; }
+    .itemPage { padding: 0 16px; }
+    .title { font-size: 32px; }
+    .equalizer { flex-direction: column; }
+    .relatedGrid { padding: 4px 16px 16px; }
+    .relatedCard { flex: 0 0 240px; }
 }
 
