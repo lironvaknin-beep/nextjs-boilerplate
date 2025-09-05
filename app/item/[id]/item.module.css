@@ -1,4 +1,4 @@
-/* -- Item Page Styles - "Evolve" V2.0 (Full Vision) -- */
+/* -- Item Page Styles - "Evolve" V3.0 (Viral Vision) -- */
 /* -- Premium, clean, and interactive reading experience -- */
 
 .itemPageWrapper {
@@ -19,7 +19,7 @@
 }
 
 /* -- ============================================= -- */
-/* -- Item Header & Metadata -- */
+/* -- Item Header & Viral Actions -- */
 /* -- ============================================= -- */
 
 .itemHeader {
@@ -41,6 +41,15 @@
 .backLink:hover {
   color: var(--brand-primary);
 }
+
+.headerMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.headerText { flex: 1; }
 
 .category {
   font-size: 14px;
@@ -68,24 +77,64 @@
   color: var(--foreground);
 }
 
+.viralActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.viralScore {
+    background: var(--muted);
+    color: var(--foreground);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 99px;
+}
+
+.shareButtons {
+    display: flex;
+    gap: 8px;
+}
+.shareButtons button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted-foreground);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.shareButtons button:hover {
+    background: var(--accent);
+    color: var(--foreground);
+}
 
 /* -- ============================================= -- */
-/* -- Content Body -- */
+/* -- Content Body & Interactivity -- */
 /* -- ============================================= -- */
 
 .content {
   color: var(--foreground);
-  font-size: 18px; /* Base font size for content */
+  font-size: 18px;
   font-family: var(--font-serif-display);
   line-height: 1.8;
 }
-.content p {
-  margin-bottom: 1.5em;
+.content .sentence {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.content .sentence:hover {
+    background-color: rgba(161, 161, 170, 0.1); /* Zinc 300 with opacity */
+}
+html[data-theme='dark'] .content .sentence:hover {
+    background-color: rgba(161, 161, 170, 0.1);
 }
 
-
 /* -- ============================================= -- */
-/* -- Floating Action Button (FAB) for Equalizer -- */
+/* -- Floating Action Button (FAB) & Gamification -- */
 /* -- ============================================= -- */
 
 .equalizerFab {
@@ -110,20 +159,35 @@
     transform: scale(1.1);
 }
 
+.xpGain {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #16A34A; /* Green */
+    color: white;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    animation: xpAnimation 1.5s ease-out forwards;
+}
+@keyframes xpAnimation {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, -30px); opacity: 0; }
+}
+
 /* -- ============================================= -- */
 /* -- Equalizer Modal -- */
 /* -- ============================================= -- */
 
 .modalOverlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-color: hsla(0, 0%, 100%, 0.5);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex; justify-content: center; align-items: center;
     padding: 16px;
     animation: fadeInOverlay 0.3s ease;
 }
@@ -148,134 +212,74 @@ html[data-theme='dark'] .modalOverlay {
 }
 
 .closeModalBtn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    color: var(--muted-foreground);
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none;
+    color: var(--muted-foreground); cursor: pointer;
+    padding: 8px; border-radius: 50%;
 }
-.closeModalBtn:hover {
-    background-color: var(--accent);
-}
+.closeModalBtn:hover { background-color: var(--accent); }
 
-.modalTitle {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--foreground);
-}
+.modalTitle { font-size: 20px; font-weight: 700; color: var(--foreground); }
+.equalizerSection { display: flex; flex-direction: column; gap: 12px; }
+.equalizerTitle { font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; }
+.controlGroup { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.controlGroup button { padding: 8px 16px; font-size: 14px; font-weight: 500; border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card); color: var(--foreground); cursor: pointer; transition: all var(--transition); }
+.controlGroup button:hover { background-color: var(--accent); border-color: var(--ring); }
+.slider { width: 100%; }
 
-.equalizerSection {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.equalizerTitle {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.controlGroup {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.controlGroup button {
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background-color: var(--card);
-  color: var(--foreground);
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.controlGroup button:hover {
-  background-color: var(--accent);
-  border-color: var(--ring);
-}
-
+.stepper { display: flex; align-items: center; gap: 12px; }
+.stepper button { width: 32px; height: 32px; border-radius: 50%; }
+.stepper span { font-weight: 600; font-size: 16px; }
 
 /* -- ============================================= -- */
-/* -- Related Content Section (Slider) -- */
+/* -- Related & Community Sections -- */
 /* -- ============================================= -- */
-.relatedSection {
+
+.relatedSection, .communitySection {
   margin-top: 64px;
   padding-top: 32px;
   border-top: 1px solid var(--border);
 }
 
-.relatedTitle {
-  font-size: 24px;
-  font-weight: 700;
+.relatedTitle, .communityTitle {
+  font-size: 24px; font-weight: 700;
   margin-bottom: 24px;
+  max-width: 720px; margin-left: auto; margin-right: auto;
   padding: 0 24px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-.relatedGrid {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  padding: 4px 24px 24px;
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.relatedSlider {
+  display: flex; gap: 16px; overflow-x: auto;
+  padding: 4px 24px 24px; scroll-snap-type: x mandatory;
+  -ms-overflow-style: none; scrollbar-width: none;
 }
-.relatedGrid::-webkit-scrollbar {
-  display: none;
-}
+.relatedSlider::-webkit-scrollbar { display: none; }
 
 .relatedCard {
-  scroll-snap-align: start;
-  flex: 0 0 280px;
-  height: 180px;
-  border-radius: var(--radius);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  color: white;
-  transition: all var(--transition);
+  scroll-snap-align: start; flex: 0 0 280px; height: 180px;
+  border-radius: var(--radius); overflow: hidden; position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  color: white; transition: all var(--transition);
 }
-.relatedCard:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+.relatedCard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.cardOverlay { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(to top, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0) 60%) !important; }
+.relatedCardContent { position: relative; z-index: 2; padding: 20px; }
+.relatedCardTitle { font-size: 18px; font-weight: 600; line-height: 1.4; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+.quickRemixBtn {
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 99px;
+    background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); color: white;
+    border: none; cursor: pointer; margin-top: 12px;
 }
 
-.relatedCardOverlay {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(to top, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0) 60%);
-    z-index: 1;
+.comments { max-width: 720px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 24px; }
+.comment { background: var(--muted); padding: 16px; border-radius: var(--radius); }
+.commentAuthor { font-weight: 600; margin-bottom: 4px; }
+.commentText { font-size: 15px; color: var(--muted-foreground); }
+.reactions { display: flex; gap: 8px; margin-top: 12px; }
+.reactions button {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 99px; font-size: 12px; cursor: pointer;
 }
-
-.relatedCardContent {
-    position: relative;
-    z-index: 2;
-}
-
-.relatedCardTitle {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: white;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-}
-
 
 /* -- ============================================= -- */
 /* -- RTL & Responsive -- */
@@ -289,16 +293,10 @@ html[dir="rtl"] .modalTitle,
 html[dir="rtl"] .equalizerTitle {
   text-align: right;
 }
+html[dir="rtl"] .closeModalBtn { right: auto; left: 16px; }
+html[dir="rtl"] .equalizerFab { right: auto; left: 24px; }
+html[dir="rtl"] .relatedSlider { flex-direction: row-reverse; }
 
-html[dir="rtl"] .closeModalBtn {
-    right: auto;
-    left: 16px;
-}
-
-html[dir="rtl"] .equalizerFab {
-    right: auto;
-    left: 24px;
-}
 
 @media (max-width: 768px) {
     .itemPageWrapper { padding: 24px 0; }
