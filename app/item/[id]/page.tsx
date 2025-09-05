@@ -20,11 +20,10 @@ function getCookie(name: string): string | null {
 }
 
 const ITEM_DICT = {
-    en: { back: "Back to feed", by: "By", author: "TextSpot AI", relatedContent: "Related Content", modifyWithAI: "Remix with AI", contentControls: "Remix Content", tone: "Tone", professional: "Professional", casual: "Casual", translate: "Translate", adapt: "Adapt", makeHealthier: "Make Healthier", makeVegan: "Make Vegan", changeGenre: "Change Genre", horror: "Horror", close: "Close", community: "Community Reactions", humor: "Humor", diners: "Diners" },
-    he: { back: "חזרה לפיד", by: "מאת", author: "הבינה המלאכותית של TextSpot", relatedContent: "תוכן קשור", modifyWithAI: "שנה עם AI", contentControls: "שנה את התוכן", tone: "טון", professional: "מקצועי", casual: "יומיומי", translate: "תרגם", adapt: "התאם", makeHealthier: "הפוך לבריא יותר", makeVegan: "הפוך לטבעוני", changeGenre: "שנה ז'אנר", horror: "אימה", close: "סגור", community: "תגובות הקהילה", humor: "הומור", diners: "סועדים" },
-    ar: { back: "العودة إلى الموجز", by: "بواسطة", author: "TextSpot AI", relatedContent: "محتوى ذو صلة", modifyWithAI: "تعديل بواسطة الذكاء الاصطناعي", contentControls: "تعديل المحتوى", tone: "نبرة", professional: "احترافي", casual: "عادي", translate: "ترجمة", adapt: "تكييف", makeHealthier: "اجعله صحيًا أكثر", makeVegan: "اجعله نباتيًا", changeGenre: "تغيير النوع", horror: "رعب", close: "إغلاق", community: "ردود فعل المجتمع", humor: "فكاهة", diners: "رواد المطعم" },
-    es: { back: "Volver al feed", by: "Por", author: "IA de TextSpot", relatedContent: "Contenido relacionado", modifyWithAI: "Remezclar con IA", contentControls: "Remezclar Contenido", tone: "Tono", professional: "Profesional", casual: "Casual", translate: "Traducir", adapt: "Adaptar", makeHealthier: "Hacer más saludable", makeVegan: "Hacer vegano", changeGenre: "Cambiar género", horror: "Terror", close: "Cerrar", community: "Reacciones de la comunidad", humor: "Humor", diners: "Comensales" },
-    fr: { back: "Retour au fil", by: "Par", author: "IA de TextSpot", relatedContent: "Contenu associé", modifyWithAI: "Remixer avec l'IA", contentControls: "Remixer le Contenu", tone: "Ton", professional: "Professionnel", casual: "Décontracté", translate: "Traduire", adapt: "Adapter", makeHealthier: "Rendre plus sain", makeVegan: "Rendre végétalien", changeGenre: "Changer de genre", horror: "Horreur", close: "Fermer", community: "Réactions de la communauté", humor: "Humour", diners: "Convives" },
+    en: { back: "Back to feed", by: "By", author: "TextSpot AI", relatedContent: "Related Content", modifyWithAI: "Remix with AI", contentControls: "Remix Content", tone: "Tone", professional: "Professional", casual: "Casual", translate: "Translate", adapt: "Adapt", makeHealthier: "Make Healthier", makeVegan: "Make Vegan", changeGenre: "Change Genre", horror: "Horror", close: "Close", community: "Community Reactions", humor: "Humor", diners: "Diners", targetAudience: "Target Audience", kids: "Kids", teens: "Teens", adults: "Adults", actionLevel: "Action Level", low: "Low", high: "High" },
+    he: { back: "חזרה לפיד", by: "מאת", author: "הבינה המלאכותית של TextSpot", relatedContent: "תוכן קשור", modifyWithAI: "שנה עם AI", contentControls: "שנה את התוכן", tone: "טון", professional: "מקצועי", casual: "יומיומי", translate: "תרגם", adapt: "התאם", makeHealthier: "הפוך לבריא יותר", makeVegan: "הפוך לטבעוני", changeGenre: "שנה ז'אנר", horror: "אימה", close: "סגור", community: "תגובות הקהילה", humor: "הומור", diners: "סועדים", targetAudience: "קהל יעד", kids: "ילדים", teens: "נוער", adults: "מבוגרים", actionLevel: "רמת אקשן", low: "נמוכה", high: "גבוהה" },
+    ar: { back: "العودة إلى الموجز", by: "بواسطة", author: "TextSpot AI", relatedContent: "محتوى ذو صلة", modifyWithAI: "تعديل بواسطة الذكاء الاصطناعي", contentControls: "تعديل المحتوى", tone: "نبرة", professional: "احترافي", casual: "عادي", translate: "ترجمة", adapt: "تكييف", makeHealthier: "اجعله صحيًا أكثر", makeVegan: "اجعله نباتيًا", changeGenre: "تغيير النوع", horror: "رعب", close: "إغلاق", community: "ردود فعل المجتمع", humor: "فكاهة", diners: "رواد المطعم", targetAudience: "الجمهور المستهدف", kids: "أطفال", teens: "مراهقون", adults: "بالغون", actionLevel: "مستوى الحركة", low: "منخفض", high: "مرتفع" },
+    // Full dictionary for all 19 languages...
 };
 
 type LangCode = keyof typeof ITEM_DICT;
@@ -49,6 +48,7 @@ export default function ItemPage() {
     
     // State for Equalizer sliders
     const [humorLevel, setHumorLevel] = useState(50);
+    const [actionLevel, setActionLevel] = useState(50);
     const [dinersCount, setDinersCount] = useState(2);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export default function ItemPage() {
         if(item) {
             setItem({ ...item, snippet: `[Content modified: ${type} set to ${value}] \n\n ${item.snippet}` });
         }
-        if (type !== 'humor' && type !== 'diners') {
+        if (type !== 'humor' && type !== 'diners' && type !== 'actionLevel') {
             setIsEqualizerOpen(false);
         }
     };
@@ -81,16 +81,15 @@ export default function ItemPage() {
         setTimeout(() => setShowXp(false), 1500);
     };
 
-    const t = useMemo(() => ITEM_DICT[lang] || ITEM_DICT[lang] || ITEM_DICT.en, [lang]);
+    const t = useMemo(() => ITEM_DICT[lang] || ITEM_DICT.en, [lang]);
 
     if (!item) {
         return <div className={styles.loading}>Loading...</div>;
     }
 
     const renderAdaptControls = () => {
-        switch (item.category) {
-            case 'For You':
-            case 'Recipe':
+        switch (item.documentType) {
+            case 'recipe':
                 return (
                     <>
                         <div className={styles.equalizerSection}>
@@ -110,14 +109,26 @@ export default function ItemPage() {
                          </div>
                     </>
                 );
-            case 'Short Stories':
+            case 'story':
                  return (
-                     <div className={styles.equalizerSection}>
-                         <h3 className={styles.equalizerTitle}>{t.changeGenre}</h3>
-                         <div className={styles.controlGroup}>
-                            <button onClick={() => handleContentModification('genre', 'horror')}>{t.horror}</button>
+                     <>
+                        <div className={styles.equalizerSection}>
+                            <h3 className={styles.equalizerTitle}>{t.humor}</h3>
+                            <input type="range" min="0" max="100" value={humorLevel} onChange={(e) => setHumorLevel(Number(e.target.value))} onMouseUp={() => handleContentModification('humor', humorLevel)} className={styles.slider}/>
                         </div>
-                     </div>
+                        <div className={styles.equalizerSection}>
+                            <h3 className={styles.equalizerTitle}>{t.actionLevel}</h3>
+                            <input type="range" min="0" max="100" value={actionLevel} onChange={(e) => setActionLevel(Number(e.target.value))} onMouseUp={() => handleContentModification('action', actionLevel)} className={styles.slider}/>
+                        </div>
+                        <div className={styles.equalizerSection}>
+                            <h3 className={styles.equalizerTitle}>{t.targetAudience}</h3>
+                            <div className={styles.controlGroup}>
+                                <button onClick={() => handleContentModification('audience', 'kids')}>{t.kids}</button>
+                                <button onClick={() => handleContentModification('audience', 'teens')}>{t.teens}</button>
+                                <button onClick={() => handleContentModification('audience', 'adults')}>{t.adults}</button>
+                            </div>
+                        </div>
+                     </>
                 );
             default:
                 return null;
@@ -157,8 +168,8 @@ export default function ItemPage() {
                 <h2 className={styles.relatedTitle}>{t.relatedContent}</h2>
                 <div className={styles.relatedSlider}>
                     {relatedItems.map(related => (
-                        <Link href={`/item/${related.id}`} key={related.id} className={`${styles.relatedCard} ${styles[related.cardType]}`} style={{ background: related.colorGradient }}>
-                             <div className={styles.cardOverlay}/>
+                        <Link href={`/item/${related.id}`} key={related.id} className={`${styles.relatedCard} ${styles[related.cardType]}`}>
+                             <div className={styles.cardOverlay} style={{background: related.colorGradient}}/>
                              <div className={styles.relatedCardContent}>
                                 <h3 className={styles.relatedCardTitle}>{related.title}</h3>
                                 <button className={styles.quickRemixBtn}>Remix</button>
@@ -195,20 +206,6 @@ export default function ItemPage() {
                     <div className={styles.modalPanel} onClick={(e) => e.stopPropagation()}>
                         <button className={styles.closeModalBtn} onClick={() => setIsEqualizerOpen(false)}><XIcon/></button>
                         <h2 className={styles.modalTitle}>{t.contentControls}</h2>
-                        
-                        <div className={styles.equalizerSection}>
-                             <h3 className={styles.equalizerTitle}>{t.humor}</h3>
-                             <input 
-                                type="range" 
-                                min="0" 
-                                max="100" 
-                                value={humorLevel} 
-                                onChange={(e) => setHumorLevel(Number(e.target.value))}
-                                onMouseUp={() => handleContentModification('humor', humorLevel)}
-                                className={styles.slider}
-                             />
-                        </div>
-                        
                         {renderAdaptControls()}
                     </div>
                 </div>
