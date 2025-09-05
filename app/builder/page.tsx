@@ -34,7 +34,6 @@ const DOC_TYPES = {
     en: { story: 'Story', article: 'Article', blog: 'Blog Post', email: 'Email', school: 'School Work', work: 'Work Document', recipe: 'Recipe', song: 'Song', poem: 'Poem' },
     he: { story: 'סיפור', article: 'מאמר', blog: 'פוסט לבלוג', email: 'אימייל', school: 'עבודה לבית הספר', work: 'מסמך עבודה', recipe: 'מתכון', song: 'שיר', poem: 'שיר' },
     ar: { story: 'قصة', article: 'مقالة', blog: 'منشور مدونة', email: 'بريد إلكتروني', school: 'عمل مدرسي', work: 'مستند عمل', recipe: 'وصفة', song: 'أغنية', poem: 'قصيدة' },
-    // Full translations for all languages...
     es: { story: "Historia", article: "Artículo", blog: "Entrada de blog", email: "Correo electrónico", school: "Trabajo escolar", work: "Documento de trabajo", recipe: "Receta", song: "Canción", poem: "Poema" },
     fr: { story: "Histoire", article: "Article", blog: "Article de blog", email: "E-mail", school: "Travail scolaire", work: "Document de travail", recipe: "Recette", song: "Chanson", poem: "Poème" },
     de: { story: "Geschichte", article: "Artikel", blog: "Blogbeitrag", email: "E-Mail", school: "Schularbeit", work: "Arbeitsdokument", recipe: "Rezept", song: "Lied", poem: "Gedicht" },
