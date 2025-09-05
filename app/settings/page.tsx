@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styles from './settings.module.css';
 
-// --- Helper functions for cookies ---
+// --- Helper function for setting a cookie ---
 function setCookie(name: string, value: string, days: number) {
   let expires = "";
   if (days) {
@@ -14,18 +14,6 @@ function setCookie(name: string, value: string, days: number) {
   if (typeof document !== 'undefined') {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
-}
-
-function getCookie(name: string): string | null {
-  if (typeof document === 'undefined') return null;
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
 }
 
 const LANGUAGES = [
@@ -74,40 +62,34 @@ const SETTINGS_DICT = {
 
 type LangCode = keyof typeof SETTINGS_DICT;
 
-function useUserPreferences() {
-  const [lang, setLang] = useState<LangCode>('en');
-  const [theme, setTheme] = useState('light');
-  
-  useEffect(() => {
-    // This hook reads the initial state from the DOM, which is set by PreferencesProvider
-    const initialLang = (document.documentElement.lang || 'en') as LangCode;
-    if (initialLang in SETTINGS_DICT) {
-      setLang(initialLang);
-    }
-    const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    setTheme(initialTheme as 'light' | 'dark');
-  }, []);
-
-  const changeLanguage = (langInfo: { code: string, dir: string }) => {
-    setCookie('user-lang', langInfo.code, 365);
-    // Reload to allow PreferencesProvider to apply changes globally
-    window.location.reload();
-  };
-
-  const changeTheme = (newTheme: 'light' | 'dark') => {
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    setCookie('user-theme', newTheme, 365);
-  };
-
-  return { lang, theme, changeLanguage, changeTheme };
-}
-
 export default function SettingsPage() {
-    const { lang, theme, changeLanguage, changeTheme } = useUserPreferences();
-    const t = SETTINGS_DICT[lang] || SETTINGS_DICT.en;
+    const [lang, setLang] = useState<LangCode>('en');
+    const [theme, setTheme] = useState('light');
+  
+    useEffect(() => {
+        // This component now only READS from the DOM, which is set by PreferencesProvider
+        const initialLang = (document.documentElement.lang || 'en') as LangCode;
+        if (initialLang in SETTINGS_DICT) {
+            setLang(initialLang);
+        }
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        setTheme(initialTheme as 'light' | 'dark');
+    }, []);
 
-    const dir = LANGUAGES.find(l => l.code === lang)?.dir || 'ltr';
+    const changeLanguage = (langInfo: { code: string, dir: string }) => {
+        setCookie('user-lang', langInfo.code, 365);
+        // Reload to allow PreferencesProvider to apply changes globally
+        window.location.reload();
+    };
+
+    const changeTheme = (newTheme: 'light' | 'dark') => {
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        setCookie('user-theme', newTheme, 365);
+    };
+
+    const t = SETTINGS_DICT[lang] || SETTINGS_DICT.en;
+    const dir = document.documentElement.dir || 'ltr';
 
     return (
         <div className={styles.settingsPage} dir={dir}>
