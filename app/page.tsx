@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import styles from './home.module.css';
-import sampleData from './sample-data.json';
+import sampleData from './sample-data.json'; // Import data from the new JSON file
 
 // --- Helper function for getting a cookie ---
 function getCookie(name: string): string | null {
@@ -64,9 +64,12 @@ const CATEGORIES_DICT = {
 
 type LangCode = keyof typeof DICT;
 
+// Group data by category for the Netflix-style rows
 const groupedData = sampleData.reduce((acc, item) => {
     const category = item.category;
-    if (!acc[category]) acc[category] = [];
+    if (!acc[category]) {
+        acc[category] = [];
+    }
     acc[category].push(item);
     return acc;
 }, {} as Record<string, typeof sampleData>);
@@ -122,7 +125,6 @@ export default function HomePage() {
                                     <div className={styles.cardOverlay} style={{background: item.colorGradient}}/>
                                     <div className={styles.cardContent}>
                                         <h3 className={styles.cardTitle}>{item.title}</h3>
-                                        {/* Snippet is now optional, for cleaner cards */}
                                         {item.snippet && <p className={styles.snippet}>{item.snippet}</p>}
                                     </div>
                                 </Link>
