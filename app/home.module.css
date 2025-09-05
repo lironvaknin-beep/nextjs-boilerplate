@@ -1,4 +1,4 @@
-/* -- Home Page Styles - "Evolve" V3.1 (The Netflix Vision - Polished) -- */
+/* -- Home Page Styles - "Evolve" V3.2 (The Netflix Vision - Polished) -- */
 /* -- Built from the ground up for a premium, dynamic feed experience -- */
 
 .homePage {
@@ -198,6 +198,7 @@ html[dir="rtl"] .cardContent {
 html[dir="rtl"] .filterBar,
 html[dir="rtl"] .rowSlider {
   flex-direction: row-reverse;
+  direction: rtl; /* This is the key fix for scrolling behavior */
 }
 
 @media (max-width: 768px) {
