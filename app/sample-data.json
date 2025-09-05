@@ -5,7 +5,7 @@
     "snippet": "A short story about a discovery that changed everything.",
     "category": "Trending Now",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #0f172a 0%, #334155 100%)"
   },
   {
@@ -14,7 +14,7 @@
     "snippet": "Key takeaways from A/B testing at scale.",
     "category": "Trending Now",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #4f46e5 0%, #818cf8 100%)"
   },
   {
@@ -23,7 +23,7 @@
     "snippet": "A practical guide for entrepreneurs.",
     "category": "Trending Now",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #047857 0%, #34d399 100%)"
   },
   {
@@ -32,7 +32,7 @@
     "snippet": "Protect your time and energy.",
     "category": "Trending Now",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #be185d 0%, #f9a8d4 100%)"
   },
   {
@@ -41,7 +41,7 @@
     "snippet": "Find your inner peace in just 5 minutes a day.",
     "category": "Trending Now",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #06b6d4 0%, #67e8f9 100%)"
   },
   {
@@ -50,7 +50,7 @@
     "snippet": "",
     "category": "Short Stories",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)"
   },
   {
@@ -59,7 +59,7 @@
     "snippet": "",
     "category": "Short Stories",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #92400e 0%, #f59e0b 100%)"
   },
   {
@@ -68,7 +68,7 @@
     "snippet": "",
     "category": "Short Stories",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #4a044e 0%, #a21caf 100%)"
   },
   {
@@ -77,7 +77,7 @@
     "snippet": "",
     "category": "Short Stories",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #065f46 0%, #34d399 100%)"
   },
   {
@@ -86,7 +86,7 @@
     "snippet": "A cyberpunk detective story.",
     "category": "Short Stories",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)"
   },
   {
@@ -95,7 +95,7 @@
     "snippet": "More than just food, it's a taste of home.",
     "category": "For You",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #9a3412 0%, #fdba74 100%)"
   },
   {
@@ -104,7 +104,7 @@
     "snippet": "A step-by-step guide to baking bread.",
     "category": "For You",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #b45309 0%, #fcd34d 100%)"
   },
   {
@@ -113,7 +113,7 @@
     "snippet": "A new song about finding your voice.",
     "category": "For You",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #172554 0%, #3b82f6 100%)"
   },
   {
@@ -122,7 +122,7 @@
     "snippet": "",
     "category": "Characters",
     "cardType": "circle",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%)"
   },
   {
@@ -131,7 +131,7 @@
     "snippet": "",
     "category": "Characters",
     "cardType": "circle",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #0c4a6e 0%, #38bdf8 100%)"
   },
   {
@@ -140,7 +140,7 @@
     "snippet": "",
     "category": "Characters",
     "cardType": "circle",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #166534 0%, #4ade80 100%)"
   },
   {
@@ -149,7 +149,7 @@
     "snippet": "",
     "category": "Characters",
     "cardType": "circle",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #581c87 0%, #a855f7 100%)"
   },
   {
@@ -158,7 +158,7 @@
     "snippet": "",
     "category": "Characters",
     "cardType": "circle",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #1f2937 0%, #4b5563 100%)"
   },
   {
@@ -167,7 +167,7 @@
     "snippet": "A deep dive into the future of React.",
     "category": "Tech & Future",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #000000 0%, #434343 100%)"
   },
   {
@@ -176,7 +176,7 @@
     "snippet": "A philosophical debate for the modern age.",
     "category": "Tech & Future",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #3730a3 0%, #818cf8 100%)"
   },
   {
@@ -185,7 +185,7 @@
     "snippet": "How technology is reshaping the office.",
     "category": "Tech & Future",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #164e63 0%, #22d3ee 100%)"
   },
   {
@@ -194,7 +194,7 @@
     "snippet": "Boost your focus and get more done.",
     "category": "Productivity Hacks",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #9f1239 0%, #fb7185 100%)"
   },
   {
@@ -203,7 +203,7 @@
     "snippet": "Reclaim your inbox and your sanity.",
     "category": "Productivity Hacks",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #1e40af 0%, #60a5fa 100%)"
   },
   {
@@ -212,7 +212,7 @@
     "snippet": "How to organize your digital life.",
     "category": "Productivity Hacks",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #374151 0%, #9ca3af 100%)"
   },
   {
@@ -221,7 +221,7 @@
     "snippet": "What can we learn from history's giants?",
     "category": "World History",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #78350f 0%, #f59e0b 100%)"
   },
   {
@@ -230,7 +230,7 @@
     "snippet": "Connecting worlds, one trade at a time.",
     "category": "World History",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #854d0e 0%, #eab308 100%)"
   },
   {
@@ -239,7 +239,7 @@
     "snippet": "How exploration changed the map forever.",
     "category": "World History",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #047857 0%, #34d399 100%)"
   },
   {
@@ -248,7 +248,7 @@
     "snippet": "The machines that built the modern world.",
     "category": "World History",
     "cardType": "thumbnail",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #334155 0%, #94a3b8 100%)"
   },
   {
@@ -257,7 +257,7 @@
     "snippet": "Uncovering the mysteries of ancient Egypt.",
     "category": "World History",
     "cardType": "poster",
-    "imageUrl": null,
+    "lang": "en",
     "colorGradient": "linear-gradient(135deg, #ca8a04 0%, #fde047 100%)"
   }
 ]
