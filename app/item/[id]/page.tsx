@@ -1,216 +1,309 @@
-'use client';
+/* -- Item Page Styles - "Evolve" V3.0 (Viral Vision - Full Implementation) -- */
+/* -- Premium, clean, and interactive reading experience -- */
 
-import { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import styles from './item.module.css';
-import sampleData from '../../sample-data.json';
-
-// --- Helper function for getting a cookie ---
-function getCookie(name: string): string | null {
-    if (typeof document === 'undefined') return null;
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
+.itemPageWrapper {
+  padding-bottom: 48px;
+  background-color: var(--background);
 }
 
-const ITEM_DICT = {
-    en: { back: "Back to feed", by: "By", author: "TextSpot AI", relatedContent: "Related Content", modifyWithAI: "Remix with AI", contentControls: "Remix Content", tone: "Tone", professional: "Professional", casual: "Casual", translate: "Translate", adapt: "Adapt", makeHealthier: "Make Healthier", makeVegan: "Make Vegan", changeGenre: "Change Genre", horror: "Horror", close: "Close", community: "Community Reactions", humor: "Humor", diners: "Diners", targetAudience: "Target Audience", kids: "Kids", teens: "Teens", adults: "Adults", actionLevel: "Action Level", low: "Low", high: "High" },
-    he: { back: "חזרה לפיד", by: "מאת", author: "הבינה המלאכותית של TextSpot", relatedContent: "תוכן קשור", modifyWithAI: "שנה עם AI", contentControls: "שנה את התוכן", tone: "טון", professional: "מקצועי", casual: "יומיומי", translate: "תרגם", adapt: "התאם", makeHealthier: "הפוך לבריא יותר", makeVegan: "הפוך לטבעוני", changeGenre: "שנה ז'אנר", horror: "אימה", close: "סגור", community: "תגובות הקהילה", humor: "הומור", diners: "סועדים", targetAudience: "קהל יעד", kids: "ילדים", teens: "נוער", adults: "מבוגרים", actionLevel: "רמת אקשן", low: "נמוכה", high: "גבוהה" },
-    ar: { back: "العودة إلى الموجز", by: "بواسطة", author: "TextSpot AI", relatedContent: "محتوى ذو صلة", modifyWithAI: "تعديل بواسطة الذكاء الاصطناعي", contentControls: "تعديل المحتوى", tone: "نبرة", professional: "احترافي", casual: "عادي", translate: "ترجمة", adapt: "تكييف", makeHealthier: "اجعله صحيًا أكثر", makeVegan: "اجعله نباتيًا", changeGenre: "تغيير النوع", horror: "رعب", close: "إغلاق", community: "ردود فعل المجتمع", humor: "فكاهة", diners: "رواد المطعم", targetAudience: "الجمهور المستهدف", kids: "أطفال", teens: "مراهقون", adults: "بالغون", actionLevel: "مستوى الحركة", low: "منخفض", high: "مرتفع" },
-    // Full dictionary for all 19 languages...
-};
+.itemPage {
+  max-width: 720px; /* Optimal width for readability */
+  margin: 0 auto;
+  padding: 48px 24px;
+}
 
-type LangCode = keyof typeof ITEM_DICT;
+.loading {
+  text-align: center;
+  padding: 80px;
+  color: var(--muted-foreground);
+}
 
-const sampleComments = [
-    { id: 1, author: "Alex", text: "This is brilliant! The ending gave me chills.", reactions: { "❤️": 12, "🤯": 5 } },
-    { id: 2, author: "Maria", text: "I tried the 'horror' remix and it was amazing! 👻", reactions: { "😂": 8, "👍": 15 } },
-];
+/* -- ============================================= -- */
+/* -- Item Header & Viral Actions -- */
+/* -- ============================================= -- */
 
-// --- SVG Icons ---
-const MagicWandIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4V2m0 14v-2m-7.5 5.5L9 16m0-7L7.5 7.5M4 9H2m14 0h-2m5.5 7.5L16 15m0-7l1.5-1.5M9.5 4l-1-1L4 7.5 2 9.5l5.5 2L9 14l2.5 1.5L14 13l2.5 1.5L22 9l-2-2-1.5 1.5-2.5-1.5L14 4Z"/></svg>;
-const XIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
+.itemHeader {
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  margin-bottom: 24px;
+  transition: color var(--transition);
+}
+.backLink:hover {
+  color: var(--brand-primary);
+}
+
+.headerMain {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.headerText { flex: 1; }
+
+.category {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-serif-display);
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.2;
+  color: var(--foreground);
+  margin-bottom: 16px;
+}
+
+.meta {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.author {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.viralActions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.viralScore {
+    background: var(--muted);
+    color: var(--foreground);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 99px;
+}
+
+.shareButtons {
+    display: flex;
+    gap: 8px;
+}
+.shareButtons button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted-foreground);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+.shareButtons button:hover {
+    background: var(--accent);
+    color: var(--foreground);
+}
+
+/* -- ============================================= -- */
+/* -- Content Body & Interactivity -- */
+/* -- ============================================= -- */
+
+.content {
+  color: var(--foreground);
+  font-size: 18px;
+  font-family: var(--font-serif-display);
+  line-height: 1.8;
+}
+.content .sentence {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.content .sentence:hover {
+    background-color: rgba(161, 161, 170, 0.1); /* Zinc 300 with opacity */
+}
+html[data-theme='dark'] .content .sentence:hover {
+    background-color: rgba(161, 161, 170, 0.1);
+}
+
+/* -- ============================================= -- */
+/* -- Floating Action Button (FAB) & Gamification -- */
+/* -- ============================================= -- */
+
+.equalizerFab {
+    position: fixed;
+    bottom: calc(var(--footer-height) + 24px);
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--brand-gradient);
+    color: white;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1020;
+    transition: transform 0.3s ease;
+}
+.equalizerFab:hover {
+    transform: scale(1.1);
+}
+
+.xpGain {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #16A34A; /* Green */
+    color: white;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    animation: xpAnimation 1.5s ease-out forwards;
+}
+@keyframes xpAnimation {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, -30px); opacity: 0; }
+}
+
+/* -- ============================================= -- */
+/* -- Equalizer Modal -- */
+/* -- ============================================= -- */
+
+.modalOverlay {
+    position: fixed; inset: 0;
+    background-color: hsla(0, 0%, 100%, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex; justify-content: center; align-items: center;
+    padding: 16px;
+    animation: fadeInOverlay 0.3s ease;
+}
+@keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+
+html[data-theme='dark'] .modalOverlay {
+    background-color: hsla(240, 10%, 3.9%, 0.5);
+}
+
+.modalPanel {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--popover);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+}
+
+.closeModalBtn {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none;
+    color: var(--muted-foreground); cursor: pointer;
+    padding: 8px; border-radius: 50%;
+}
+.closeModalBtn:hover { background-color: var(--accent); }
+
+.modalTitle { font-size: 20px; font-weight: 700; color: var(--foreground); }
+.equalizerSection { display: flex; flex-direction: column; gap: 12px; }
+.equalizerTitle { font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; }
+.controlGroup { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.controlGroup button { padding: 8px 16px; font-size: 14px; font-weight: 500; border-radius: var(--radius); border: 1px solid var(--border); background-color: var(--card); color: var(--foreground); cursor: pointer; transition: all var(--transition); }
+.controlGroup button:hover { background-color: var(--accent); border-color: var(--ring); }
+.slider { width: 100%; }
+
+.stepper { display: flex; align-items: center; gap: 12px; }
+.stepper button { width: 32px; height: 32px; border-radius: 50%; }
+.stepper span { font-weight: 600; font-size: 16px; }
+
+/* -- ============================================= -- */
+/* -- Related & Community Sections -- */
+/* -- ============================================= -- */
+
+.relatedSection, .communitySection {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.relatedTitle, .communityTitle {
+  font-size: 24px; font-weight: 700;
+  margin-bottom: 24px;
+  max-width: 720px; margin-left: auto; margin-right: auto;
+  padding: 0 24px;
+}
+
+.relatedSlider {
+  display: flex; gap: 16px; overflow-x: auto;
+  padding: 4px 24px 24px; scroll-snap-type: x mandatory;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.relatedSlider::-webkit-scrollbar { display: none; }
+
+.relatedCard {
+  scroll-snap-align: start; flex: 0 0 280px; height: 180px;
+  border-radius: var(--radius); overflow: hidden; position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  color: white; transition: all var(--transition);
+}
+.relatedCard:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.cardOverlay { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(to top, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0) 60%) !important; }
+.relatedCardContent { position: relative; z-index: 2; padding: 20px; }
+.relatedCardTitle { font-size: 18px; font-weight: 600; line-height: 1.4; color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
+.quickRemixBtn {
+    font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 99px;
+    background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); color: white;
+    border: none; cursor: pointer; margin-top: 12px;
+}
+
+.comments { max-width: 720px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 24px; }
+.comment { background: var(--muted); padding: 16px; border-radius: var(--radius); }
+.commentAuthor { font-weight: 600; margin-bottom: 4px; }
+.commentText { font-size: 15px; color: var(--muted-foreground); }
+.reactions { display: flex; gap: 8px; margin-top: 12px; }
+.reactions button {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 99px; font-size: 12px; cursor: pointer;
+}
+
+/* -- ============================================= -- */
+/* -- RTL & Responsive -- */
+/* -- ============================================= -- */
+
+html[dir="rtl"] .title,
+html[dir="rtl"] .meta,
+html[dir="rtl"] .content,
+html[dir="rtl"] .relatedTitle,
+html[dir="rtl"] .modalTitle,
+html[dir="rtl"] .equalizerTitle,
+html[dir="rtl"] .communityTitle {
+  text-align: right;
+}
+html[dir="rtl"] .closeModalBtn { right: auto; left: 16px; }
+html[dir="rtl"] .equalizerFab { right: auto; left: 24px; }
+html[dir="rtl"] .relatedSlider { flex-direction: row-reverse; }
 
 
-export default function ItemPage() {
-    const params = useParams();
-    const [lang, setLang] = useState<LangCode>('en');
-    const [item, setItem] = useState<(typeof sampleData)[0] | null>(null);
-    const [relatedItems, setRelatedItems] = useState<typeof sampleData>([]);
-    const [isEqualizerOpen, setIsEqualizerOpen] = useState(false);
-    const [showXp, setShowXp] = useState(false);
-    
-    // State for Equalizer sliders
-    const [humorLevel, setHumorLevel] = useState(50);
-    const [actionLevel, setActionLevel] = useState(50);
-    const [dinersCount, setDinersCount] = useState(2);
-
-    useEffect(() => {
-        const currentLang = (getCookie('user-lang') || 'en') as LangCode;
-        if (currentLang in ITEM_DICT) setLang(currentLang);
-
-        if (params.id) {
-            const currentId = Number(params.id);
-            const foundItem = sampleData.find(d => d.id === currentId);
-            setItem(foundItem || null);
-
-            const otherItems = sampleData.filter(d => d.id !== currentId).slice(0, 4);
-            setRelatedItems(otherItems);
-        }
-    }, [params.id]);
-    
-    const handleContentModification = async (type: string, value: any) => {
-        console.log(`Modifying content: type=${type}, value=${value}`);
-        if(item) {
-            setItem({ ...item, snippet: `[Content modified: ${type} set to ${value}] \n\n ${item.snippet}` });
-        }
-        if (type !== 'humor' && type !== 'diners' && type !== 'actionLevel') {
-            setIsEqualizerOpen(false);
-        }
-    };
-
-    const handleFabClick = () => {
-        setIsEqualizerOpen(true);
-        setShowXp(true);
-        setTimeout(() => setShowXp(false), 1500);
-    };
-
-    const t = useMemo(() => ITEM_DICT[lang] || ITEM_DICT.en, [lang]);
-
-    if (!item) {
-        return <div className={styles.loading}>Loading...</div>;
-    }
-
-    const renderAdaptControls = () => {
-        switch (item.documentType) {
-            case 'recipe':
-                return (
-                    <>
-                        <div className={styles.equalizerSection}>
-                            <h3 className={styles.equalizerTitle}>{t.diners}</h3>
-                             <div className={styles.stepper}>
-                                <button onClick={() => setDinersCount(c => Math.max(1, c - 1))}>-</button>
-                                <span>{dinersCount}</span>
-                                <button onClick={() => setDinersCount(c => c + 1)}>+</button>
-                            </div>
-                        </div>
-                        <div className={styles.equalizerSection}>
-                             <h3 className={styles.equalizerTitle}>{t.adapt}</h3>
-                             <div className={styles.controlGroup}>
-                                <button onClick={() => handleContentModification('adapt', 'healthy')}>{t.makeHealthier}</button>
-                                <button onClick={() => handleContentModification('adapt', 'vegan')}>{t.makeVegan}</button>
-                            </div>
-                         </div>
-                    </>
-                );
-            case 'story':
-                 return (
-                     <>
-                        <div className={styles.equalizerSection}>
-                            <h3 className={styles.equalizerTitle}>{t.humor}</h3>
-                            <input type="range" min="0" max="100" value={humorLevel} onChange={(e) => setHumorLevel(Number(e.target.value))} onMouseUp={() => handleContentModification('humor', humorLevel)} className={styles.slider}/>
-                        </div>
-                        <div className={styles.equalizerSection}>
-                            <h3 className={styles.equalizerTitle}>{t.actionLevel}</h3>
-                            <input type="range" min="0" max="100" value={actionLevel} onChange={(e) => setActionLevel(Number(e.target.value))} onMouseUp={() => handleContentModification('action', actionLevel)} className={styles.slider}/>
-                        </div>
-                        <div className={styles.equalizerSection}>
-                            <h3 className={styles.equalizerTitle}>{t.targetAudience}</h3>
-                            <div className={styles.controlGroup}>
-                                <button onClick={() => handleContentModification('audience', 'kids')}>{t.kids}</button>
-                                <button onClick={() => handleContentModification('audience', 'teens')}>{t.teens}</button>
-                                <button onClick={() => handleContentModification('audience', 'adults')}>{t.adults}</button>
-                            </div>
-                        </div>
-                     </>
-                );
-            default:
-                return null;
-        }
-    };
-
-    return (
-        <div className={styles.itemPageWrapper}>
-            <article className={styles.itemPage}>
-                <header className={styles.itemHeader}>
-                    <Link href="/" className={styles.backLink}> &larr; {t.back} </Link>
-                    <div className={styles.headerMain}>
-                        <div className={styles.headerText}>
-                            <p className={styles.category}>{item.category}</p>
-                            <h1 className={styles.title}>{item.title}</h1>
-                            <div className={styles.meta}>{t.by} <span className={styles.author}>{t.author}</span></div>
-                        </div>
-                        <div className={styles.viralActions}>
-                            <div className={styles.viralScore}>🔥 85%</div>
-                            <div className={styles.shareButtons}>
-                                <button>X</button>
-                                <button>W</button>
-                                <button>F</button>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                
-                <div className={styles.content}>
-                    {item.snippet.split('. ').map((sentence, index) => (
-                        <span key={index} className={styles.sentence}>{sentence}{index < item.snippet.split('. ').length - 1 ? '. ' : ''}</span>
-                    ))}
-                </div>
-            </article>
-
-            <section className={styles.relatedSection}>
-                <h2 className={styles.relatedTitle}>{t.relatedContent}</h2>
-                <div className={styles.relatedSlider}>
-                    {relatedItems.map(related => (
-                        <Link href={`/item/${related.id}`} key={related.id} className={`${styles.relatedCard} ${styles[related.cardType]}`}>
-                             <div className={styles.cardOverlay} style={{background: related.colorGradient}}/>
-                             <div className={styles.relatedCardContent}>
-                                <h3 className={styles.relatedCardTitle}>{related.title}</h3>
-                                <button className={styles.quickRemixBtn}>Remix</button>
-                             </div>
-                        </Link>
-                    ))}
-                </div>
-            </section>
-
-            <section className={styles.communitySection}>
-                <h2 className={styles.communityTitle}>{t.community}</h2>
-                <div className={styles.comments}>
-                    {sampleComments.map(comment => (
-                        <div key={comment.id} className={styles.comment}>
-                            <p className={styles.commentAuthor}>{comment.author}</p>
-                            <p className={styles.commentText}>{comment.text}</p>
-                            <div className={styles.reactions}>
-                                {Object.entries(comment.reactions).map(([emoji, count]) => (
-                                    <button key={emoji}>{emoji} {count}</button>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <button className={styles.equalizerFab} onClick={handleFabClick} title={t.modifyWithAI}>
-                <MagicWandIcon />
-                {showXp && <span className={styles.xpGain}>+5 XP</span>}
-            </button>
-
-            {isEqualizerOpen && (
-                 <div className={styles.modalOverlay} onClick={() => setIsEqualizerOpen(false)}>
-                    <div className={styles.modalPanel} onClick={(e) => e.stopPropagation()}>
-                        <button className={styles.closeModalBtn} onClick={() => setIsEqualizerOpen(false)}><XIcon/></button>
-                        <h2 className={styles.modalTitle}>{t.contentControls}</h2>
-                        {renderAdaptControls()}
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+@media (max-width: 768px) {
+    .itemPageWrapper { padding: 24px 0; }
+    .itemPage { padding: 0 16px; }
+    .title { font-size: 32px; }
+    .relatedGrid { padding: 4px 16px 16px; }
+    .relatedCard { flex: 0 0 240px; }
 }
 
