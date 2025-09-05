@@ -48,12 +48,12 @@ export default function AppFooter() {
     const [lang, setLang] = useState<LangCode>('en');
 
     useEffect(() => {
-        // Read the language from the root HTML element on mount.
+        // This component now only READS from the DOM, which is set by the provider.
         const currentLang = (document.documentElement.lang || 'en') as LangCode;
         if (currentLang in FOOTER_DICT) {
             setLang(currentLang);
         }
-    }, []);
+    }, [pathname]); // Re-check language if path changes, useful for client-side navigation
 
     const t = FOOTER_DICT[lang] || FOOTER_DICT.en;
 
