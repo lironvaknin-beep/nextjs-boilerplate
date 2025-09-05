@@ -42,8 +42,24 @@ const HEADER_DICT = {
     en: { appearance: 'Appearance', language: 'Language', settings: 'Settings', light: 'Light', dark: 'Dark', searchPlaceholder: 'Search...' },
     he: { appearance: 'מראה', language: 'שפה', settings: 'הגדרות', light: 'בהיר', dark: 'כהה', searchPlaceholder: 'חיפוש...' },
     ar: { appearance: 'المظهر', language: 'اللغة', settings: 'الإعدادات', light: 'فاتح', dark: 'داكن', searchPlaceholder: 'بحث...' },
-    // Full dictionary for all languages...
+    es: { appearance: 'Apariencia', language: 'Idioma', settings: 'Ajustes', light: 'Claro', dark: 'Oscuro', searchPlaceholder: 'Buscar...' },
+    fr: { appearance: 'Apparence', language: 'Langue', settings: 'Paramètres', light: 'Clair', dark: 'Sombre', searchPlaceholder: 'Rechercher...' },
+    de: { appearance: 'Erscheinungsbild', language: 'Sprache', settings: 'Einstellungen', light: 'Hell', dark: 'Dunkel', searchPlaceholder: 'Suchen...' },
+    it: { appearance: 'Aspetto', language: 'Lingua', settings: 'Impostazioni', light: 'Chiaro', dark: 'Scuro', searchPlaceholder: 'Cerca...' },
+    pt: { appearance: 'Aparência', language: 'Idioma', settings: 'Configurações', light: 'Claro', dark: 'Escuro', searchPlaceholder: 'Pesquisar...' },
+    ru: { appearance: 'Внешний вид', language: 'Язык', settings: 'Настройки', light: 'Светлая', dark: 'Тёмная', searchPlaceholder: 'Поиск...' },
+    pl: { appearance: 'Wygląd', language: 'Język', settings: 'Ustawienia', light: 'Jasny', dark: 'Ciemny', searchPlaceholder: 'Szukaj...' },
+    tr: { appearance: 'Görünüm', language: 'Dil', settings: 'Ayarlar', light: 'Açık', dark: 'Koyu', searchPlaceholder: 'Ara...' },
+    nl: { appearance: 'Uiterlijk', language: 'Taal', settings: 'Instellingen', light: 'Licht', dark: 'Donker', searchPlaceholder: 'Zoeken...' },
+    sv: { appearance: 'Utseende', language: 'Språk', settings: 'Inställningar', light: 'Ljus', dark: 'Mörk', searchPlaceholder: 'Sök...' },
+    zh: { appearance: '外观', language: '语言', settings: '设置', light: '浅色', dark: '深色', searchPlaceholder: '搜索...' },
+    ja: { appearance: '外観', language: '言語', settings: '設定', light: 'ライト', dark: 'ダーク', searchPlaceholder: '検索...' },
+    ko: { appearance: '테마', language: '언어', settings: '설정', light: '라이트', dark: '다크', searchPlaceholder: '검색...' },
+    hi: { appearance: 'दिखावट', language: 'भाषा', settings: 'सेटिंग्स', light: 'लाइट', dark: 'डार्क', searchPlaceholder: 'खोजें...' },
+    id: { appearance: 'Tampilan', language: 'Bahasa', settings: 'Pengaturan', light: 'Terang', dark: 'Gelap', searchPlaceholder: 'Cari...' },
+    vi: { appearance: 'Giao diện', language: 'Ngôn ngữ', settings: 'Cài đặt', light: 'Sáng', dark: 'Tối', searchPlaceholder: 'Tìm kiếm...' },
 };
+
 
 type LangCode = keyof typeof HEADER_DICT;
 
