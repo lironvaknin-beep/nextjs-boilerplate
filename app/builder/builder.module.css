@@ -1,5 +1,5 @@
 /* Builder Module CSS - Premium & Complete Redesign
-  Version 8.3: Styling for True Inline Editing & Final QA.
+  Version 8.4: Final QA, visual polish, and floating buttons fix.
 */
 
 /* -- ============================================= -- */
@@ -30,6 +30,9 @@
   --action-edit: #3b82f6;   /* Blue for editing/info */
   --action-undo: #f97316;    /* Orange for undo */
   --action-save: #16a34a;   /* Green for saving */
+  
+  /* Using global variables from globals.css for consistency */
+  --footer-height-val: 60px;
   
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -101,9 +104,26 @@
 :global(.saveBtn:hover) { color: var(--action-save); background-color: white; }
 
 /* -- ============================================= -- */
-/* -- Part 3: Floating Actions, Modals & Toasts -- */
+/* -- Part 3: Floating Actions, Modals & Toasts (FIXED) -- */
 /* -- ============================================= -- */
-.floatingActions { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; z-index: 1000; padding: 8px; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border-radius: 99px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-primary); transition: background-color var(--transition), border-color var(--transition); }
+.floatingActions { 
+  position: fixed; 
+  /* CRITICAL FIX: Position buttons ABOVE the footer */
+  bottom: calc(var(--footer-height-val) + 16px); 
+  left: 50%; 
+  transform: translateX(-50%); 
+  display: flex; 
+  gap: 16px; 
+  /* CRITICAL FIX: Ensure buttons are above the footer */
+  z-index: 1010; 
+  padding: 8px; 
+  background-color: rgba(255, 255, 255, 0.8); 
+  backdrop-filter: blur(8px); 
+  border-radius: 99px; 
+  box-shadow: var(--shadow-lg); 
+  border: 1px solid var(--border-primary); 
+  transition: background-color var(--transition), border-color var(--transition); 
+}
 :global(html[data-theme='dark']) .floatingActions { background-color: rgba(31, 41, 55, 0.7); }
 .floatingActions .btnPrimary { width: auto; padding: 12px 24px; }
 .floatingActions .btnSecondary { width: auto; padding: 12px 24px; border-radius: var(--radius-md); }
@@ -119,7 +139,8 @@
 /* Toast Notification */
 .toast {
   position: fixed;
-  bottom: 24px;
+  /* CRITICAL FIX: Position toast above floating buttons */
+  bottom: calc(var(--footer-height-val) + 80px);
   left: 50%;
   transform: translateX(-50%);
   padding: 12px 24px;
@@ -164,6 +185,6 @@
   :global(.actions) { gap: 8px; }
   :global(.actionBtn) { width: 44px; height: 44px; }
   .floatingActions { width: calc(100% - 32px); }
-  .toast { bottom: 80px; /* Avoid floating action buttons */ }
+  .toast { bottom: calc(var(--footer-height-val) + 80px); }
 }
 
