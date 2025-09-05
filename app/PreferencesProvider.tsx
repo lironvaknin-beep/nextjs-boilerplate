@@ -33,7 +33,7 @@ const LANGUAGES = [
 export default function PreferencesProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         // Apply Language and Direction
-        const langCookie = getCookie('user-lang') || 'en';
+        const langCookie = getCookie('user-lang') || navigator.language.split('-')[0] || 'en';
         const langInfo = LANGUAGES.find(l => l.code === langCookie) || LANGUAGES[0];
         document.documentElement.lang = langInfo.code;
         document.documentElement.dir = langInfo.dir;
@@ -43,7 +43,8 @@ export default function PreferencesProvider({ children }: { children: React.Reac
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const initialTheme = themeCookie || (systemPrefersDark ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', initialTheme);
-    }, []);
+    }, []); // Runs only once on initial client-side render
 
     return <>{children}</>;
 }
+
