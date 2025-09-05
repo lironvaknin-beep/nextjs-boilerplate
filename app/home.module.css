@@ -189,6 +189,11 @@ html[dir="rtl"] .cardContent {
   text-align: right;
 }
 
+html[dir="rtl"] .filterBar,
+html[dir="rtl"] .rowSlider {
+  flex-direction: row-reverse;
+}
+
 @media (max-width: 768px) {
   .homePage { padding: 32px 0; }
   .pageHeader, .rowTitle { padding: 0 24px; }
