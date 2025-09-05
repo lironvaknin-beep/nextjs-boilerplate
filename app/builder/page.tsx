@@ -4,18 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import Script from 'next/script';
 import styles from './builder.module.css';
 
-// --- Helper function for getting a cookie ---
-function getCookie(name: string): string | null {
-  if (typeof document === 'undefined') return null;
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
+// This component now assumes PreferencesProvider has set the correct lang/dir on the <html> element.
 
 const LANGUAGES = [
     { code: 'en', dir: 'ltr' }, { code: 'he', dir: 'rtl' }, { code: 'ar', dir: 'rtl' },
@@ -40,20 +29,38 @@ const DICT = {
     zh: { title: '您想创建什么？', docType: '文档类型', promptPh: '例如，一个关于孩子在沙滩上发现机器人的短篇故事…', clear: '清除', start: '开始创作', preview: '预览', share: '分享', save: '保存', previewTitle: '预览', contentSaved: '内容已保存！', contentCopied: '内容已复制！', close: '关闭' },
     ja: { title: '何を作成しますか？', docType: 'ドキュメントの種類', promptPh: '例：ビーチでロボットを見つけた子供の短編小説…', clear: 'クリア', start: '作成を開始', preview: 'プレビュー', share: '共有', save: '保存', previewTitle: 'プレビュー', contentSaved: 'コンテンツが保存されました！', contentCopied: 'コンテンツがコピーされました！', close: '閉じる' },
     ko: { title: '무엇을 만들고 싶으신가요?', docType: '문서 종류', promptPh: '예: 해변에서 로봇을 발견한 아이에 대한 짧은 이야기…', clear: '지우기', start: '만들기 시작', preview: '미리보기', share: '공유', save: '저장', previewTitle: '미리보기', contentSaved: '콘텐츠가 저장되었습니다!', contentCopied: '콘텐츠가 복사되었습니다!', close: '닫기' },
-    // Other languages are included in the logic but omitted here for brevity
+    pl: { title: "Co chcesz stworzyć?", docType: "Typ dokumentu", promptPh: "np. opowiadanie o dziecku, które znajduje robota na plaży...", clear: "Wyczyść", start: "Zacznij tworzyć", preview: "Podgląd", share: "Udostępnij", save: "Zapisz", previewTitle: "Podgląd", contentSaved: "Treść zapisana!", contentCopied: "Treść skopiowana!", close: "Zamknij" },
+    tr: { title: "Ne oluşturmak istersiniz?", docType: "Belge türü", promptPh: "örneğin, sahilde bir robot bulan bir çocuk hakkında kısa bir hikaye...", clear: "Temizle", start: "Oluşturmaya Başla", preview: "Önizleme", share: "Paylaş", save: "Kaydet", previewTitle: "Önizleme", contentSaved: "İçerik kaydedildi!", contentCopied: "İçerik kopyalandı!", close: "Kapat" },
+    nl: { title: "Wat wil je maken?", docType: "Documenttype", promptPh: "bijv. een kort verhaal over een kind dat een robot op het strand vindt...", clear: "Wissen", start: "Begin met bouwen", preview: "Voorbeeld", share: "Delen", save: "Opslaan", previewTitle: "Voorbeeld", contentSaved: "Inhoud opgeslagen!", contentCopied: "Inhoud gekopieerd!", close: "Sluiten" },
+    sv: { title: "Vad vill du skapa?", docType: "Dokumenttyp", promptPh: "t.ex. en novell om ett barn som hittar en robot på stranden...", clear: "Rensa", start: "Börja skapa", preview: "Förhandsgranska", share: "Dela", save: "Spara", previewTitle: "Förhandsgranska", contentSaved: "Innehåll sparat!", contentCopied: "Innehåll kopierat!", close: "Stäng" },
+    hi: { title: "आप क्या बनाना चाहेंगे?", docType: "दस्तावेज़ का प्रकार", promptPh: "जैसे, एक बच्चे के बारे में एक छोटी कहानी जिसे समुद्र तट पर एक रोबोट मिलता है...", clear: "साफ़ करें", start: "बनाना शुरू करें", preview: "पूर्वावलोकन", share: "साझा करें", save: "सहेजें", previewTitle: "पूर्वावलोकन", contentSaved: "सामग्री सहेजी गई!", contentCopied: "सामग्री कॉपी की गई!", close: "बंद करें" },
+    id: { title: "Apa yang ingin Anda buat?", docType: "Jenis Dokumen", promptPh: "misalnya, cerita pendek tentang seorang anak yang menemukan robot di pantai...", clear: "Hapus", start: "Mulai Membuat", preview: "Pratinjau", share: "Bagikan", save: "Simpan", previewTitle: "Pratinjau", contentSaved: "Konten disimpan!", contentCopied: "Konten disalin!", close: "Tutup" },
+    vi: { title: "Bạn muốn tạo gì?", docType: "Loại tài liệu", promptPh: "ví dụ: một câu chuyện ngắn về một đứa trẻ tìm thấy một con robot trên bãi biển...", clear: "Xóa", start: "Bắt đầu tạo", preview: "Xem trước", share: "Chia sẻ", save: "Lưu", previewTitle: "Xem trước", contentSaved: "Nội dung đã được lưu!", contentCopied: "Đã sao chép nội dung!", close: "Đóng" },
 };
 
 type LangCode = keyof typeof DICT;
 
-const DOC_TYPES = [
-    { value: 'story', label: { en: 'Story', he: 'סיפור', ar: 'قصة', es: 'Historia', fr: 'Histoire', de: 'Geschichte', it: 'Storia' } },
-    { value: 'article', label: { en: 'Article', he: 'מאמר', ar: 'مقالة', es: 'Artículo', fr: 'Article', de: 'Artikel', it: 'Articolo' } },
-    { value: 'school', label: { en: 'School Work', he: 'עבודה לבית הספר', ar: 'عمل مدرسي', es: 'Trabajo escolar', fr: 'Travail scolaire', de: 'Schularbeit', it: 'Compito scolastico' } },
-    { value: 'work', label: { en: 'Work Document', he: 'מסמך עבודה', ar: 'مستند عمل', es: 'Documento de trabajo', fr: 'Document de travail', de: 'Arbeitsdokument', it: 'Documento di lavoro' } },
-    { value: 'recipe', label: { en: 'Recipe', he: 'מתכון', ar: 'وصفة', es: 'Receta', fr: 'Recette', de: 'Rezept', it: 'Ricetta' } },
-    { value: 'song', label: { en: 'Song', he: 'שיר', ar: 'أغنية', es: 'Canción', fr: 'Chanson', de: 'Lied', it: 'Canzone' } },
-];
-
+const DOC_TYPES = {
+    en: { story: 'Story', article: 'Article', school: 'School Work', work: 'Work Document', recipe: 'Recipe', song: 'Song' },
+    he: { story: 'סיפור', article: 'מאמר', school: 'עבודה לבית הספר', work: 'מסמך עבודה', recipe: 'מתכון', song: 'שיר' },
+    ar: { story: 'قصة', article: 'مقالة', school: 'عمل مدرسي', work: 'مستند عمل', recipe: 'وصفة', song: 'أغنية' },
+    es: { story: "Historia", article: "Artículo", school: "Trabajo escolar", work: "Documento de trabajo", recipe: "Receta", song: "Canción" },
+    fr: { story: "Histoire", article: "Article", school: "Travail scolaire", work: "Document de travail", recipe: "Recette", song: "Chanson" },
+    de: { story: "Geschichte", article: "Artikel", school: "Schularbeit", work: "Arbeitsdokument", recipe: "Rezept", song: "Lied" },
+    it: { story: "Storia", article: "Articolo", school: "Compito scolastico", work: "Documento di lavoro", recipe: "Ricetta", song: "Canzone" },
+    pt: { story: "História", article: "Artigo", school: "Trabalho escolar", work: "Documento de trabalho", recipe: "Receita", song: "Canção" },
+    ru: { story: "История", article: "Статья", school: "Школьная работа", work: "Рабочий документ", recipe: "Рецепт", song: "Песня" },
+    pl: { story: "Historia", article: "Artykuł", school: "Praca szkolna", work: "Dokument roboczy", recipe: "Przepis", song: "Piosenka" },
+    tr: { story: "Hikaye", article: "Makale", school: "Okul Ödevi", work: "İş Belgesi", recipe: "Tarif", song: "Şarkı" },
+    nl: { story: "Verhaal", article: "Artikel", school: "Schoolwerk", work: "Werkdocument", recipe: "Recept", song: "Lied" },
+    sv: { story: "Berättelse", article: "Artikel", school: "Skolarbete", work: "Arbetsdokument", recipe: "Recept", song: "Sång" },
+    zh: { story: "故事", article: "文章", school: "学校作业", work: "工作文件", recipe: "食谱", song: "歌曲" },
+    ja: { story: "物語", article: "記事", school: "学校の課題", work: "作業文書", recipe: "レシピ", song: "歌" },
+    ko: { story: "이야기", article: "기사", school: "학교 과제", work: "업무 문서", recipe: "레시피", song: "노래" },
+    hi: { story: "कहानी", article: "लेख", school: "स्कूल का काम", work: "कार्य दस्तावेज़", recipe: "नुस्खा", song: "गीत" },
+    id: { story: "Cerita", article: "Artikel", school: "Tugas Sekolah", work: "Dokumen Kerja", recipe: "Resep", song: "Lagu" },
+    vi: { story: "Câu chuyện", article: "Bài báo", school: "Bài tập ở trường", work: "Tài liệu công việc", recipe: "Công thức", song: "Bài hát" },
+};
 
 export default function BuilderPage() {
   const [lang, setLang] = useState<LangCode>('en');
@@ -64,14 +71,15 @@ export default function BuilderPage() {
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    const currentLang = (getCookie('user-lang') || 'en') as LangCode;
+    const currentLang = (document.documentElement.lang || 'en') as LangCode;
     if (currentLang in DICT) {
       setLang(currentLang);
     }
   }, []);
 
   const t = useMemo(() => DICT[lang] || DICT.en, [lang]);
-  const dir = useMemo(() => LANGUAGES.find(l => l.code === lang)?.dir || 'ltr', [lang]);
+  const t_docs = useMemo(() => DOC_TYPES[lang] || DOC_TYPES.en, [lang]);
+  const dir = useMemo(() => document.documentElement.dir || 'ltr', [lang]);
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -116,7 +124,7 @@ export default function BuilderPage() {
           <div className={styles.formGroup}>
             <label className={styles.formLabel} htmlFor="doc-type-select">{t.docType}</label>
             <select id="doc-type-select" className={styles.formSelect} value={docType} onChange={(e) => setDocType(e.target.value)} dir={dir}>
-              {DOC_TYPES.map(opt => (<option key={opt.value} value={opt.value}>{opt.label[lang as keyof typeof opt.label] ?? opt.label.en}</option>))}
+              {Object.entries(t_docs).map(([value, label]) => (<option key={value} value={value}>{label}</option>))}
             </select>
           </div>
           <div className={`${styles.formGroup} ${styles.isGrowing}`}>
