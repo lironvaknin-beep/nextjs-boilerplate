@@ -1,8 +1,8 @@
-// --- Builder Logic v3.1: True Inline Editing, SVG Icons & Full QA ---
+// --- Builder Logic v3.2: Final QA & Polish ---
+// This script assumes it is loaded after the main React component has rendered.
 
-// Wait for the DOM and the React component to be ready
 document.addEventListener('DOMContentLoaded', () => {
-    // --- SVG Icon Library ---
+    // --- SVG Icon Library (for a premium feel) ---
     const ICONS = {
         like: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
         edit: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`,
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scroller = document.getElementById('scroller');
     if (!scroller) return;
 
+    // This data structure defines the interactive steps of the builder
     const slots = [
         { key: 'subject', words: ['I', 'You', 'The cat', 'The artist', 'We'] },
         { key: 'verb', words: ['love', 'create', 'design', 'write', 'explore'] },
@@ -75,8 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chosen[slotData.key] = text;
         
         document.querySelectorAll('.slot').forEach(el => el.classList.remove('is-active'));
-        wrap.classList.add('is-selected');
-        wrap.classList.add('is-active');
+        wrap.classList.add('is-selected', 'is-active');
 
         updateFullSentence();
 
@@ -137,15 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function changeWord(slotData, delta, wordEl) {
         if (!slotData.words || !slotData.words.length) return;
         
-        wordEl.classList.add('is-changing'); // Trigger fade-out animation
+        wordEl.classList.add('is-changing');
 
         setTimeout(() => {
             const currentIndex = slotData.words.indexOf(wordEl.textContent);
             const nextIndex = (currentIndex + delta + slotData.words.length) % slotData.words.length;
             wordEl.textContent = slotData.words[nextIndex];
             pushHistory(slotData.key, nextIndex);
-            wordEl.classList.remove('is-changing'); // Trigger fade-in animation
-        }, 200); // Match animation duration
+            wordEl.classList.remove('is-changing');
+        }, 200);
     }
     
     function undoLast(slotData, wordEl) {
@@ -177,10 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function centerOnIndex(index) {
         const el = document.querySelector(`.slot[data-index="${index}"]`);
         if (!el) return;
-        el.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
     function buildSentence() {
@@ -213,5 +210,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Start the Builder ---
     renderUpTo(0);
 });
-
 
