@@ -60,7 +60,7 @@ const SETTINGS_DICT = {
     it: { title: 'Impostazioni', profile: 'Profilo', name: 'Nome', email: 'Email', appearance: 'Aspetto', language: 'Lingua', light: 'Chiaro', dark: 'Scuro', save: 'Salva modifiche' },
     pt: { title: 'Configurações', profile: 'Perfil', name: 'Nome', email: 'E-mail', appearance: 'Aparência', language: 'Idioma', light: 'Claro', dark: 'Escuro', save: 'Salvar alterações' },
     ru: { title: 'Настройки', profile: 'Профиль', name: 'Имя', email: 'Электронная почта', appearance: 'Внешний вид', language: 'Язык', light: 'Светлая', dark: 'Тёмная', save: 'Сохранить изменения' },
-    pl: { title: 'Ustawienia', profile: 'Profil', name: 'Nazwa', email: 'E-mail', appearance: 'Wygląd', language: 'Język', light: 'Jasny', dark: 'Ciemny', save: 'Zapisz zmiany' },
+    pl: { title: 'Ustawienia', profile: 'Profil', name: 'Imię', email: 'E-mail', appearance: 'Wygląd', language: 'Język', light: 'Jasny', dark: 'Ciemny', save: 'Zapisz zmiany' },
     tr: { title: 'Ayarlar', profile: 'Profil', name: 'Ad', email: 'E-posta', appearance: 'Görünüm', language: 'Dil', light: 'Açık', dark: 'Koyu', save: 'Değişiklikleri Kaydet' },
     nl: { title: 'Instellingen', profile: 'Profiel', name: 'Naam', email: 'E-mail', appearance: 'Uiterlijk', language: 'Taal', light: 'Licht', dark: 'Donker', save: 'Wijzigingen opslaan' },
     sv: { title: 'Inställningar', profile: 'Profil', name: 'Namn', email: 'E-post', appearance: 'Utseende', language: 'Språk', light: 'Ljus', dark: 'Mörk', save: 'Spara ändringar' },
@@ -79,23 +79,18 @@ function useUserPreferences() {
   const [theme, setTheme] = useState('light');
   
   useEffect(() => {
-    const cookieLang = getCookie('user-lang') as LangCode;
-    if (cookieLang && cookieLang in SETTINGS_DICT) {
-      setLang(cookieLang);
-      document.documentElement.lang = cookieLang;
-      const langInfo = LANGUAGES.find(l => l.code === cookieLang);
-      if (langInfo) document.documentElement.dir = langInfo.dir;
+    // This hook reads the initial state from the DOM, which is set by PreferencesProvider
+    const initialLang = (document.documentElement.lang || 'en') as LangCode;
+    if (initialLang in SETTINGS_DICT) {
+      setLang(initialLang);
     }
-
-    const cookieTheme = getCookie('user-theme') || 'light';
-    setTheme(cookieTheme as 'light' | 'dark');
-    document.documentElement.setAttribute('data-theme', cookieTheme);
+    const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(initialTheme as 'light' | 'dark');
   }, []);
 
   const changeLanguage = (langInfo: { code: string, dir: string }) => {
     setCookie('user-lang', langInfo.code, 365);
-    document.documentElement.lang = langInfo.code;
-    document.documentElement.dir = langInfo.dir;
+    // Reload to allow PreferencesProvider to apply changes globally
     window.location.reload();
   };
 
@@ -155,5 +150,4 @@ export default function SettingsPage() {
         </div>
     );
 }
-
 
