@@ -22,11 +22,14 @@ function getCookie(name: string): string | null {
 const ITEM_DICT = {
     en: { back: "Back to feed", by: "By", author: "TextSpot AI", relatedContent: "Related Content", modifyWithAI: "Remix with AI", contentControls: "Remix Content", tone: "Tone", professional: "Professional", casual: "Casual", translate: "Translate", adapt: "Adapt", makeHealthier: "Make Healthier", makeVegan: "Make Vegan", changeGenre: "Change Genre", horror: "Horror", close: "Close", community: "Community Reactions", humor: "Humor", diners: "Diners" },
     he: { back: "חזרה לפיד", by: "מאת", author: "הבינה המלאכותית של TextSpot", relatedContent: "תוכן קשור", modifyWithAI: "שנה עם AI", contentControls: "שנה את התוכן", tone: "טון", professional: "מקצועי", casual: "יומיומי", translate: "תרגם", adapt: "התאם", makeHealthier: "הפוך לבריא יותר", makeVegan: "הפוך לטבעוני", changeGenre: "שנה ז'אנר", horror: "אימה", close: "סגור", community: "תגובות הקהילה", humor: "הומור", diners: "סועדים" },
-    ar: { back: "العودة إلى الموجز", by: "بواسطة", author: "TextSpot AI", relatedContent: "محتوى ذو صلة", modifyWithAI: "تعديل بواسطة الذكاء الاصطناعي", contentControls: "تعديل المحتوى", tone: "نبرة", professional: "احترافي", casual: "عادي", translate: "ترجمة", adapt: "تكييف", makeHealthier: "اجعله صحيًا أكثر", makeVegan: "اجعله نباتيًا", changeGenre: "تغيير النوع", horror: "رعب", close: "إغلاق", community: "ردود فعل المجتمع", humor: "فكاهة", diners: "رواد المطعم" },
     // Full dictionary for all 19 languages...
 };
 
 type LangCode = keyof typeof ITEM_DICT;
+
+// --- SVG Icons ---
+const MagicWandIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 4V2m0 14v-2m-7.5 5.5L9 16m0-7L7.5 7.5M4 9H2m14 0h-2m5.5 7.5L16 15m0-7l1.5-1.5M9.5 4l-1-1L4 7.5 2 9.5l5.5 2L9 14l2.5 1.5L14 13l2.5 1.5L22 9l-2-2-1.5 1.5-2.5-1.5L14 4Z"/></svg>;
+const XIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
 
 const sampleComments = [
     { id: 1, author: "Alex", text: "This is brilliant! The ending gave me chills.", reactions: { "❤️": 12, "🤯": 5 } },
@@ -64,7 +67,6 @@ export default function ItemPage() {
         if(item) {
             setItem({ ...item, snippet: `[Content modified: ${type} set to ${value}] \n\n ${item.snippet}` });
         }
-        // For buttons, we close the modal. For sliders, we keep it open.
         if (type !== 'humor' && type !== 'diners') {
             setIsEqualizerOpen(false);
         }
@@ -84,7 +86,7 @@ export default function ItemPage() {
 
     const renderAdaptControls = () => {
         switch (item.category) {
-            case 'For You': // Assuming "For You" might contain recipes
+            case 'For You':
             case 'Recipe':
                 return (
                     <>
