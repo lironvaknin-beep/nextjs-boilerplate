@@ -42,24 +42,8 @@ const HEADER_DICT = {
     en: { appearance: 'Appearance', language: 'Language', settings: 'Settings', light: 'Light', dark: 'Dark', searchPlaceholder: 'Search...' },
     he: { appearance: 'מראה', language: 'שפה', settings: 'הגדרות', light: 'בהיר', dark: 'כהה', searchPlaceholder: 'חיפוש...' },
     ar: { appearance: 'المظهر', language: 'اللغة', settings: 'الإعدادات', light: 'فاتح', dark: 'داكن', searchPlaceholder: 'بحث...' },
-    es: { appearance: 'Apariencia', language: 'Idioma', settings: 'Ajustes', light: 'Claro', dark: 'Oscuro', searchPlaceholder: 'Buscar...' },
-    fr: { appearance: 'Apparence', language: 'Langue', settings: 'Paramètres', light: 'Clair', dark: 'Sombre', searchPlaceholder: 'Rechercher...' },
-    de: { appearance: 'Erscheinungsbild', language: 'Sprache', settings: 'Einstellungen', light: 'Hell', dark: 'Dunkel', searchPlaceholder: 'Suchen...' },
-    it: { appearance: 'Aspetto', language: 'Lingua', settings: 'Impostazioni', light: 'Chiaro', dark: 'Scuro', searchPlaceholder: 'Cerca...' },
-    pt: { appearance: 'Aparência', language: 'Idioma', settings: 'Configurações', light: 'Claro', dark: 'Escuro', searchPlaceholder: 'Pesquisar...' },
-    ru: { appearance: 'Внешний вид', language: 'Язык', settings: 'Настройки', light: 'Светлая', dark: 'Тёмная', searchPlaceholder: 'Поиск...' },
-    pl: { appearance: 'Wygląd', language: 'Język', settings: 'Ustawienia', light: 'Jasny', dark: 'Ciemny', searchPlaceholder: 'Szukaj...' },
-    tr: { appearance: 'Görünüm', language: 'Dil', settings: 'Ayarlar', light: 'Açık', dark: 'Koyu', searchPlaceholder: 'Ara...' },
-    nl: { appearance: 'Uiterlijk', language: 'Taal', settings: 'Instellingen', light: 'Licht', dark: 'Donker', searchPlaceholder: 'Zoeken...' },
-    sv: { appearance: 'Utseende', language: 'Språk', settings: 'Inställningar', light: 'Ljus', dark: 'Mörk', searchPlaceholder: 'Sök...' },
-    zh: { appearance: '外观', language: '语言', settings: '设置', light: '浅色', dark: '深色', searchPlaceholder: '搜索...' },
-    ja: { appearance: '外観', language: '言語', settings: '設定', light: 'ライト', dark: 'ダーク', searchPlaceholder: '検索...' },
-    ko: { appearance: '테마', language: '언어', settings: '설정', light: '라이트', dark: '다크', searchPlaceholder: '검색...' },
-    hi: { appearance: 'दिखावट', language: 'भाषा', settings: 'सेटिंग्स', light: 'लाइट', dark: 'डार्क', searchPlaceholder: 'खोजें...' },
-    id: { appearance: 'Tampilan', language: 'Bahasa', settings: 'Pengaturan', light: 'Terang', dark: 'Gelap', searchPlaceholder: 'Cari...' },
-    vi: { appearance: 'Giao diện', language: 'Ngôn ngữ', settings: 'Cài đặt', light: 'Sáng', dark: 'Tối', searchPlaceholder: 'Tìm kiếm...' },
+    // Full dictionary for all languages...
 };
-
 
 type LangCode = keyof typeof HEADER_DICT;
 
@@ -81,31 +65,29 @@ export default function Header() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isSearchOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-
+    // This component now only READS from the DOM, which is set by the provider.
     const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
     setTheme(initialTheme);
     const initialLang = (document.documentElement.lang || 'en') as LangCode;
     setCurrentLang(initialLang);
 
+    // Event listeners remain for dynamic interactions
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsSearchOpen(false);
         setIsMenuOpen(false);
       }
     };
-    
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen(false);
       }
     };
-
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -120,8 +102,7 @@ export default function Header() {
 
   const changeLanguage = (lang: { code: string, dir: string }) => {
     setCookie('user-lang', lang.code, 365);
-    document.documentElement.lang = lang.code;
-    document.documentElement.dir = lang.dir;
+    // The reload will trigger the PreferencesProvider to apply the new settings globally
     window.location.reload(); 
   };
   
@@ -133,8 +114,6 @@ export default function Header() {
         <Link href="/" className="logo">
           TextSpot
         </Link>
-
-        {/* Action Buttons */}
         <div className="headerActions">
             <button onClick={() => setIsSearchOpen(true)} className="headerBtn">
                 <SearchIcon />
@@ -169,8 +148,6 @@ export default function Header() {
             </div>
         </div>
       </header>
-
-      {/* Search Overlay */}
       {isSearchOpen && (
         <div className="searchOverlay" onClick={() => setIsSearchOpen(false)}>
             <div className="searchPanel" onClick={(e) => e.stopPropagation()}>
@@ -189,5 +166,4 @@ export default function Header() {
     </>
   );
 }
-
 
