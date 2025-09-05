@@ -1,4 +1,4 @@
-/* -- Item Page Styles - "Evolve" V3.0 (Viral Vision) -- */
+/* -- Item Page Styles - "Evolve" V3.0 (Viral Vision - Full Implementation) -- */
 /* -- Premium, clean, and interactive reading experience -- */
 
 .itemPageWrapper {
@@ -290,7 +290,8 @@ html[dir="rtl"] .meta,
 html[dir="rtl"] .content,
 html[dir="rtl"] .relatedTitle,
 html[dir="rtl"] .modalTitle,
-html[dir="rtl"] .equalizerTitle {
+html[dir="rtl"] .equalizerTitle,
+html[dir="rtl"] .communityTitle {
   text-align: right;
 }
 html[dir="rtl"] .closeModalBtn { right: auto; left: 16px; }
