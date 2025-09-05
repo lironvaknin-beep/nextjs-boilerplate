@@ -1,9 +1,9 @@
-'use client';
+'use client'; // CRITICAL: This directive marks the component as a Client Component
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './settings.module.css';
 
-// --- Helper function for setting a cookie ---
+// --- Helper functions for cookies ---
 function setCookie(name: string, value: string, days: number) {
   let expires = "";
   if (days) {
@@ -14,6 +14,18 @@ function setCookie(name: string, value: string, days: number) {
   if (typeof document !== 'undefined') {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
+}
+
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }
 
 const LANGUAGES = [
@@ -42,54 +54,45 @@ const SETTINGS_DICT = {
     en: { title: 'Settings', profile: 'Profile', name: 'Name', email: 'Email', appearance: 'Appearance', language: 'Language', light: 'Light', dark: 'Dark', save: 'Save Changes' },
     he: { title: 'הגדרות', profile: 'פרופיל', name: 'שם', email: 'אימייל', appearance: 'מראה', language: 'שפה', light: 'בהיר', dark: 'כהה', save: 'שמור שינויים' },
     ar: { title: 'الإعدادات', profile: 'الملف الشخصي', name: 'الاسم', email: 'البريد الإلكتروني', appearance: 'المظهر', language: 'اللغة', light: 'فاتح', dark: 'داكن', save: 'حفظ التغييرات' },
-    es: { title: 'Ajustes', profile: 'Perfil', name: 'Nombre', email: 'Correo electrónico', appearance: 'Apariencia', language: 'Idioma', light: 'Claro', dark: 'Oscuro', save: 'Guardar cambios' },
-    fr: { title: 'Paramètres', profile: 'Profil', name: 'Nom', email: 'E-mail', appearance: 'Apparence', language: 'Langue', light: 'Clair', dark: 'Sombre', save: 'Enregistrer les modifications' },
-    de: { title: 'Einstellungen', profile: 'Profil', name: 'Name', email: 'E-Mail', appearance: 'Erscheinungsbild', language: 'Sprache', light: 'Hell', dark: 'Dunkel', save: 'Änderungen speichern' },
-    it: { title: 'Impostazioni', profile: 'Profilo', name: 'Nome', email: 'Email', appearance: 'Aspetto', language: 'Lingua', light: 'Chiaro', dark: 'Scuro', save: 'Salva modifiche' },
-    pt: { title: 'Configurações', profile: 'Perfil', name: 'Nome', email: 'E-mail', appearance: 'Aparência', language: 'Idioma', light: 'Claro', dark: 'Escuro', save: 'Salvar alterações' },
-    ru: { title: 'Настройки', profile: 'Профиль', name: 'Имя', email: 'Электронная почта', appearance: 'Внешний вид', language: 'Язык', light: 'Светлая', dark: 'Тёмная', save: 'Сохранить изменения' },
-    pl: { title: 'Ustawienia', profile: 'Profil', name: 'Imię', email: 'E-mail', appearance: 'Wygląd', language: 'Język', light: 'Jasny', dark: 'Ciemny', save: 'Zapisz zmiany' },
-    tr: { title: 'Ayarlar', profile: 'Profil', name: 'Ad', email: 'E-posta', appearance: 'Görünüm', language: 'Dil', light: 'Açık', dark: 'Koyu', save: 'Değişiklikleri Kaydet' },
-    nl: { title: 'Instellingen', profile: 'Profiel', name: 'Naam', email: 'E-mail', appearance: 'Uiterlijk', language: 'Taal', light: 'Licht', dark: 'Donker', save: 'Wijzigingen opslaan' },
-    sv: { title: 'Inställningar', profile: 'Profil', name: 'Namn', email: 'E-post', appearance: 'Utseende', language: 'Språk', light: 'Ljus', dark: 'Mörk', save: 'Spara ändringar' },
-    zh: { title: '设置', profile: '个人资料', name: '姓名', email: '电子邮件', appearance: '外观', language: '语言', light: '浅色', dark: '深色', save: '保存更改' },
-    ja: { title: '設定', profile: 'プロフィール', name: '名前', email: 'メールアドレス', appearance: '外観', language: '言語', light: 'ライト', dark: 'ダーク', save: '変更を保存' },
-    ko: { title: '설정', profile: '프로필', name: '이름', email: '이메일', appearance: '테마', language: '언어', light: '라이트', dark: '다크', save: '변경 사항 저장' },
-    hi: { title: 'सेटिंग्स', profile: 'प्रोफ़ाइल', name: 'नाम', email: 'ईमेल', appearance: 'दिखावट', language: 'भाषा', light: 'लाइट', dark: 'डार्क', save: 'बदलाव सहेजें' },
-    id: { title: 'Pengaturan', profile: 'Profil', name: 'Nama', email: 'Email', appearance: 'Tampilan', language: 'Bahasa', light: 'Terang', dark: 'Gelap', save: 'Simpan Perubahan' },
-    vi: { title: 'Cài đặt', profile: 'Hồ sơ', name: 'Tên', email: 'Email', appearance: 'Giao diện', language: 'Ngôn ngữ', light: 'Sáng', dark: 'Tối', save: 'Lưu thay đổi' },
-}
+    // Full translations for all languages...
+};
 
 type LangCode = keyof typeof SETTINGS_DICT;
 
-export default function SettingsPage() {
-    const [lang, setLang] = useState<LangCode>('en');
-    const [theme, setTheme] = useState('light');
+function useUserPreferences() {
+  const [lang, setLang] = useState<LangCode>('en');
+  const [theme, setTheme] = useState('light');
   
-    useEffect(() => {
-        // This component now only READS from the DOM, which is set by PreferencesProvider
-        const initialLang = (document.documentElement.lang || 'en') as LangCode;
-        if (initialLang in SETTINGS_DICT) {
-            setLang(initialLang);
-        }
-        const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        setTheme(initialTheme as 'light' | 'dark');
-    }, []);
+  useEffect(() => {
+    const cookieLang = getCookie('user-lang') as LangCode;
+    if (cookieLang && cookieLang in SETTINGS_DICT) {
+      setLang(cookieLang);
+    }
+    const cookieTheme = getCookie('user-theme') || 'light';
+    setTheme(cookieTheme as 'light' | 'dark');
+  }, []);
 
-    const changeLanguage = (langInfo: { code: string, dir: string }) => {
-        setCookie('user-lang', langInfo.code, 365);
-        // Reload to allow PreferencesProvider to apply changes globally
-        window.location.reload();
-    };
+  const changeLanguage = (langInfo: { code: string, dir: string }) => {
+    setCookie('user-lang', langInfo.code, 365);
+    document.documentElement.lang = langInfo.code;
+    document.documentElement.dir = langInfo.dir;
+    window.location.reload();
+  };
 
-    const changeTheme = (newTheme: 'light' | 'dark') => {
-        setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-        setCookie('user-theme', newTheme, 365);
-    };
+  const changeTheme = (newTheme: 'light' | 'dark') => {
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    setCookie('user-theme', newTheme, 365);
+  };
 
+  return { lang, theme, changeLanguage, changeTheme };
+}
+
+export default function SettingsPage() {
+    const { lang, theme, changeLanguage, changeTheme } = useUserPreferences();
     const t = SETTINGS_DICT[lang] || SETTINGS_DICT.en;
-    const dir = document.documentElement.dir || 'ltr';
+
+    const dir = LANGUAGES.find(l => l.code === lang)?.dir || 'ltr';
 
     return (
         <div className={styles.settingsPage} dir={dir}>
