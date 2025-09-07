@@ -1,13 +1,23 @@
-// app/layout.tsx
-import type { ReactNode } from 'react';
+// File: app/layout.tsx
+// This is the root layout. Its only job is to define the <html> and <body> tags.
+// It receives the `locale` from the URL and sets it as the language.
 
-// אם יש לך app/globals.css – זה המקום לייבא אותו
-import './globals.css';
+import { ReactNode } from 'react';
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+// This defines the props the component will receive
+type Props = {
+  children: ReactNode;
+  params: { locale: string };
+};
+
+export default function RootLayout({ children, params: { locale } }: Props) {
+  // The lang attribute is crucial for next-intl and accessibility.
   return (
-    <html lang="en" dir="ltr">
-      <body>{children}</body>
+    <html lang={locale}>
+      <body>
+        {children}
+      </body>
     </html>
   );
 }
+
