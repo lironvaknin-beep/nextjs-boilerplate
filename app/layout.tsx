@@ -1,23 +1,17 @@
 // File: app/layout.tsx
-// This is the root layout. Its only job is to define the <html> and <body> tags.
-// It receives the `locale` from the URL and sets it as the language.
+// Location: /app/layout.tsx
+// This is the root layout. It's now minimal and only passes children through.
+// The actual <html> and <body> tags are defined in app/[locale]/layout.tsx.
 
 import { ReactNode } from 'react';
 
-// This defines the props the component will receive
 type Props = {
   children: ReactNode;
-  params: { locale: string };
 };
 
-export default function RootLayout({ children, params: { locale } }: Props) {
-  // The lang attribute is crucial for next-intl and accessibility.
-  return (
-    <html lang={locale}>
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+// This component needs to exist, but it should be as simple as possible.
+// It just returns the children, which will be the content from the nested layout.
+export default function RootLayout({ children }: Props) {
+  return children;
 }
 
