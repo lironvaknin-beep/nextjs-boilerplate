@@ -1,32 +1,13 @@
+// File: app/(ui)/AppFooter.tsx
+// Location: /app/(ui)/AppFooter.tsx
+// This component is now fully refactored to use the central `next-intl` system.
+// The local dictionary has been removed.
+
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-const FOOTER_DICT = {
-    en: { home: 'Home', explore: 'Explore', create: 'Create', library: 'Library', settings: 'Settings' },
-    he: { home: 'בית', explore: 'גילוי', create: 'יצירה', library: 'ספרייה', settings: 'הגדרות' },
-    ar: { home: 'الرئيسية', explore: 'استكشف', create: 'إنشاء', library: 'المكتبة', settings: 'الإعدادات' },
-    es: { home: 'Inicio', explore: 'Explorar', create: 'Crear', library: 'Biblioteca', settings: 'Ajustes' },
-    fr: { home: 'Accueil', explore: 'Explorer', create: 'Créer', library: 'Bibliothèque', settings: 'Paramètres' },
-    de: { home: 'Start', explore: 'Entdecken', create: 'Erstellen', library: 'Bibliothek', settings: 'Einstellungen' },
-    it: { home: 'Home', explore: 'Esplora', create: 'Crea', library: 'Libreria', settings: 'Impostazioni' },
-    pt: { home: 'Início', explore: 'Explorar', create: 'Criar', library: 'Biblioteca', settings: 'Configurações' },
-    ru: { home: 'Главная', explore: 'Обзор', create: 'Создать', library: 'Библиотека', settings: 'Настройки' },
-    pl: { home: 'Start', explore: 'Odkrywaj', create: 'Utwórz', library: 'Biblioteka', settings: 'Ustawienia' },
-    tr: { home: 'Anasayfa', explore: 'Keşfet', create: 'Oluştur', library: 'Kütüphane', settings: 'Ayarlar' },
-    nl: { home: 'Home', explore: 'Verkennen', create: 'Creëren', library: 'Bibliotheek', settings: 'Instellingen' },
-    sv: { home: 'Hem', explore: 'Utforska', create: 'Skapa', library: 'Bibliotek', settings: 'Inställningar' },
-    zh: { home: '首页', explore: '发现', create: '创建', library: '图书馆', settings: '设置' },
-    ja: { home: 'ホーム', explore: '発見', create: '作成', library: 'ライブラリ', settings: '設定' },
-    ko: { home: '홈', explore: '탐색', create: '만들기', library: '라이브러리', settings: '설정' },
-    hi: { home: 'होम', explore: 'अन्वेषण', create: 'बनाएं', library: 'पुस्तकालय', settings: 'सेटिंग्स' },
-    id: { home: 'Beranda', explore: 'Jelajahi', create: 'Buat', library: 'Perpustakaan', settings: 'Pengaturan' },
-    vi: { home: 'Trang chủ', explore: 'Khám phá', create: 'Tạo', library: 'Thư viện', settings: 'Cài đặt' },
-};
-
-type LangCode = keyof typeof FOOTER_DICT;
+import { useTranslations } from 'next-intl';
 
 // --- SVG Icons for Footer ---
 const HomeIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>;
@@ -45,17 +26,9 @@ const NAV_LINKS = [
 
 export default function AppFooter() {
     const pathname = usePathname();
-    const [lang, setLang] = useState<LangCode>('en');
-
-    useEffect(() => {
-        // This component now only READS from the DOM, which is set by the provider.
-        const currentLang = (document.documentElement.lang || 'en') as LangCode;
-        if (currentLang in FOOTER_DICT) {
-            setLang(currentLang);
-        }
-    }, [pathname]); // Re-check language if path changes, useful for client-side navigation
-
-    const t = FOOTER_DICT[lang] || FOOTER_DICT.en;
+    // The `useTranslations` hook pulls from the nearest `NextIntlClientProvider`.
+    // In our case, this is in the `app/[locale]/layout.tsx` file.
+    const t = useTranslations('Footer');
 
     return (
         <footer className="appFooter">
@@ -66,7 +39,8 @@ export default function AppFooter() {
                 return (
                     <Link key={href} href={href} className={linkClasses}>
                         {icon}
-                        <span>{t[labelKey as keyof typeof t]}</span>
+                        {/* The translation is now fetched using the key (e.g., 'home') */}
+                        <span>{t(labelKey)}</span>
                     </Link>
                 );
             })}
