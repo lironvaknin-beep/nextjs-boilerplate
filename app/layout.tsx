@@ -1,30 +1,24 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import Header from './(ui)/Header';
-import AppFooter from './(ui)/AppFooter';
-import PreferencesProvider from './(ui)/PreferencesProvider'; // Import the new provider
+// File: app/layout.tsx
+// This is the root layout. It's minimal and sets up the language.
 
-export const metadata: Metadata = {
-  title: 'TextSpot - AI-Powered Creation',
-  description: 'A smart, guided builder for creating stories, recipes, and more.',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-};
+import { locales } from '../i18n';
 
 export default function RootLayout({
   children,
+  params: {locale}
 }: {
   children: React.ReactNode;
+  params: {locale: string};
 }) {
+  // Validate that the incoming `locale` parameter is one of our supported locales
+  if (!locales.includes(locale)) {
+    // In a real app, you would redirect to a default locale or show a 404 page.
+    // For now, we let it render, but it won't find translation messages.
+  }
+
   return (
-    // The provider will now handle setting these attributes on the client side
-    <html>
-      <body>
-        <PreferencesProvider>
-          <Header />
-          <main>{children}</main>
-          <AppFooter />
-        </PreferencesProvider>
-      </body>
+    <html lang={locale}>
+      <body>{children}</body>
     </html>
   );
 }
