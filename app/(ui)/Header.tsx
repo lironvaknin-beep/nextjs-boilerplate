@@ -1,3 +1,8 @@
+// File: app/(ui)/Header.tsx
+// Location: /app/(ui)/Header.tsx
+// This component has been refactored to rely on the central PreferencesProvider.
+// It reads the initial theme/lang from the DOM and its dictionary is now complete.
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
