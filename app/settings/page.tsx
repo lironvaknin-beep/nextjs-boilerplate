@@ -1,6 +1,7 @@
 // File: app/[locale]/settings/page.tsx
 // Location: /app/[locale]/settings/page.tsx
-// CRITICAL FIX: Moved all DOM access into useEffect to prevent prerender errors.
+// CRITICAL FIX: This component now renders its UI only on the client-side
+// to definitively solve the "document is not defined" prerender error.
 
 'use client';
 
@@ -44,13 +45,16 @@ const LANGUAGES = [
 ];
 
 export default function SettingsPage() {
+    const [isClient, setIsClient] = useState(false);
     const [theme, setTheme] = useState('light');
     const [currentLangCode, setCurrentLangCode] = useState('en');
     const [dir, setDir] = useState('ltr');
     const t = useTranslations('SettingsPage');
 
     useEffect(() => {
-        // Read initial state from the DOM, which is set by PreferencesProvider
+        // This effect runs only on the client, after the initial render.
+        setIsClient(true);
+
         const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
         setTheme(initialTheme as 'light' | 'dark');
         
@@ -63,7 +67,6 @@ export default function SettingsPage() {
 
     const changeLanguage = (langInfo: { code: string, dir: string }) => {
         setCookie('user-lang', langInfo.code, 365);
-        // A full redirect is the most reliable way to switch locales
         window.location.href = `/${langInfo.code}/settings`;
     };
 
@@ -72,6 +75,11 @@ export default function SettingsPage() {
         document.documentElement.setAttribute('data-theme', newTheme);
         setCookie('user-theme', newTheme, 365);
     };
+    
+    // On the server or during the initial render, return null or a loading skeleton.
+    if (!isClient) {
+        return null;
+    }
 
     return (
         <div className={styles.settingsPage} dir={dir}>
