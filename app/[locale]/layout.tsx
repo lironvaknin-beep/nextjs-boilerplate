@@ -1,10 +1,11 @@
 // File: app/[locale]/layout.tsx
-// This is the one and only ROOT layout for the entire application.
+// Location: /app/[locale]/layout.tsx
+// This is now the one and only ROOT layout for the entire application.
 // It defines <html> and <body>, loads translations, and sets up all global components.
 
 import {NextIntlClientProvider, AbstractIntlMessages} from 'next-intl';
 import {getMessages} from 'next-intl/server';
-import {notFound} from 'next/navigation';
+import {notFound} from 'next-navigation';
 import { locales } from '../../i18n'; // Assumes i18n.ts is in the project root
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
