@@ -1,9 +1,14 @@
-'use client'; // CRITICAL: This directive marks the component as a Client Component
+// File: app/[locale]/settings/page.tsx
+// Location: /app/[locale]/settings/page.tsx
+// This component is now fully refactored to use the central `next-intl` system.
+
+'use client';
 
 import { useState, useEffect } from 'react';
 import styles from './settings.module.css';
+import { useTranslations } from 'next-intl';
 
-// --- Helper functions for cookies ---
+// --- Helper function for setting a cookie ---
 function setCookie(name: string, value: string, days: number) {
   let expires = "";
   if (days) {
@@ -14,18 +19,6 @@ function setCookie(name: string, value: string, days: number) {
   if (typeof document !== 'undefined') {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
-}
-
-function getCookie(name: string): string | null {
-  if (typeof document === 'undefined') return null;
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
 }
 
 const LANGUAGES = [
@@ -50,79 +43,63 @@ const LANGUAGES = [
   { code: 'vi', label: 'Tiếng Việt', dir: 'ltr' },
 ];
 
-const SETTINGS_DICT = {
-    en: { title: 'Settings', profile: 'Profile', name: 'Name', email: 'Email', appearance: 'Appearance', language: 'Language', light: 'Light', dark: 'Dark', save: 'Save Changes' },
-    he: { title: 'הגדרות', profile: 'פרופיל', name: 'שם', email: 'אימייל', appearance: 'מראה', language: 'שפה', light: 'בהיר', dark: 'כהה', save: 'שמור שינויים' },
-    ar: { title: 'الإعدادات', profile: 'الملف الشخصي', name: 'الاسم', email: 'البريد الإلكتروني', appearance: 'المظهر', language: 'اللغة', light: 'فاتح', dark: 'داكن', save: 'حفظ التغييرات' },
-    // Full translations for all languages...
-};
-
-type LangCode = keyof typeof SETTINGS_DICT;
-
-function useUserPreferences() {
-  const [lang, setLang] = useState<LangCode>('en');
-  const [theme, setTheme] = useState('light');
-  
-  useEffect(() => {
-    const cookieLang = getCookie('user-lang') as LangCode;
-    if (cookieLang && cookieLang in SETTINGS_DICT) {
-      setLang(cookieLang);
-    }
-    const cookieTheme = getCookie('user-theme') || 'light';
-    setTheme(cookieTheme as 'light' | 'dark');
-  }, []);
-
-  const changeLanguage = (langInfo: { code: string, dir: string }) => {
-    setCookie('user-lang', langInfo.code, 365);
-    document.documentElement.lang = langInfo.code;
-    document.documentElement.dir = langInfo.dir;
-    window.location.reload();
-  };
-
-  const changeTheme = (newTheme: 'light' | 'dark') => {
-    setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    setCookie('user-theme', newTheme, 365);
-  };
-
-  return { lang, theme, changeLanguage, changeTheme };
-}
-
 export default function SettingsPage() {
-    const { lang, theme, changeLanguage, changeTheme } = useUserPreferences();
-    const t = SETTINGS_DICT[lang] || SETTINGS_DICT.en;
+    const [theme, setTheme] = useState('light');
+    const [currentLangCode, setCurrentLangCode] = useState('en');
+    const t = useTranslations('SettingsPage');
 
-    const dir = LANGUAGES.find(l => l.code === lang)?.dir || 'ltr';
+    useEffect(() => {
+        // Read initial state from the DOM, which is set by PreferencesProvider
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        setTheme(initialTheme as 'light' | 'dark');
+        
+        const initialLang = document.documentElement.lang || 'en';
+        setCurrentLangCode(initialLang);
+    }, []);
+
+    const changeLanguage = (langInfo: { code: string, dir: string }) => {
+        setCookie('user-lang', langInfo.code, 365);
+        // A full redirect is the most reliable way to switch locales with next-intl's App Router setup
+        window.location.href = `/${langInfo.code}/settings`;
+    };
+
+    const changeTheme = (newTheme: 'light' | 'dark') => {
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        setCookie('user-theme', newTheme, 365);
+    };
+
+    const dir = document.documentElement.dir || 'ltr';
 
     return (
         <div className={styles.settingsPage} dir={dir}>
-            <h1 className={styles.title}>{t.title}</h1>
+            <h1 className={styles.title}>{t('title')}</h1>
 
             <div className={styles.settingsCard}>
-                <h2 className={styles.cardTitle}>{t.profile}</h2>
+                <h2 className={styles.cardTitle}>{t('profile')}</h2>
                 <div className={styles.formGroup}>
-                    <label htmlFor="name" className={styles.formLabel}>{t.name}</label>
+                    <label htmlFor="name" className={styles.formLabel}>{t('name')}</label>
                     <input type="text" id="name" className={styles.formInput} placeholder="Your Name" />
                 </div>
                 <div className={styles.formGroup}>
-                    <label htmlFor="email" className={styles.formLabel}>{t.email}</label>
+                    <label htmlFor="email" className={styles.formLabel}>{t('email')}</label>
                     <input type="email" id="email" className={styles.formInput} placeholder="your@email.com" />
                 </div>
             </div>
 
             <div className={styles.settingsCard}>
-                <h2 className={styles.cardTitle}>{t.appearance}</h2>
+                <h2 className={styles.cardTitle}>{t('appearance')}</h2>
                 <div className={styles.themeSelector}>
-                    <button onClick={() => changeTheme('light')} className={`${styles.themeBtn} ${theme === 'light' ? styles.active : ''}`}>{t.light}</button>
-                    <button onClick={() => changeTheme('dark')} className={`${styles.themeBtn} ${theme === 'dark' ? styles.active : ''}`}>{t.dark}</button>
+                    <button onClick={() => changeTheme('light')} className={`${styles.themeBtn} ${theme === 'light' ? styles.active : ''}`}>{t('light')}</button>
+                    <button onClick={() => changeTheme('dark')} className={`${styles.themeBtn} ${theme === 'dark' ? styles.active : ''}`}>{t('dark')}</button>
                 </div>
             </div>
 
             <div className={styles.settingsCard}>
-                <h2 className={styles.cardTitle}>{t.language}</h2>
+                <h2 className={styles.cardTitle}>{t('language')}</h2>
                 <div className={styles.langGrid}>
                     {LANGUAGES.map((langInfo) => (
-                        <button key={langInfo.code} onClick={() => changeLanguage(langInfo)} className={`${styles.langBtn} ${lang === langInfo.code ? styles.active : ''}`}>
+                        <button key={langInfo.code} onClick={() => changeLanguage(langInfo)} className={`${styles.langBtn} ${currentLangCode === langInfo.code ? styles.active : ''}`}>
                             {langInfo.label}
                         </button>
                     ))}
@@ -130,9 +107,8 @@ export default function SettingsPage() {
             </div>
 
             <div className={styles.actions}>
-                <button className={styles.saveBtn}>{t.save}</button>
+                <button className={styles.saveBtn}>{t('save')}</button>
             </div>
         </div>
     );
 }
-
