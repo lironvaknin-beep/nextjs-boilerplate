@@ -1,3 +1,7 @@
+// File: app/(ui)/PreferencesProvider.tsx
+// This component's SOLE responsibility is now to manage the theme (light/dark).
+// Language and direction are handled globally by next-intl's middleware and layouts.
+
 'use client';
 
 import { useEffect } from 'react';
@@ -15,35 +19,22 @@ function getCookie(name: string): string | null {
     return null;
 }
 
-const LANGUAGES = [
-  { code: 'en', dir: 'ltr' }, { code: 'he', dir: 'rtl' }, { code: 'ar', dir: 'rtl' },
-  { code: 'es', dir: 'ltr' }, { code: 'fr', dir: 'ltr' }, { code: 'de', dir: 'ltr' },
-  { code: 'it', dir: 'ltr' }, { code: 'pt', dir: 'ltr' }, { code: 'ru', dir: 'ltr' },
-  { code: 'pl', dir: 'ltr' }, { code: 'tr', dir: 'ltr' }, { code: 'nl', dir: 'ltr' },
-  { code: 'sv', dir: 'ltr' }, { code: 'zh', dir: 'ltr' }, { code: 'ja', dir: 'ltr' },
-  { code: 'ko', dir: 'ltr' }, { code: 'hi', dir: 'ltr' }, { code: 'id', dir: 'ltr' },
-  { code: 'vi', dir: 'ltr' },
-];
-
 /**
  * This is a client-side component that runs only once when the app loads.
- * Its sole purpose is to read user preferences from cookies and apply them
- * to the root <html> element, ensuring consistency across the entire site.
+ * It reads the user's theme preference from cookies and applies it
+ * to the root <html> element, ensuring visual consistency.
  */
 export default function PreferencesProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
-        // Apply Language and Direction
-        const langCookie = getCookie('user-lang') || navigator.language.split('-')[0] || 'en';
-        const langInfo = LANGUAGES.find(l => l.code === langCookie) || LANGUAGES[0];
-        document.documentElement.lang = langInfo.code;
-        document.documentElement.dir = langInfo.dir;
-
-        // Apply Theme
+        // Apply Theme based on cookie or system preference
         const themeCookie = getCookie('user-theme');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
         const initialTheme = themeCookie || (systemPrefersDark ? 'dark' : 'light');
+        
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []); // Runs only once on initial client-side render
 
     return <>{children}</>;
 }
+
