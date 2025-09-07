@@ -1,5 +1,7 @@
-// --- Builder Logic v3.2: Final QA & Polish ---
-// This script assumes it is loaded after the main React component has rendered.
+// File: public/builder/builder.js
+// Location: /public/builder/builder.js
+// This script provides the interactive logic for the builder after the initial form is submitted.
+// It includes inline editing, animations, and communication with the React parent component.
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- SVG Icon Library (for a premium feel) ---
@@ -195,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sentenceEl = document.getElementById('previewSentence');
         if (sentenceEl) sentenceEl.textContent = buildSentence();
         const modal = document.getElementById('previewModal');
+        // This class is defined in builder.module.css and is globally available
         if (modal) modal.classList.add('isOpen');
     }
 
