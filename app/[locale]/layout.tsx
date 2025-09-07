@@ -1,12 +1,14 @@
 // File: app/[locale]/layout.tsx
-// This is the main layout for all internationalized pages.
-// It loads translations and wraps all pages with the global components.
+// This is now the ROOT layout for the entire application.
+// It defines <html> and <body>, loads translations, and sets up global components.
 
 import {NextIntlClientProvider, AbstractIntlMessages} from 'next-intl';
 import {getMessages} from 'next-intl/server';
+import {notFound} from 'next/navigation';
+import { locales } from '../../i18n'; // Assumes i18n.ts is in the root
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
-import '../globals.css'; // Note the path goes up one level
+import '../globals.css';
 import Header from '../(ui)/Header';
 import AppFooter from '../(ui)/AppFooter';
 import PreferencesProvider from '../(ui)/PreferencesProvider';
@@ -26,18 +28,30 @@ export default async function LocaleLayout({
   children,
   params: {locale}
 }: Props) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages() as AbstractIntlMessages;
+  // Validate that the incoming `locale` parameter is valid
+  if (!locales.includes(locale)) notFound();
+
+  let messages;
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default as AbstractIntlMessages;
+  } catch (error) {
+    // If messages for a valid locale are not found, it's a build error.
+    console.error(error);
+    notFound();
+  }
  
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
-        <PreferencesProvider>
-          <Header />
-          <main>{children}</main>
-          <AppFooter />
-        </PreferencesProvider>
-    </NextIntlClientProvider>
+    <html lang={locale}>
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+            <PreferencesProvider>
+              <Header />
+              <main>{children}</main>
+              <AppFooter />
+            </PreferencesProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
 
