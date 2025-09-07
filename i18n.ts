@@ -1,17 +1,23 @@
 // File: i18n.ts
-import { getRequestConfig } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+// Location: / (Project Root)
+// This file defines the supported locales and tells the server how to load the translation files.
+// Corrected syntax and verified locale list.
 
-// רשימת שפות קיימות באמת בתיקיית /messages
-export const locales = [
-  'en','he','ar','es','fr','de','it','pt','ru','pl','tr','nl','sv','zh','ja','ko','hi','id','vi'
-];
-
+import {getRequestConfig} from 'next-intl/server';
+import {notFound} from 'next/navigation';
+ 
+// The list of all supported locales.
+// To prevent build errors, ensure a messages/{locale}.json file exists for each of these.
+export const locales = ['en', 'he', 'ar', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'pl', 'tr', 'nl', 'sv', 'zh', 'ja', 'ko', 'hi', 'id', 'vi'];
 export const defaultLocale = 'en';
 
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async ({locale}) => {
+  // Validate that the incoming `locale` parameter is valid.
   if (!locales.includes(locale as any)) notFound();
+ 
   return {
+    // Load the correct messages for the given locale.
     messages: (await import(`./messages/${locale}.json`)).default
   };
 });
+
