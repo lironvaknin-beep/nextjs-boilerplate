@@ -6,7 +6,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Script from 'next/script';
-import styles from './builder.module.css';
+import styles from '../../builder/builder.module.css';
 import { useTranslations, useLocale } from 'next-intl';
 
 const DOC_TYPE_KEYS = ['story', 'article', 'blog', 'email', 'school', 'work', 'recipe', 'song', 'poem'];
