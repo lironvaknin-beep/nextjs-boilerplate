@@ -1,4 +1,5 @@
 // File: app/[locale]/layout.tsx
+// Location: /app/[locale]/layout.tsx
 // This is the main layout for all internationalized pages.
 // It loads translations and wraps all pages with the global components.
 // CRITICAL: It does NOT render <html> or <body> tags.
@@ -11,20 +12,22 @@ import '../globals.css';
 import Header from '../(ui)/Header';
 import AppFooter from '../(ui)/AppFooter';
 import PreferencesProvider from '../(ui)/PreferencesProvider';
+import { getMessages } from 'next-intl/server';
 
-// The params can be an object or a Promise, to align with Next.js types.
-type Params = { locale: string } | Promise<{ locale: string }>;
-type Props = { children: ReactNode; params: Params };
+type Props = { 
+  children: ReactNode; 
+  params: { locale: string };
+};
 
-export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await Promise.resolve(params);
+export default async function LocaleLayout({ children, params: { locale } }: Props) {
   if (!locales.includes(locale as any)) notFound();
 
   let messages: AbstractIntlMessages;
   try {
-    messages = (await import(`../../messages/${locale}.json`)).default as AbstractIntlMessages;
-  } catch {
+    messages = (await getMessages({locale})) as AbstractIntlMessages;
+  } catch (error) {
     // A safe fallback to English if a translation file is missing.
+    console.error("Could not load messages for locale:", locale, "Falling back to 'en'.");
     messages = (await import(`../../messages/en.json`)).default as AbstractIntlMessages;
   }
 
