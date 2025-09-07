@@ -6,7 +6,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import styles from './home.module.css';
+import styles from '../home.module.css';
 import sampleData from '../sample-data.json';
 import { useTranslations } from 'next-intl';
 
