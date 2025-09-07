@@ -1,11 +1,7 @@
 // File: app/[locale]/layout.tsx
-// This is now the one and only ROOT layout for the entire application.
-// It defines <html> and <body>, loads translations, and sets up all global components.
-
 import {NextIntlClientProvider, AbstractIntlMessages} from 'next-intl';
-import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
-import { locales } from '../../i18n'; // Assumes i18n.ts is in the project root
+import { locales } from '../../i18n';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import '../globals.css';
@@ -21,39 +17,31 @@ export const metadata: Metadata = {
 
 type Props = {
   children: ReactNode;
-  params: {locale: string};
+  params: { locale: string };
 };
 
-export default async function LocaleLayout({
-  children,
-  params: {locale}
-}: Props) {
-  // Validate that the incoming `locale` parameter is valid
+export default async function LocaleLayout({ children, params: { locale } }: Props) {
   if (!locales.includes(locale)) notFound();
 
-  let messages;
+  let messages: AbstractIntlMessages;
   try {
-    // The path is now relative to the project root, where the `messages` folder is.
     messages = (await import(`../../messages/${locale}.json`)).default as AbstractIntlMessages;
   } catch (error) {
-    // If messages for a valid locale are not found, it's a build error.
-    console.error(`Could not load messages for locale: ${locale}`, error);
+    console.error(error);
     notFound();
   }
- 
+
   return (
-    // The <html> and <body> tags are defined here.
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-            <PreferencesProvider>
-              <Header />
-              <main>{children}</main>
-              <AppFooter />
-            </PreferencesProvider>
+          <PreferencesProvider>
+            <Header />
+            <main>{children}</main>
+            <AppFooter />
+          </PreferencesProvider>
         </NextIntlClientProvider>
       </body>
     </html>
   );
 }
-
