@@ -6,6 +6,7 @@ import {getRequestConfig} from 'next-intl/server';
 import {notFound} from 'next/navigation';
  
 // The list of all supported locales.
+// To prevent build errors, ensure a messages/{locale}.json file exists for each of these.
 export const locales = ['en', 'he', 'ar', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'pl', 'tr', 'nl', 'sv', 'zh', 'ja', 'ko', 'hi', 'id', 'vi'];
 export const defaultLocale = 'en';
 
