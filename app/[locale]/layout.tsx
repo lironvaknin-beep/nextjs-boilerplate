@@ -1,15 +1,18 @@
-// app/[locale]/layout.tsx
+// File: app/[locale]/layout.tsx
+// This is the main layout for all internationalized pages.
+// It loads translations and wraps all pages with the global components.
+// CRITICAL: It does NOT render <html> or <body> tags.
+
 import {NextIntlClientProvider, AbstractIntlMessages} from 'next-intl';
 import {notFound} from 'next/navigation';
 import type {ReactNode} from 'react';
 import {locales} from '../../i18n';
-
 import '../globals.css';
 import Header from '../(ui)/Header';
 import AppFooter from '../(ui)/AppFooter';
 import PreferencesProvider from '../(ui)/PreferencesProvider';
 
-// params יכול להיות אובייקט או Promise (תואם לשינויים בטיפוסי Next)
+// The params can be an object or a Promise, to align with Next.js types.
 type Params = { locale: string } | Promise<{ locale: string }>;
 type Props = { children: ReactNode; params: Params };
 
@@ -21,11 +24,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   try {
     messages = (await import(`../../messages/${locale}.json`)).default as AbstractIntlMessages;
   } catch {
-    // Fallback בטוח לאנגלית אם חסר קובץ (עדיף על notFound)
+    // A safe fallback to English if a translation file is missing.
     messages = (await import(`../../messages/en.json`)).default as AbstractIntlMessages;
   }
 
-  // חשוב: לא מחזירים כאן <html>/<body> אם יש לך app/layout.tsx
+  // IMPORTANT: This layout does not return <html> or <body>,
+  // as that is handled by the root layout in app/layout.tsx.
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <PreferencesProvider>
@@ -36,3 +40,4 @@ export default async function LocaleLayout({ children, params }: Props) {
     </NextIntlClientProvider>
   );
 }
+
