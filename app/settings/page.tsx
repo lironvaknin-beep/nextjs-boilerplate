@@ -1,6 +1,6 @@
 // File: app/[locale]/settings/page.tsx
 // Location: /app/[locale]/settings/page.tsx
-// This component is now fully refactored to use the central `next-intl` system.
+// CRITICAL FIX: Moved all DOM access into useEffect to prevent prerender errors.
 
 'use client';
 
@@ -46,6 +46,7 @@ const LANGUAGES = [
 export default function SettingsPage() {
     const [theme, setTheme] = useState('light');
     const [currentLangCode, setCurrentLangCode] = useState('en');
+    const [dir, setDir] = useState('ltr');
     const t = useTranslations('SettingsPage');
 
     useEffect(() => {
@@ -55,11 +56,14 @@ export default function SettingsPage() {
         
         const initialLang = document.documentElement.lang || 'en';
         setCurrentLangCode(initialLang);
+        
+        const initialDir = document.documentElement.dir || 'ltr';
+        setDir(initialDir);
     }, []);
 
     const changeLanguage = (langInfo: { code: string, dir: string }) => {
         setCookie('user-lang', langInfo.code, 365);
-        // A full redirect is the most reliable way to switch locales with next-intl's App Router setup
+        // A full redirect is the most reliable way to switch locales
         window.location.href = `/${langInfo.code}/settings`;
     };
 
@@ -68,8 +72,6 @@ export default function SettingsPage() {
         document.documentElement.setAttribute('data-theme', newTheme);
         setCookie('user-theme', newTheme, 365);
     };
-
-    const dir = document.documentElement.dir || 'ltr';
 
     return (
         <div className={styles.settingsPage} dir={dir}>
@@ -112,3 +114,4 @@ export default function SettingsPage() {
         </div>
     );
 }
+
