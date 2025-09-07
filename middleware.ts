@@ -12,8 +12,8 @@ export default createMiddleware({
   // If this locale is matched, pathnames work without a prefix (e.g. /about)
   defaultLocale: defaultLocale,
 
-  // CRITICAL CHANGE: The prefix will now only be used when needed (i.e., for non-default locales)
-  localePrefix: 'as-needed'
+  // This enables automatic locale detection based on the user's browser settings
+  localeDetection: true
 });
  
 export const config = {
