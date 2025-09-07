@@ -1,0 +1,96 @@
+{
+  "Header": {
+    "settings": "הגדרות",
+    "appearance": "מראה",
+    "language": "שפה",
+    "light": "בהיר",
+    "dark": "כהה",
+    "searchPlaceholder": "חיפוש..."
+  },
+  "Footer": {
+    "home": "בית",
+    "explore": "גילוי",
+    "create": "יצירה",
+    "library": "ספרייה",
+    "settings": "הגדרות"
+  },
+  "HomePage": {
+    "welcome": "ברוכים הבאים ל-TextSpot",
+    "all": "הכל",
+    "categories": {
+      "Trending Now": "פופולרי עכשיו",
+      "Short Stories": "סיפורים קצרים",
+      "For You": "בשבילך",
+      "Characters": "דמויות",
+      "Tech & Future": "טכנולוגיה ועתיד",
+      "Productivity Hacks": "טיפים לפרודוקטיביות",
+      "World History": "היסטוריה עולמית"
+    }
+  },
+  "BuilderPage": {
+    "title": "מה תרצו ליצור?",
+    "docType": "סוג המסמך",
+    "promptPh": "לדוגמה: סיפור קצר על ילד שמוצא רובוט בחוף הים…",
+    "clear": "ניקוי",
+    "start": "להתחיל ליצור",
+    "preview": "תצוגה מקדימה",
+    "share": "שיתוף",
+    "save": "שמירה",
+    "previewTitle": "תצוגה מקדימה",
+    "contentSaved": "התוכן נשמר!",
+    "contentCopied": "התוכן הועתק!",
+    "close": "סגור",
+    "docTypes": {
+      "story": "סיפור",
+      "article": "מאמר",
+      "blog": "פוסט לבלוג",
+      "email": "אימייל",
+      "school": "עבודה לבית הספר",
+      "work": "מסמך עבודה",
+      "recipe": "מתכון",
+      "song": "שיר",
+      "poem": "שיר"
+    }
+  },
+  "ItemPage": {
+    "back": "חזרה לפיד",
+    "by": "מאת",
+    "author": "הבינה המלאכותית של TextSpot",
+    "relatedContent": "תוכן קשור",
+    "modifyWithAI": "שנה עם AI",
+    "contentControls": "שנה את התוכן",
+    "community": "תגובות הקהילה",
+    "postComment": "פרסם תגובה",
+    "addCommentPlaceholder": "הוסף את תגובתך...",
+    "equalizer": {
+      "humor": "הומור",
+      "diners": "סועדים",
+      "targetAudience": "קהל יעד",
+      "kids": "ילדים",
+      "teens": "נוער",
+      "adults": "מבוגרים",
+      "actionLevel": "רמת אקשן",
+      "pov": "נקודת מבט",
+      "firstPerson": "גוף ראשון",
+      "thirdPerson": "גוף שלישי",
+      "twists": "טוויסטים",
+      "addTwist": "הוסף טוויסט",
+      "emotionalTone": "טון רגשי",
+      "drama": "דרמה",
+      "romance": "רומנטיקה",
+      "comedy": "קומדיה",
+      "horror": "אימה"
+    }
+  },
+  "SettingsPage": {
+    "title": "הגדרות",
+    "profile": "פרופיל",
+    "name": "שם",
+    "email": "אימייל",
+    "appearance": "מראה",
+    "language": "שפה",
+    "light": "בהיר",
+    "dark": "כהה",
+    "save": "שמור שינויים"
+  }
+}
