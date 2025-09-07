@@ -1,0 +1,96 @@
+{
+  "Header": {
+    "settings": "Settings",
+    "appearance": "Appearance",
+    "language": "Language",
+    "light": "Light",
+    "dark": "Dark",
+    "searchPlaceholder": "Search..."
+  },
+  "Footer": {
+    "home": "Home",
+    "explore": "Explore",
+    "create": "Create",
+    "library": "Library",
+    "settings": "Settings"
+  },
+  "HomePage": {
+    "welcome": "Welcome to TextSpot",
+    "all": "All",
+    "categories": {
+      "Trending Now": "Trending Now",
+      "Short Stories": "Short Stories",
+      "For You": "For You",
+      "Characters": "Characters",
+      "Tech & Future": "Tech & Future",
+      "Productivity Hacks": "Productivity Hacks",
+      "World History": "World History"
+    }
+  },
+  "BuilderPage": {
+    "title": "What would you like to create?",
+    "docType": "Document type",
+    "promptPh": "e.g., a short story about a kid who finds a robot on the beach…",
+    "clear": "Clear",
+    "start": "Start Building",
+    "preview": "Preview",
+    "share": "Share",
+    "save": "Save",
+    "previewTitle": "Preview",
+    "contentSaved": "Content saved!",
+    "contentCopied": "Content copied!",
+    "close": "Close",
+    "docTypes": {
+      "story": "Story",
+      "article": "Article",
+      "blog": "Blog Post",
+      "email": "Email",
+      "school": "School Work",
+      "work": "Work Document",
+      "recipe": "Recipe",
+      "song": "Song",
+      "poem": "Poem"
+    }
+  },
+  "ItemPage": {
+    "back": "Back to feed",
+    "by": "By",
+    "author": "TextSpot AI",
+    "relatedContent": "Related Content",
+    "modifyWithAI": "Remix with AI",
+    "contentControls": "Remix Content",
+    "community": "Community Reactions",
+    "postComment": "Post Comment",
+    "addCommentPlaceholder": "Add your reaction...",
+    "equalizer": {
+      "humor": "Humor",
+      "diners": "Diners",
+      "targetAudience": "Target Audience",
+      "kids": "Kids",
+      "teens": "Teens",
+      "adults": "Adults",
+      "actionLevel": "Action Level",
+      "pov": "Point of View",
+      "firstPerson": "First",
+      "thirdPerson": "Third",
+      "twists": "Twists",
+      "addTwist": "Add a Twist",
+      "emotionalTone": "Emotional Tone",
+      "drama": "Drama",
+      "romance": "Romance",
+      "comedy": "Comedy",
+      "horror": "Horror"
+    }
+  },
+  "SettingsPage": {
+    "title": "Settings",
+    "profile": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "appearance": "Appearance",
+    "language": "Language",
+    "light": "Light",
+    "dark": "Dark",
+    "save": "Save Changes"
+  }
+}
