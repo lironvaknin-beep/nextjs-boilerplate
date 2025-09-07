@@ -1,11 +1,11 @@
 // File: app/[locale]/layout.tsx
-// This is now the ROOT layout for the entire application.
-// It defines <html> and <body>, loads translations, and sets up global components.
+// This is now the one and only ROOT layout for the entire application.
+// It defines <html> and <body>, loads translations, and sets up all global components.
 
 import {NextIntlClientProvider, AbstractIntlMessages} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
-import { locales } from '../../i18n'; // Assumes i18n.ts is in the root
+import { locales } from '../../i18n'; // Assumes i18n.ts is in the project root
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 import '../globals.css';
@@ -37,12 +37,12 @@ export default async function LocaleLayout({
     messages = (await import(`../../messages/${locale}.json`)).default as AbstractIntlMessages;
   } catch (error) {
     // If messages for a valid locale are not found, it's a build error.
-    console.error(error);
+    console.error(`Could not load messages for locale: ${locale}`, error);
     notFound();
   }
  
   return (
-    // The <html> and <body> tags are defined here, in the internationalized layout.
+    // The <html> and <body> tags are defined here.
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
