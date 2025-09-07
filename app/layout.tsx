@@ -1,23 +1,19 @@
 // File: app/layout.tsx
-// This is the root layout. It's minimal and sets up the language.
+// This is the root layout. It's minimal and only defines the html and body tags.
+// The locale is handled by the layout inside the [locale] folder.
 
-import { locales } from '../i18n';
+import { ReactNode } from 'react';
 
-export default function RootLayout({
-  children,
-  params: {locale}
-}: {
-  children: React.ReactNode;
-  params: {locale: string};
-}) {
-  // Validate that the incoming `locale` parameter is one of our supported locales
-  if (!locales.includes(locale)) {
-    // In a real app, you would redirect to a default locale or show a 404 page.
-    // For now, we let it render, but it won't find translation messages.
-  }
+type Props = {
+  children: ReactNode;
+};
 
+// Since the middleware is redirecting, the locale parameter is not available here.
+// This layout applies to all locales.
+export default function RootLayout({ children }: Props) {
   return (
-    <html lang={locale}>
+    // The lang attribute will be set by the nested layout in app/[locale]/layout.tsx
+    <html>
       <body>{children}</body>
     </html>
   );
