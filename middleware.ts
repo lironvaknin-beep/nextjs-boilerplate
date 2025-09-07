@@ -12,7 +12,7 @@ export default createMiddleware({
   // If this locale is matched, pathnames work without a prefix (e.g. /about)
   defaultLocale: defaultLocale,
 
-  // This prevents the middleware from running on static files and API routes
+  // This enables automatic locale detection based on the user's browser settings
   localeDetection: true
 });
  
