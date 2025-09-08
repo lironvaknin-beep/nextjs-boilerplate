@@ -1,24 +1,16 @@
-// File: middleware.ts
-// Location: / (Project Root)
-// This file is critical. It intercepts requests to determine which locale to use.
-
 import createMiddleware from 'next-intl/middleware';
 import { locales, defaultLocale } from './i18n';
- 
+
 export default createMiddleware({
-  // A list of all locales that are supported
-  locales: locales,
- 
-  // If this locale is matched, pathnames work without a prefix (e.g. /about)
-  defaultLocale: defaultLocale,
-
-  // This enables automatic locale detection based on the user's browser settings
-  localeDetection: true
+  locales,
+  defaultLocale,           // en
+  localePrefix: 'as-needed' // לא מוסיף קידומת לברירת המחדל
 });
- 
-export const config = {
-  // Skip all paths that should not be internationalized. This example skips
-  // certain folders and all pathnames with a dot (e.g. favicon.ico)
-  matcher: ['/((?!api|_next|.*\\..*).*)']
-};
 
+export const config = {
+  matcher: [
+    '/', // שורש
+    // כל השפות בקידומת (לא כולל קבצי סטטיק, _next, api)
+    '/(ar|de|en|es|fr|he|hi|id|it|ja|ko|nl|pl|pt|ru|sv|tr|vi|zh)/:path*'
+  ]
+};
