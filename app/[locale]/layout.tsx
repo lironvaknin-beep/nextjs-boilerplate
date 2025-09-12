@@ -14,9 +14,10 @@ export default async function LocaleLayout({
   params,
 }: {
   children: ReactNode;
-  params: { locale: string };
+  // שים לב: כאן params הוא Promise של האובייקט עם locale
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   if (!locales.includes(locale as any)) {
     notFound();
