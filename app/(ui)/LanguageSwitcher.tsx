@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter } from '@/navigation';
-import { locales, defaultLocale } from '@/i18n';
+import {useEffect, useMemo, useState} from 'react';
+import {usePathname, useRouter} from '@/navigation';
+import {locales, defaultLocale} from '@/locales';
 
 type Lang = typeof locales[number];
 
@@ -10,10 +10,8 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const options = useMemo(
-    () => (['en','he','ar','es','fr','ru'] as const).filter(c => (locales as readonly string[]).includes(c)),
-    []
-  ) as Lang[];
+  // בחר תתי-קבוצה להצגה (אפשר להרחיב בהמשך)
+  const options = useMemo(() => (['en','he','ar','es','fr','ru'] as Lang[]), []);
 
   const [current, setCurrent] = useState<Lang>('en');
 
