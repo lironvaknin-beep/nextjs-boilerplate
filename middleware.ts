@@ -3,14 +3,13 @@ import { locales, defaultLocale } from './i18n';
 
 export default createMiddleware({
   locales,
-  defaultLocale,           // en
-  localePrefix: 'as-needed' // לא מוסיף קידומת לברירת המחדל
+  defaultLocale,             // en
+  localePrefix: 'as-needed'  // ברירת המחדל בלי קידומת
 });
 
 export const config = {
   matcher: [
-    '/', // שורש
-    // כל השפות בקידומת (לא כולל קבצי סטטיק, _next, api)
-    '/(ar|de|en|es|fr|he|hi|id|it|ja|ko|nl|pl|pt|ru|sv|tr|vi|zh)/:path*'
+    // החל על כל נתיב שאינו סטטי/‏API — כך שגם /settings, /item/123 וכו' יכוסו
+    '/((?!api|_next|_vercel|.*\\..*).*)'
   ]
 };
