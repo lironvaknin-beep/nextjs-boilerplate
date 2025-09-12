@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '../../navigation';
+import { Link } from '@/navigation';
 import styles from '../home.module.css';
 import sampleData from '../sample-data.json';
 import { useTranslations } from 'next-intl';
