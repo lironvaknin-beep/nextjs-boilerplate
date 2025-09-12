@@ -1,22 +1,17 @@
 import '../globals.css';
-
 import type { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
-
-import { locales, defaultLocale } from '@/locales'; // ← כאן התיקון
-import Header from '../(ui)/Header';
-import AppFooter from '../(ui)/AppFooter';
-import PreferencesProvider from '../(ui)/PreferencesProvider';
+import { locales, defaultLocale } from '@/locales';
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string }; // ← היה Promise — לתקן לאובייקט רגיל
 }) {
-  const { locale } = await params;
+  const { locale } = params; // ← בלי await
 
   if (!locales.includes(locale as any)) {
     notFound();
