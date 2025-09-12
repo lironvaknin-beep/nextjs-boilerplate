@@ -1,0 +1,31 @@
+/* File: app/design-tokens.css */
+/* Root-level design tokens & CSS variables (global) */
+:root {
+  /* Layout */
+  --footer-height-val: 60px;
+
+  /* Palette & surfaces (התאם לערכים שלך אם צריך) */
+  --background: #0b0b0c;
+  --foreground: #eaeaec;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --card: #111214;
+  --card-foreground: #eaeaec;
+
+  --secondary: #15171a;
+  --secondary-foreground: #dcdde2;
+
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+
+  --muted-foreground: #9aa0a6;
+
+  /* Brand */
+  --brand-primary: #4f46e5;
+  --brand-gradient: linear-gradient(90deg, #4f46e5, #06b6d4);
+}
+
+/* תמיכה ב-RTL אם צריך (לא חובה) */
+[dir="rtl"] {
+  /* דוגמא: אפשר להגדיר משתנים חלופיים ל-RTL כאן */
+}
