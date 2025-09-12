@@ -1,51 +1,43 @@
 /* File: app/[locale]/builder/builder.module.css */
-/* Location: /app/[locale]/builder/builder.module.css */
 /* This file contains all styles for the Builder page, fully QA'd. */
-
-/* -- ============================================= -- */
-/* -- Part 0: Design System & Variables -- */
-/* -- ============================================= -- */
-:global(:root) {
-  /* Using global variables from globals.css for consistency */
-  --footer-height-val: 60px; 
-}
+/* אין פה :root בכלל – כל המשתנים מגיעים מ-app/design-tokens.css */
 
 /* -- ============================================= -- */
 /* -- Part 1: Main Layout & Starter Panel (Stable) -- */
 /* -- ============================================= -- */
-.builderPageContainer { 
+.builderPageContainer {
   width: 100%;
-  display: flex; 
-  gap: 24px; 
-  align-items: flex-start; 
-  justify-content: center; 
-  padding: 24px 0 96px; 
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 0 96px;
   min-height: 100vh;
   background: var(--background);
 }
 
 /* Starter panel card */
-.starterPanel { 
-  position: sticky; 
-  top: 24px; 
-  width: 100%; 
+.starterPanel {
+  position: sticky;
+  top: 24px;
+  width: 100%;
   max-width: 980px;
-  display: flex; 
-  flex-direction: column; 
-  gap: 16px; 
-  border-radius: 16px; 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
   border: 1px solid var(--border);
   background: var(--card);
   color: var(--card-foreground);
-  padding: 32px; 
+  padding: 32px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
 
 /* Title + subtitle */
-.panelHeader { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 8px; 
+.panelHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .title {
   font-size: clamp(28px, 4vw, 36px);
@@ -63,21 +55,21 @@
 }
 
 /* Search / filter row */
-.controlRow { 
-  display: grid; 
-  grid-template-columns: 1fr auto; 
-  gap: 12px; 
-  align-items: center; 
+.controlRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
 }
 
-.searchInput { 
-  width: 100%; 
-  height: 44px; 
-  padding: 0 12px; 
-  border-radius: 10px; 
-  border: 1px solid var(--border); 
+.searchInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
   background: var(--background);
-  color: var(--foreground); 
+  color: var(--foreground);
 }
 .searchInput::placeholder { color: var(--muted-foreground); }
 
@@ -90,13 +82,11 @@
   overflow-x: auto;
   padding: 4px 48px 24px;
   margin-bottom: 32px;
-  scroll-snap-type: x mandatory; 
+  scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.filterBar::-webkit-scrollbar {
-    display: none;
-}
+.filterBar::-webkit-scrollbar { display: none; }
 
 .filterBtn {
   scroll-snap-align: start;
@@ -117,13 +107,14 @@
 }
 
 /* Cards grid */
-.scroller { 
-  display: grid; 
-  grid-template-columns: repeat(2, minmax(0, 1fr)); 
-  gap: 16px; 
-  padding: 16px 24px 24px; 
+.scroller {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 16px 24px 24px;
 }
 
+/* גלובלים שמגיעים מרכיבים – נשארים ככה */
 :global(.card) {
   border-radius: 16px;
   border: 1px solid var(--border);
@@ -140,51 +131,51 @@
   border-color: color-mix(in srgb, var(--border) 60%, var(--primary) 40%);
 }
 
-:global(.word) { 
+:global(.word) {
   font-size: clamp(32px, 5vw, 40px);
   font-weight: 800;
   letter-spacing: -0.015em;
 }
 
-:global(.desc) { 
-  color: var(--muted-foreground); 
+:global(.desc) {
+  color: var(--muted-foreground);
   line-height: 1.5;
 }
 
 /* Inline actions on each card */
-:global(.actions) { 
-  display: flex; 
-  gap: 10px; 
+:global(.actions) {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
 }
-:global(.actionBtn) { 
-  border-radius: 10px; 
-  border: 1px solid var(--border); 
-  background: var(--background); 
-  color: var(--foreground); 
-  height: 40px; 
-  padding: 0 12px; 
-  display: inline-flex; 
-  align-items: center; 
-  gap: 8px; 
-  font-weight: 600; 
-  font-size: 14px; 
+:global(.actionBtn) {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  height: 40px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
 }
-:global(.actionBtn:hover) { 
-  border-color: var(--primary); 
+:global(.actionBtn:hover) {
+  border-color: var(--primary);
 }
 
 /* -- ============================================= -- */
 /* -- Part 2: Floating Controls & Toasts -- */
 /* -- ============================================= -- */
 
-.floatingActions { 
-  position: fixed; 
-  right: 16px; 
+.floatingActions {
+  position: fixed;
+  right: 16px;
   bottom: calc(var(--footer-height-val) + 24px);
-  display: grid; 
-  gap: 10px; 
-  z-index: 40; 
+  display: grid;
+  gap: 10px;
+  z-index: 40;
 }
 .fab {
   display: inline-flex;
@@ -194,92 +185,4 @@
   width: 52px;
   border-radius: 999px;
   background: var(--primary);
-  color: var(--primary-foreground);
-  border: 1px solid var(--border);
-  font-weight: 800;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.toast { 
-  position: fixed; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  bottom: calc(var(--footer-height-val) + 24px); 
-  background: var(--secondary); 
-  color: var(--secondary-foreground); 
-  border: 1px solid var(--border); 
-  border-radius: 12px; 
-  padding: 10px 14px; 
-  font-weight: 600; 
-  z-index: 50; 
-}
-
-/* -- ============================================= -- */
-/* -- Part 3: Forms & Inputs (Reusable) -- */
-/* -- ============================================= -- */
-
-.formGroup { 
-  display: grid; 
-  gap: 8px; 
-}
-
-.formLabel { 
-  font-weight: 700; 
-  color: var(--foreground);
-}
-
-.formInput, .formSelect, .formTextarea { 
-  width: 100%; 
-  border-radius: 10px; 
-  border: 1px solid var(--border); 
-  background: var(--background);
-  color: var(--foreground); 
-  padding: 10px 12px; 
-}
-.formTextarea { min-height: 120px; resize: vertical; }
-
-.formInput:focus, .formSelect:focus, .formTextarea:focus { 
-  outline: none; 
-  border-color: var(--brand-primary); 
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); 
-  background-color: var(--card); 
-}
-
-.helperText { 
-  color: var(--muted-foreground); 
-  font-size: 13px; 
-}
-
-/* -- ============================================= -- */
-/* -- Part 4: Footer Spacer -- */
-/* -- ============================================= -- */
-
-.footerSpacer {
-  height: var(--footer-height-val);
-}
-
-/* -- ============================================= -- */
-/* -- Part 5: RTL Tuning -- */
-/* -- ============================================= -- */
-
-[dir="rtl"] .starterPanel {
-  text-align: right;
-}
-[dir="rtl"] .controlRow {
-  direction: rtl;
-}
-[dir="rtl"] .actions {
-  direction: rtl;
-}
-
-@media (max-width: 640px) {
-  .builderPageContainer { padding: 0; align-items: flex-start; }
-  .starterPanel { padding: 24px 16px; border-radius: 0; border: none; max-height: none; min-height: calc(100vh - 100px); }
-  .scroller { padding: 16px; }
-  :global(.card) { padding: 32px 24px; }
-  :global(.word) { font-size: 28px; }
-  :global(.actions) { gap: 8px; }
-  :global(.actionBtn) { width: 44px; height: 44px; }
-  .floatingActions { width: calc(100% - 32px); }
-  .toast { bottom: calc(var(--footer-height-val) + 80px); }
-}
+  col
