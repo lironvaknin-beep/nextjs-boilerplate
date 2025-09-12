@@ -185,4 +185,74 @@
   width: 52px;
   border-radius: 999px;
   background: var(--primary);
-  col
+  color: var(--primary-foreground);
+  border: 1px solid var(--border);
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--footer-height-val) + 24px);
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 600;
+  z-index: 50;
+}
+
+/* -- ============================================= -- */
+/* -- Part 3: Forms & Inputs (Reusable) -- */
+/* -- ============================================= -- */
+
+.formGroup { display: grid; gap: 8px; }
+.formLabel { font-weight: 700; color: var(--foreground); }
+
+.formInput, .formSelect, .formTextarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  padding: 10px 12px;
+}
+.formTextarea { min-height: 120px; resize: vertical; }
+
+.formInput:focus, .formSelect:focus, .formTextarea:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background-color: var(--card);
+}
+
+.helperText { color: var(--muted-foreground); font-size: 13px; }
+
+/* -- ============================================= -- */
+/* -- Part 4: Footer Spacer -- */
+/* -- ============================================= -- */
+
+.footerSpacer { height: var(--footer-height-val); }
+
+/* -- ============================================= -- */
+/* -- Part 5: RTL Tuning -- */
+/* -- ============================================= -- */
+
+[dir="rtl"] .starterPanel { text-align: right; }
+[dir="rtl"] .controlRow { direction: rtl; }
+[dir="rtl"] .actions { direction: rtl; }
+
+@media (max-width: 640px) {
+  .builderPageContainer { padding: 0; align-items: flex-start; }
+  .starterPanel { padding: 24px 16px; border-radius: 0; border: none; max-height: none; min-height: calc(100vh - 100px); }
+  .scroller { padding: 16px; }
+  :global(.card) { padding: 32px 24px; }
+  :global(.word) { font-size: 28px; }
+  :global(.actions) { gap: 8px; }
+  :global(.actionBtn) { width: 44px; height: 44px; }
+  .floatingActions { width: calc(100% - 32px); }
+  .toast { bottom: calc(var(--footer-height-val) + 80px); }
+}
