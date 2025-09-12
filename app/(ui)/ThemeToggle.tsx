@@ -1,35 +1,30 @@
 'use client';
+
 import { useEffect, useState } from 'react';
-import { applyTheme, ThemeMode } from '../(utils)/theme';
+
+type ThemeMode = 'auto' | 'light' | 'dark';
 
 export default function ThemeToggle() {
-  const [currentMode, setCurrentMode] = useState<ThemeMode>('auto');
+  const [mode, setMode] = useState<ThemeMode>('auto');
 
   useEffect(() => {
-    // On initial load, read the saved theme from localStorage
-    const savedMode = (localStorage.getItem('wa_theme') as ThemeMode) || 'auto';
-    setCurrentMode(savedMode);
+    const saved = (localStorage.getItem('wa_theme') as ThemeMode) || 'auto';
+    setMode(saved);
   }, []);
 
-  function cycleTheme() {
-    // Cycle through: auto -> light -> dark -> auto
-    const nextMode = currentMode === 'auto' ? 'light' : currentMode === 'light' ? 'dark' : 'auto';
-    setCurrentMode(nextMode);
-    applyTheme(nextMode);
+  function cycle() {
+    const next: ThemeMode = mode === 'auto' ? 'light' : mode === 'light' ? 'dark' : 'auto';
+    setMode(next);
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+    const resolved = next === 'auto' ? (prefersDark ? 'dark' : 'light') : next;
+    document.documentElement.setAttribute('data-theme', resolved);
+    localStorage.setItem('wa_theme', next);
+    document.cookie = `user-theme=${resolved}; path=/; max-age=31536000`;
   }
-  
-  // Capitalize the first letter for display
-  const buttonLabel = currentMode.charAt(0).toUpperCase() + currentMode.slice(1);
 
   return (
-    <button
-      className="control-btn"
-      onClick={cycleTheme}
-      title="Cycle theme"
-      aria-label="Cycle theme"
-    >
-      {buttonLabel}
+    <button onClick={cycle} aria-label="Theme" title="Theme">
+      {mode[0].toUpperCase() + mode.slice(1)}
     </button>
   );
 }
-
