@@ -6,14 +6,14 @@ import { notFound } from 'next/navigation';
 import Header from '../(ui)/Header';
 import AppFooter from '../(ui)/AppFooter';
 import PreferencesProvider from '../(ui)/PreferencesProvider';
-import { locales, defaultLocale, type Locale } from '../../i18n';
+import { locales, defaultLocale, type Locale, isRTL } from '../../i18n';
 
 export const metadata = {
   title: 'App',
   description: 'Next.js App',
 };
 
-// מקבל גם מצב שבו params הוא Promise וגם מצב שהוא אובייקט רגיל – בלי להיתקע על LayoutProps
+// מקבל גם params כאובייקט וגם כ-Promise כדי למנוע שגיאות טיפוס בין גרסאות
 export default async function LocaleLayout(props: any) {
   const { children, params }: { children: ReactNode; params: { locale?: string } | Promise<{ locale?: string }> } = props;
 
@@ -31,8 +31,7 @@ export default async function LocaleLayout(props: any) {
     messages = (await import(`../../messages/${defaultLocale}.json`)).default;
   }
 
-  // RTL רק לעברית (he). אם תרצה גם ערבית – הוסף 'ar' ל-locales בקובץ i18n.ts.
-  const dir: 'rtl' | 'ltr' = locale === 'he' ? 'rtl' : 'ltr';
+  const dir: 'rtl' | 'ltr' = isRTL(locale) ? 'rtl' : 'ltr';
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
