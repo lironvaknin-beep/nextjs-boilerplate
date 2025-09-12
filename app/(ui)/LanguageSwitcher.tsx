@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { usePathname, useRouter } from '../../navigation';
-import { locales, defaultLocale } from '../../i18n';
+import { usePathname, useRouter } from '@/navigation';
+import { locales, defaultLocale } from '@/i18n';
 
 type Lang = typeof locales[number];
 
