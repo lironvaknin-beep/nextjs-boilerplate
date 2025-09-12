@@ -13,11 +13,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",                  // ← חובה כדי ש- paths יעבדו
+    "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./*"]
     }
