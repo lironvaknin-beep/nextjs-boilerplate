@@ -1,6 +1,6 @@
 'use client';
 
-import { Link, usePathname } from '../../navigation';
+import { Link, usePathname } from '@/navigation';
 import { useTranslations } from 'next-intl';
 
 export default function AppFooter() {
