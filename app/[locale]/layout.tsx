@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 
-import { locales } from '../../i18n';
+import { locales, defaultLocale } from '../../i18n';
 import Header from '../(ui)/Header';
 import AppFooter from '../(ui)/AppFooter';
 import PreferencesProvider from '../(ui)/PreferencesProvider';
@@ -14,7 +14,7 @@ export default async function LocaleLayout({
   params,
 }: {
   children: ReactNode;
-  // שים לב: כאן params הוא Promise של האובייקט עם locale
+  // ב־Vercel ה־types דורשים Promise כאן; await יחזיר גם אובייקט רגיל בלי בעיה
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
@@ -23,7 +23,14 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = (await import(`../../messages/${locale}.json`)).default;
+  // נסה לטעון תרגומים; אם נכשל מכל סיבה – fallback ל־EN
+  let messages: any;
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default;
+  } catch (e) {
+    console.error('Failed to load locale messages for:', locale, e);
+    messages = (await import(`../../messages/${defaultLocale}.json`)).default;
+  }
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
