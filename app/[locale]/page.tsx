@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '../../navigation';
 import styles from '../home.module.css';
 import sampleData from '../sample-data.json';
 import { useTranslations } from 'next-intl';
@@ -18,10 +18,7 @@ export default function HomePage() {
   const tCat = useTranslations('HomePage.categories');
 
   const rows = useMemo(
-    () =>
-      active === 'All'
-        ? Object.entries(grouped)
-        : Object.entries(grouped).filter(([c]) => c === active),
+    () => (active === 'All' ? Object.entries(grouped) : Object.entries(grouped).filter(([c]) => c === active)),
     [active]
   );
 
@@ -33,11 +30,7 @@ export default function HomePage() {
 
       <nav className={styles.filterBar}>
         {allCategories.map((c) => (
-          <button
-            key={c}
-            className={`${styles.filterBtn} ${active === c ? styles.active : ''}`}
-            onClick={() => setActive(c)}
-          >
+          <button key={c} className={`${styles.filterBtn} ${active === c ? styles.active : ''}`} onClick={() => setActive(c)}>
             {c === 'All' ? t('all') : tCat(c) || c}
           </button>
         ))}
@@ -49,15 +42,8 @@ export default function HomePage() {
             <h2 className={styles.rowTitle}>{tCat(category) || category}</h2>
             <div className={styles.rowSlider}>
               {items.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/item/${item.id}`}
-                  className={`${styles.card} ${styles[item.cardType]}`}
-                >
-                  <div
-                    className={styles.cardOverlay}
-                    style={{ background: item.colorGradient }}
-                  />
+                <Link key={item.id} href={`/item/${item.id}`} className={`${styles.card} ${styles[item.cardType]}`}>
+                  <div className={styles.cardOverlay} style={{ background: item.colorGradient }} />
                   <div className={styles.cardContent}>
                     <h3 className={styles.cardTitle}>{item.title}</h3>
                     {item.snippet && <p className={styles.snippet}>{item.snippet}</p>}
