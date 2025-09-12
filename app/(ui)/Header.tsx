@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '../../navigation';
+import { Link } from '@/navigation';
 import { useTranslations } from 'next-intl';
 import ThemeToggle from './ThemeToggle';
 import LanguageSwitcher from './LanguageSwitcher';
