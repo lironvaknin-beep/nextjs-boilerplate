@@ -5,7 +5,7 @@
 /* -- ============================================= -- */
 /* -- Part 0: Design System & Variables -- */
 /* -- ============================================= -- */
-:root {
+:global(:root) {
   /* Using global variables from globals.css for consistency */
   --footer-height-val: 60px; 
 }
@@ -14,202 +14,261 @@
 /* -- Part 1: Main Layout & Starter Panel (Stable) -- */
 /* -- ============================================= -- */
 .builderPageContainer { 
+  width: 100%;
   display: flex; 
+  gap: 24px; 
+  align-items: flex-start; 
   justify-content: center; 
-  align-items: center; 
-  padding: 24px; 
-  width: 100%; 
-  min-height: calc(100vh - 120px); 
-  background-color: var(--background); 
-  font-family: var(--font-sans); 
-  transition: background-color var(--transition); 
+  padding: 24px 0 96px; 
+  min-height: 100vh;
+  background: var(--background);
 }
+
+/* Starter panel card */
 .starterPanel { 
+  position: sticky; 
+  top: 24px; 
   width: 100%; 
-  max-width: 580px; 
-  height: 100%; 
-  max-height: 70vh; 
-  background: var(--card); 
-  border-radius: var(--radius-lg); 
-  box-shadow: var(--shadow-subtle); 
-  border: 1px solid var(--border); 
-  padding: 32px; 
+  max-width: 980px;
   display: flex; 
   flex-direction: column; 
-  gap: 24px; 
-  animation: fadeIn 0.6s var(--transition) both; 
-  transition: background-color var(--transition), border-color var(--transition); 
+  gap: 16px; 
+  border-radius: 16px; 
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 32px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
-@keyframes fadeIn { 
-  from { opacity: 0; transform: translateY(15px); } 
-  to { opacity: 1; transform: translateY(0); } 
+
+/* Title + subtitle */
+.panelHeader { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
 }
-.starterTitle { 
-  font-size: clamp(22px, 5vw, 26px); 
-  font-weight: 700; 
-  color: var(--foreground); 
-  text-align: center; 
-  transition: color var(--transition); 
+.title {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.formGroup { display: flex; flex-direction: column; gap: 8px; }
-.formGroup.isGrowing { flex-grow: 1; display: flex; flex-direction: column; }
-.formLabel { font-size: 14px; font-weight: 500; color: var(--foreground); transition: color var(--transition); }
-.formSelect, .formTextarea { 
+.subtitle {
+  color: var(--muted-foreground);
+  font-size: clamp(14px, 2.5vw, 16px);
+}
+
+/* Search / filter row */
+.controlRow { 
+  display: grid; 
+  grid-template-columns: 1fr auto; 
+  gap: 12px; 
+  align-items: center; 
+}
+
+.searchInput { 
   width: 100%; 
-  padding: 12px 16px; 
+  height: 44px; 
+  padding: 0 12px; 
+  border-radius: 10px; 
   border: 1px solid var(--border); 
-  border-radius: var(--radius-md); 
-  font-size: 16px; 
-  font-family: inherit; 
-  background-color: var(--muted); 
+  background: var(--background);
   color: var(--foreground); 
-  transition: all var(--transition); 
 }
-.formSelect { 
-  appearance: none; 
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); 
-  background-repeat: no-repeat; 
-  background-position: right 16px center; 
-  padding-right: 48px; 
+.searchInput::placeholder { color: var(--muted-foreground); }
+
+/* Filter buttons scroller */
+.filterBar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 48px 24px;
+  margin-bottom: 32px;
+  scroll-snap-type: x mandatory; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-.formTextarea { flex-grow: 1; resize: none; }
-.formSelect:focus, .formTextarea:focus { 
+.filterBar::-webkit-scrollbar {
+    display: none;
+}
+
+.filterBtn {
+  scroll-snap-align: start;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.filterBtn[data-active="true"] {
+  border-color: transparent;
+  background: var(--brand-gradient);
+  color: white;
+}
+
+/* Cards grid */
+.scroller { 
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  gap: 16px; 
+  padding: 16px 24px 24px; 
+}
+
+:global(.card) {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 28px;
+  display: grid;
+  gap: 16px;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+:global(.card:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  border-color: color-mix(in srgb, var(--border) 60%, var(--primary) 40%);
+}
+
+:global(.word) { 
+  font-size: clamp(32px, 5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+:global(.desc) { 
+  color: var(--muted-foreground); 
+  line-height: 1.5;
+}
+
+/* Inline actions on each card */
+:global(.actions) { 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap;
+}
+:global(.actionBtn) { 
+  border-radius: 10px; 
+  border: 1px solid var(--border); 
+  background: var(--background); 
+  color: var(--foreground); 
+  height: 40px; 
+  padding: 0 12px; 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  font-weight: 600; 
+  font-size: 14px; 
+}
+:global(.actionBtn:hover) { 
+  border-color: var(--primary); 
+}
+
+/* -- ============================================= -- */
+/* -- Part 2: Floating Controls & Toasts -- */
+/* -- ============================================= -- */
+
+.floatingActions { 
+  position: fixed; 
+  right: 16px; 
+  bottom: calc(var(--footer-height-val) + 24px);
+  display: grid; 
+  gap: 10px; 
+  z-index: 40; 
+}
+.fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  width: 52px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid var(--border);
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.toast { 
+  position: fixed; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  bottom: calc(var(--footer-height-val) + 24px); 
+  background: var(--secondary); 
+  color: var(--secondary-foreground); 
+  border: 1px solid var(--border); 
+  border-radius: 12px; 
+  padding: 10px 14px; 
+  font-weight: 600; 
+  z-index: 50; 
+}
+
+/* -- ============================================= -- */
+/* -- Part 3: Forms & Inputs (Reusable) -- */
+/* -- ============================================= -- */
+
+.formGroup { 
+  display: grid; 
+  gap: 8px; 
+}
+
+.formLabel { 
+  font-weight: 700; 
+  color: var(--foreground);
+}
+
+.formInput, .formSelect, .formTextarea { 
+  width: 100%; 
+  border-radius: 10px; 
+  border: 1px solid var(--border); 
+  background: var(--background);
+  color: var(--foreground); 
+  padding: 10px 12px; 
+}
+.formTextarea { min-height: 120px; resize: vertical; }
+
+.formInput:focus, .formSelect:focus, .formTextarea:focus { 
   outline: none; 
   border-color: var(--brand-primary); 
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); 
   background-color: var(--card); 
 }
-.starterActions { 
-  display: flex; 
-  flex-direction: column; 
-  gap: 12px; 
-  margin-top: auto; 
-  padding-top: 16px; 
-}
-.btnPrimary { 
-  width: 100%; 
-  padding: 16px; 
-  font-size: 16px; 
-  font-weight: 600; 
-  border-radius: var(--radius-md); 
-  border: none; 
-  cursor: pointer; 
-  background: var(--brand-gradient); 
-  color: white; 
-  transition: all var(--transition); 
-}
-.btnPrimary:hover { 
-  transform: translateY(-2px); 
-  box-shadow: var(--shadow-md); 
-}
-.btnPrimary:disabled { 
-  background: #c7c7f0; 
-  cursor: not-allowed; 
-  transform: none; 
-  box-shadow: none; 
-}
-.btnSecondary { 
-  font-size: 14px; 
-  font-weight: 500; 
+
+.helperText { 
   color: var(--muted-foreground); 
-  background: none; 
-  border: none; 
-  cursor: pointer; 
-  padding: 8px; 
-  transition: color var(--transition); 
-}
-.btnSecondary:hover { color: var(--foreground); }
-
-/* -- ============================================= -- */
-/* -- Part 2: Builder Scroller & Content Cards (Final QA) -- */
-/* -- ============================================= -- */
-.scroller { width: 100%; max-width: 720px; padding: 24px 0; display: flex; flex-direction: column; gap: 32px; scroll-padding-top: 40vh; scroll-padding-bottom: 40vh; }
-:global(.slot) { animation: slideInUp 0.7s var(--transition-bounce) both; position: relative; transition: opacity var(--transition); }
-@keyframes slideInUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-:global(.card) { position: relative; background: var(--card); border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-subtle); padding: 48px 32px; display: flex; flex-direction: column; align-items: center; gap: 24px; transition: all var(--transition); }
-:global(.slot.is-editing .card) { border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
-:global(.slot.is-selected) { opacity: 0.8; }
-:global(.slot.is-active) { opacity: 1; }
-:global(.word) { font-family: var(--font-serif-display); font-size: clamp(32px, 8vw, 48px); font-weight: 400; line-height: 1.2; color: var(--foreground); text-align: center; transition: color var(--transition), opacity 0.2s linear, background-color var(--transition); outline: none; border-radius: var(--radius-md); min-width: 50px; }
-:global(.word.is-changing) { opacity: 0; }
-:global(.slot.is-editing .word) { padding: 0 8px; background-color: var(--muted); cursor: text; }
-:global(.actions) { display: flex; align-items: center; gap: 16px; background-color: var(--muted); padding: 8px; border-radius: 99px; border: 1px solid var(--border); transition: background-color var(--transition), border-color var(--transition); }
-:global(.actionBtn) { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; border: none; background-color: transparent; cursor: pointer; transition: all var(--transition-bounce), color var(--transition); font-size: 20px; color: var(--muted-foreground); }
-:global(.actionBtn:hover) { transform: scale(1.15); background-color: var(--card); box-shadow: var(--shadow-md); }
-:global(.actionBtn:active) { transform: scale(1.05); }
-:global(.like:hover) { color: #16a34a; }
-:global(.dislike:hover) { color: #ef4444; }
-:global(.edit:hover) { color: #3b82f6; }
-:global(.undo:hover) { color: #f97316; }
-:global(.saveBtn) { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); color: #16a34a !important; background-color: var(--card); box-shadow: var(--shadow-md); z-index: 10; }
-:global(.saveBtn:hover) { color: #16a34a; background-color: white; }
-
-/* -- ============================================= -- */
-/* -- Part 3: Floating Actions, Modals & Toasts (FIXED) -- */
-/* -- ============================================= -- */
-.floatingActions { 
-  position: fixed; 
-  bottom: calc(var(--footer-height-val) + 16px); 
-  left: 50%; 
-  transform: translateX(-50%); 
-  display: flex; 
-  gap: 16px; 
-  z-index: 1010; 
-  padding: 8px; 
-  background-color: rgba(255, 255, 255, 0.8); 
-  backdrop-filter: blur(8px); 
-  border-radius: 99px; 
-  box-shadow: var(--shadow-lg); 
-  border: 1px solid var(--border); 
-  transition: background-color var(--transition), border-color var(--transition); 
-}
-:global(html[data-theme='dark']) .floatingActions { background-color: rgba(31, 41, 55, 0.7); }
-.floatingActions .btnPrimary, .floatingActions .btnSecondary { width: auto; padding: 12px 24px; }
-.modal { position: fixed; inset: 0; z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 24px; opacity: 0; visibility: hidden; transition: opacity var(--transition), visibility var(--transition); }
-.modal.isOpen { opacity: 1; visibility: visible; }
-.modalBackdrop { position: absolute; inset: 0; background-color: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); }
-.modalPanel { position: relative; background: var(--card); padding: 32px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); max-width: 520px; width: 100%; display: flex; flex-direction: column; gap: 16px; transform: scale(0.95); transition: all var(--transition); }
-.modal.isOpen .modalPanel { transform: scale(1); }
-.modalTitle { font-size: 24px; font-weight: 700; color: var(--foreground); transition: color var(--transition); }
-.previewContent { font-size: 16px; line-height: 1.7; color: var(--muted-foreground); max-height: 40vh; overflow-y: auto; transition: color var(--transition); }
-.modalActions { display: flex; justify-content: flex-end; margin-top: 16px; }
-
-/* Toast Notification */
-.toast {
-  position: fixed;
-  bottom: calc(var(--footer-height-val) + 80px);
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 24px;
-  background-color: var(--foreground);
-  color: var(--background);
-  border-radius: 99px;
-  box-shadow: var(--shadow-lg);
-  z-index: 3000;
-  font-size: 14px;
-  font-weight: 500;
-  animation: toastIn 0.5s var(--transition-bounce);
-  transition: background-color var(--transition), color var(--transition);
-}
-@keyframes toastIn {
-  from { opacity: 0; transform: translate(-50%, 20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  font-size: 13px; 
 }
 
 /* -- ============================================= -- */
-/* -- Part 4: RTL & Responsive Design (Final) -- */
+/* -- Part 4: Footer Spacer -- */
 /* -- ============================================= -- */
-:global(html[dir="rtl"]) .starterTitle,
-:global(html[dir="rtl"]) .formLabel,
-:global(html[dir="rtl"]) .formTextarea::placeholder,
-:global(html[dir="rtl"]) .btnSecondary {
-    text-align: right;
+
+.footerSpacer {
+  height: var(--footer-height-val);
 }
-:global(html[dir="rtl"]) .formSelect {
-  background-position: left 16px center;
-  padding-left: 48px;
-  padding-right: 16px;
+
+/* -- ============================================= -- */
+/* -- Part 5: RTL Tuning -- */
+/* -- ============================================= -- */
+
+[dir="rtl"] .starterPanel {
   text-align: right;
+}
+[dir="rtl"] .controlRow {
+  direction: rtl;
+}
+[dir="rtl"] .actions {
   direction: rtl;
 }
 
