@@ -40,10 +40,28 @@
     });
   }
 
-  function buildSentence() { return [chosen.subject, chosen.verb, chosen.object].filter(Boolean).join(' '); }
-  function openPreview()    { document.getElementById('previewSentence')?.textContent = buildSentence(); document.getElementById('previewModal')?.classList.add('open'); }
-  function closePreview()   { document.getElementById('previewModal')?.classList.remove('open'); }
-  function saveContent()    { try { const text = buildSentence(); navigator.clipboard?.writeText(text); } catch(e) {} }
+  function buildSentence() {
+    return [chosen.subject, chosen.verb, chosen.object].filter(Boolean).join(' ');
+  }
+
+  function openPreview() {
+    const p = document.getElementById('previewSentence');
+    if (p) p.textContent = buildSentence();
+    const modal = document.getElementById('previewModal');
+    if (modal) modal.classList.add('open');
+  }
+
+  function closePreview() {
+    const modal = document.getElementById('previewModal');
+    if (modal) modal.classList.remove('open');
+  }
+
+  function saveContent() {
+    try {
+      const text = buildSentence();
+      navigator.clipboard && navigator.clipboard.writeText(text);
+    } catch {}
+  }
 
   document.getElementById('previewBtn')?.addEventListener('click', openPreview);
   document.getElementById('closePreview')?.addEventListener('click', closePreview);
