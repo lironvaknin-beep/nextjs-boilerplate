@@ -3,13 +3,11 @@ import { locales, defaultLocale } from './i18n';
 
 export default createMiddleware({
   locales,
-  defaultLocale,             // en
-  localePrefix: 'as-needed'  // ברירת המחדל בלי קידומת
+  defaultLocale,             // 'en'
+  localePrefix: 'as-needed', // ברירת מחדל בלי קידומת
 });
 
 export const config = {
-  matcher: [
-    // החל על כל נתיב שאינו סטטי/‏API — כך שגם /settings, /item/123 וכו' יכוסו
-    '/((?!api|_next|_vercel|.*\\..*).*)'
-  ]
+  // מפעיל i18n על כל נתיב שאינו סטטי/‏API – חשוב כדי ש-/settings יעבוד באנגלית בלי /en
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 };
