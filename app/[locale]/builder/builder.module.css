@@ -1,6 +1,5 @@
 /* File: app/[locale]/builder/builder.module.css */
-/* This file contains all styles for the Builder page, fully QA'd. */
-/* אין פה :root בכלל – כל המשתנים מגיעים מ-app/design-tokens.css */
+/* אין כאן :root בכלל. כל משתני ה-CSS אם יש—צריכים להיות בקובץ גלובלי (ראה סעיף 2). */
 
 /* -- ============================================= -- */
 /* -- Part 1: Main Layout & Starter Panel (Stable) -- */
@@ -114,8 +113,10 @@
   padding: 16px 24px 24px;
 }
 
-/* גלובלים שמגיעים מרכיבים – נשארים ככה */
-:global(.card) {
+/* ===== הבעיה שתיקנו: כל :global מקבל הקשר מקומי דרך .builderPageContainer ===== */
+
+/* גלובלים שמגיעים מרכיבים – מקושרים דרך המחלקה המקומית כדי לעמוד ב"pure selector" */
+.builderPageContainer :global(.card) {
   border-radius: 16px;
   border: 1px solid var(--border);
   background: var(--card);
@@ -125,30 +126,30 @@
   gap: 16px;
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
-:global(.card:hover) {
+.builderPageContainer :global(.card:hover) {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(0,0,0,0.08);
   border-color: color-mix(in srgb, var(--border) 60%, var(--primary) 40%);
 }
 
-:global(.word) {
+.builderPageContainer :global(.word) {
   font-size: clamp(32px, 5vw, 40px);
   font-weight: 800;
   letter-spacing: -0.015em;
 }
 
-:global(.desc) {
+.builderPageContainer :global(.desc) {
   color: var(--muted-foreground);
   line-height: 1.5;
 }
 
 /* Inline actions on each card */
-:global(.actions) {
+.builderPageContainer :global(.actions) {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
-:global(.actionBtn) {
+.builderPageContainer :global(.actionBtn) {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--background);
@@ -161,7 +162,7 @@
   font-weight: 600;
   font-size: 14px;
 }
-:global(.actionBtn:hover) {
+.builderPageContainer :global(.actionBtn:hover) {
   border-color: var(--primary);
 }
 
@@ -249,10 +250,12 @@
   .builderPageContainer { padding: 0; align-items: flex-start; }
   .starterPanel { padding: 24px 16px; border-radius: 0; border: none; max-height: none; min-height: calc(100vh - 100px); }
   .scroller { padding: 16px; }
-  :global(.card) { padding: 32px 24px; }
-  :global(.word) { font-size: 28px; }
-  :global(.actions) { gap: 8px; }
-  :global(.actionBtn) { width: 44px; height: 44px; }
+
+  .builderPageContainer :global(.card) { padding: 32px 24px; }
+  .builderPageContainer :global(.word) { font-size: 28px; }
+  .builderPageContainer :global(.actions) { gap: 8px; }
+  .builderPageContainer :global(.actionBtn) { width: 44px; height: 44px; }
+
   .floatingActions { width: calc(100% - 32px); }
   .toast { bottom: calc(var(--footer-height-val) + 80px); }
 }
