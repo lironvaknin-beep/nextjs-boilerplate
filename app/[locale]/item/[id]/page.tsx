@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '../../../../navigation';
+import { Link } from '../../../navigation';
 import { useParams } from 'next/navigation';
 import styles from './item.module.css';
 import sampleData from '../../sample-data.json';
