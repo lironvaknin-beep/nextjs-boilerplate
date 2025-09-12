@@ -1,8 +1,8 @@
-import { locales } from './i18n';
-import { createSharedPathnamesNavigation } from 'next-intl/navigation';
+import {createSharedPathnamesNavigation} from 'next-intl/navigation';
+import {locales} from './locales';
 
-export const { Link, usePathname, useRouter, redirect } =
+export const {Link, usePathname, useRouter, redirect} =
   createSharedPathnamesNavigation({
     locales,
-    localePrefix: 'as-needed', // EN בלי קידומת, אחרות עם
+    localePrefix: 'as-needed'
   });
